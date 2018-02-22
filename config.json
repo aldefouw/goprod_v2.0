@@ -1,0 +1,52 @@
+{
+	"name": "Go Prod",
+
+	"namespace": "Stanford\\Goprod",
+
+	"authors": [
+		{
+			"name": "Alvaro Andres Alvarez Peralta",
+			"email": "alvaro1@stanford.edu",
+			"institution": "Stanford University"
+		}
+	],
+
+	"permissions": [
+		"hook_every_page_top",
+		"select_data",
+		"update_data",
+		"update_user_permissions"
+	],
+
+	"description": "External Module that enforces best practices and modifies the 'Move to Production' workflow. Initial results suggest a dramatic reduction in common design mistakes while also significantly reducing the REDCap administrator support burden.",
+
+	"links": {
+		"control-center": [
+			{
+				"name": "GoProd SetUp",
+				"icon": "user",
+				"url": "gopro_config.php"
+			}
+		],
+		"project": [
+			{
+				"name": "Test for best practices and problems",
+				"icon": "user",
+				"url": "index.php"
+			}
+		]
+	},
+
+	"system-settings": [
+		{
+			"key": "redirect",
+			"name": "redirect",
+			"required": false,
+			"type": "custom",
+			"source": "js/redirect.js",
+			"functionName": "ExternalModulesOptional.redirect"
+		}
+	],
+	
+	"project-settings": []
+}
