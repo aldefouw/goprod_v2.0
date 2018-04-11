@@ -6,6 +6,7 @@
  * Time: 3:46 PM
  */
 
+namespace Stanford\GoProd;
 
 // echo '<pre>' . print_r($_SESSION["NotDesignatedFormsErrors"], TRUE) . '</pre>';
 //require  '../classes/messages.php';

@@ -63,13 +63,13 @@ if ($status == 1) {
     echo lang('PRODUCTION_WARNING');
 }
 //REDCap Version Warning
-if (\REDCap::versionCompare(REDCAP_VERSION, '7.3.0') < 0) {
+if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
     echo lang('VERSION_INFO');
 }
 
 ?>
 
-<link rel="stylesheet" href="<?php echo $module->getUrl("styles/go_prod_styles.css");?>">
+<link rel="stylesheet" href="<?php echo $module->getUrl("styles/go_prod_styles.css");   error_log($module->getUrl('views',$noAuth=false)); ?>">
     <div class="projhdr"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> <?php echo lang('TITLE'); ?> </div>
     <div id="main-container">
         <div> <span><?php echo lang('MAIN_TEXT');?></span> </div>
@@ -134,8 +134,19 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '7.3.0') < 0) {
 
 <?php
 
+$goprod_workflow=$module->getProjectSetting("gopprod-workflow");
+if ($goprod_workflow==0){
+exit();
+}
+
+echo USERID;
+echo $status;
+error_log("goprod_workflow VARIABLE");
+error_log($goprod_workflow);
+
+
 /*Remove the go to production button if the project is already in production mode*/
-if($status == 2 or USERID == 'alvaro1'){ //USERID == 'alvaro1' and
+if($status == 0 or USERID == 'alvaro'){ //USERID == 'alvaro1' and
 
 ?>
     <div id='final-info' style="display: none">
@@ -170,6 +181,11 @@ if($status == 2 or USERID == 'alvaro1'){ //USERID == 'alvaro1' and
         </h4> <br><button id="go_prod_accept_all" class=" btn btn-md btn-success text-center "> <?php echo lang('I_AGREE');?> </button>
     </div>
     </div>
+
+
+
+
+
     <script type="text/javascript">
         /*Auto Run the report if the  URL  variable is to_prod_plugin=2 */
         $( document ).ready(function() {

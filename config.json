@@ -36,17 +36,30 @@
 			}
 		]
 	},
-
 	"system-settings": [
 		{
-			"key": "redirect",
-			"name": "redirect",
+			"key": "gopprod-workflow",
+			"name": "<b>Modify the move to production workflow:</b> <br><i>Replace the behavior  or the 'Move Project to roduction' button on the Project Setup</i>",
 			"required": false,
-			"type": "custom",
-			"source": "js/redirect.js",
-			"functionName": "ExternalModulesOptional.redirect"
+			"allow-project-overrides": false,
+			"default": "1",
+			"type": "checkbox"
+		},
+		{
+			"key": "language",
+			"name": "Preferred Language / Idioma Preferido:",
+			"required": false,
+			"allow-project-overrides": false,
+			"type": "radio",
+			"default": "en",
+			"choices": [
+				{ "value": "en", "name": "English" },
+				{ "value": "es", "name": "Español" }
+
+			]
 		}
 	],
+
 	
 	"project-settings": []
 }

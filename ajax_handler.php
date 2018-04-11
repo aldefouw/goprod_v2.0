@@ -4,21 +4,10 @@
 
 //$votecap = new \Stanford\GoProd\GoProd($_GET['pid']);
 //include_once "../../redcap_v8.0.0/ExternalModules/classes/ExternalModules.php";
-namespace Stanford\GoProd;
+//namespace Stanford\GoProd;
 
 /** @var \Stanford\GoProd\GoProd $module */
 include_once "classes/utilities.php";
-
-
- $current_url = $_SERVER['REQUEST_URI'];
-//$current_url=$module->getUrl('views');
-
-//$base = parse_url($current_url, PHP_URL_PATH);
-$base = $current_url;
-
-//$new_base_url = $base . "?pid=" . $_GET['pid'] ."&id=".$_GET['id']. "&";
-$new_base_url = $base . "&";
-
 
 //if(!isset($_SESSION['data_dictionary'])){$_SESSION['data_dictionary'] = \REDCap::getDataDictionary('array');}
  //$data_dictionary_array= \REDCap::getDataDictionary('array');
@@ -27,26 +16,26 @@ $new_base_url = $base . "&";
 //global $Proj;
 //require_once 'messages.php';
 
+$current_url = $_SERVER['REQUEST_URI'];
+$base = $current_url;
+$new_base_url = $base . "&";
+
+/* in order to show the results on the #ResultsModal  and exit to avoid re run the rules*/
 if (isset($_GET['i'])) {
     $page = rawurldecode( $_GET['i'] );
-
-
     $base = dirname(__FILE__);
     $file = $base.DS.$page;
-
     if (file_exists($file)) {
         error_log("About to inc $file");
         include_once $file;
     } else {
         error_log("$file does not exist");
     }
+    exit(); //to avoid loading again all rules
 }
 
 
 function PrintRulesNames(){
-
-
-
 
 $RuleNames = array(
 
@@ -68,7 +57,7 @@ $RuleNames = array(
     "NumberOfFieldsByForm",
     "ValidatedFields",
     "MyFirstInstrumentError",
-    "NotDesignatedFormsErrors",
+    "NotDesignatedFormsErrors"
     //"AllSet",   //"PrintSuccess"
     //"VariableNamesWithTheSameNameThanAnEventName",
     // "ResearchErrors",
@@ -89,8 +78,8 @@ function PrintTr($title_text,$body_text,$span_label,$a_tag){
             <td class="gp-info-content">
                 <div class="gp-title-content ">
                     <strong>
-                        '.$title_text. ' <span class="title-text-plus" style="color: #b9b9b9"><small>(less)</small></span>
-                    </strong>   
+                        '.$title_text. ' </strong> <span class="title-text-plus" style="color: #7ec6d7"><small>(hide)</small></span>
+                     
                 </div>
                     
                 <div class="gp-body-content overflow " >
@@ -118,15 +107,14 @@ function PrintOtherOrUnknownErrors($DataDictionary, $similarity){
         $array=$res::CheckOtherOrUnknown($DataDictionary, $similarity);
 
         if(!empty($array)){
-
             global $new_base_url;
             $link= $new_base_url . "i=" . rawurlencode("views/other_or_unknown_view.php");
+
            //$link="views/other_or_unknown_view.php";
-            $a='<a href="#ResultsModal" role="button" class="btn" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
+            $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-is-loaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
             $span='<span class="label label-warning">'.lang('WARNING').'</span>';
             $print=PrintTr(lang('OTHER_OR_UNKNOWN_TITLE'),lang('OTHER_OR_UNKNOWN_BODY'),$span,$a);
             $result["OtherOrUnknownErrors"]= array("Results"=>$array,"Html"=>$print);
-
            return $result;
         }else return false;
 
@@ -140,9 +128,8 @@ function PrintBranchingLogicErrors($DataDictionary){
             global $new_base_url;
             $link= $new_base_url . "i=" . rawurlencode("views/presence_of_branching_logic_variables_view.php");
             //$link= $module->getUrl("views/presence_of_branching_logic_variables_view.php");
-            $a='<a href="#ResultsModal" role="button" class="btn" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
+            $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
             $span='<span class="label label-danger">'.lang('DANGER').'</span>';
-
             $print=PrintTr(lang('BRANCHING_LOGIC_TITLE'),lang('BRANCHING_LOGIC_BODY'),$span,$a);
             $result["BranchingLogicErrors"]= array("Results"=>$array,"Html"=>$print);
             return $result;
@@ -157,7 +144,7 @@ function PrintCalculatedFieldsErrors($DataDictionary){
     if (!empty($array)){
         global $new_base_url;
         $link= $new_base_url . "i=" . rawurlencode("views/presence_of_calculated_variables_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
+        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
         $span='<span class="label label-danger">'.lang('DANGER').'</span>';
         //$_SESSION["CalculatedFieldsErrors"]= $array;
 
@@ -175,7 +162,7 @@ function PrintASILogicErrors(){
     if (!empty($array)){
         global $new_base_url;
         $link= $new_base_url . "i=" . rawurlencode("views/asi_logic_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
+        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
         $span='<span class="label label-danger">'.lang('DANGER').'</span>';
        // $_SESSION["ASILogicErrors"]= $array;
 
@@ -196,7 +183,7 @@ function PrintQueueLogicErrors(){
         global $new_base_url;
         $link= $new_base_url . "i=" . rawurlencode("views/queue_logic_view.php");
 
-        $a='<a href="#ResultsModal" role="button" class="btn" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
+        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
         $span='<span class="label label-danger">'.lang('DANGER').'</span>';
 
 
@@ -216,7 +203,7 @@ function PrintDataQualityLogicErrors(){
     if (!empty($array)){
         global $new_base_url;
         $link= $new_base_url . "i=" . rawurlencode("views/data_quality_logic_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
+        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
         $span='<span class="label label-warning">'.lang('WARNING').'</span>';
 
         $print=PrintTr(lang('DATA_QUALITY_LOGIC_TITLE'),lang('DATA_QUALITY_LOGIC_BODY'),$span,$a);
@@ -235,7 +222,7 @@ function PrintReportsLogicErrors(){
     if (!empty($array)){
         global $new_base_url;
         $link= $new_base_url . "i=" . rawurlencode("views/reports_logic_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
+        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
         $span='<span class="label label-warning">'.lang('WARNING').'</span>';
         $print=PrintTr(lang('REPORTS_LOGIC_TITLE'),lang('REPORTS_LOGIC_BODY'),$span,$a);
         $result["ReportsLogicErrors"]= array("Results"=>$array,"Html"=>$print);
@@ -255,7 +242,7 @@ function PrintTodayInCalculationsErrors($DataDictionary){
     if (!empty($array)){
         global $new_base_url;
         $link= $new_base_url . "i=" . rawurlencode("views/today_calculations_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
+        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
         $span='<span class="label label-warning">'.lang('WARNING').'</span>';
         //$_SESSION["TodayExistInCalculations"]= $array;
 
@@ -270,12 +257,12 @@ function PrintTodayInCalculationsErrors($DataDictionary){
 }
 function PrintVariableNamesWithTheSameNameAsAnEventNameErrors(){
     include_once "classes/Check_presence_of_branching_and_calculated_variables.php";
-    $res= new check_presence_of_branching_andcalculated_variables();
+    $res= new check_presence_of_branching_and_calculated_variables();
     $array=$res::VariableNamesWithTheSameNameAsAnEventName();
     if (!empty($array)){
         global $new_base_url;
         $link= $new_base_url . "i=" . rawurlencode("views/variables_with_same_name_as_event_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
+        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
         $span='<span class="label label-warning">'.lang('WARNING').'</span>';
         //$_SESSION["VariableNamesWithTheSameNameThanAnEventName"]= $array;
 
@@ -297,7 +284,7 @@ function PrintDatesConsistentErrors($DataDictionary){
     if (!empty($array)){
         global $new_base_url;
         $link= $new_base_url . "i=" . rawurlencode("views/dates_consistency_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
+        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
         $span='<span class="label label-warning">'.lang('WARNING').'</span>';
         $print=PrintTr(lang('DATE_CONSISTENT_TITLE'),lang('DATE_CONSISTENT_BODY'),$span,$a);
         $result["DatesConsistentErrors"]= array("Results"=>$array,"Html"=>$print);
@@ -314,7 +301,7 @@ function PrintYesNoConsistentErrors($DataDictionary){
     if (!empty($array)){
         global $new_base_url;
             $link= $new_base_url . "i=" . rawurlencode("views/consistency_yes_no_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
+        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
         $span='<span class="label label-warning">'.lang('WARNING').'</span>';
         $_SESSION["YesNoConsistentErrors"]= $array;
         $print=PrintTr(lang('YES_NO_TITLE'),lang('YES_NO_BODY'),$span,$a);
@@ -332,7 +319,7 @@ function PrintPositiveNegativeConsistentErrors($DataDictionary){
     if (!empty($array)){
         global $new_base_url;
         $link= $new_base_url . "i=" . rawurlencode("views/consistency_positive_negative_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
+        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
         $span='<span class="label label-warning">'.lang('WARNING').'</span>';
         $print=PrintTr(lang('POSITIVE_NEGATIVE_TITLE'),lang('POSITIVE_NEGATIVE_BODY'),$span,$a);
         $result["PositiveNegativeConsistentErrors"]= array("Results"=>$array,"Html"=>$print);
@@ -348,7 +335,7 @@ function PrintIdentifiersErrors($DataDictionary){
     $identifiers_found=$res::AnyIdentifier($DataDictionary);
     if (!$identifiers_found){
 
-        $a='<a  target="_blank"  role="button" class="btn" href=" '.APP_PATH_WEBROOT . 'index.php?pid='.$_GET['pid'].'&route=IdentifierCheckController:index" >'.lang('EDIT').'</a>';
+        $a='<a  target="_blank"  role="button" class="btn btn-default" href=" '.APP_PATH_WEBROOT . 'index.php?pid='.$_GET['pid'].'&route=IdentifierCheckController:index" >'.lang('EDIT').'</a>';
         $span='<span class="label label-warning">'.lang('WARNING').'</span>';
 
         $print=PrintTr(lang('IDENTIFIERS_TITLE'),lang('IDENTIFIERS_BODY'),$span,$a);
@@ -364,7 +351,7 @@ function PrintPIErrors($proj){
     $res= new check_pi_irb_type();
     $pi_found=$res::PIExist($proj);
     if (!$pi_found){
-        $a='<a  target="_blank" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
+        $a='<a  target="_blank" role="button" class="btn btn-default" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
         $span='<span class="label label-danger">'.lang('DANGER').'</span>';
 
         $print=PrintTr(lang('PI_TITLE'),lang('PI_BODY'),$span,$a);
@@ -381,7 +368,7 @@ function PrintIRBErrors($proj){
     $res= new check_pi_irb_type();
     $pi_found=$res::IRBExist($proj);
     if (!$pi_found){
-        $a='<a  target="_blank" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
+        $a='<a  target="_blank" class="btn btn-default" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
         $span='<span class="label label-danger">'.lang('DANGER').'</span>';
 
         $print=PrintTr(lang('IRB_TITLE'),lang('IRB_BODY'),$span,$a);
@@ -398,7 +385,7 @@ function PrintResearchErrors($proj){
     $res= new check_pi_irb_type();
     $research_found=$res::IsAResearchProject($proj);
     if (!$research_found){
-        $a='<a  target="_blank" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
+        $a='<a  target="_blank" class="btn btn-default" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
         $span='<span class="label label-info">'.lang('INFO').'</span>';
 
         $print=PrintTr(lang('RESEARCH_PROJECT_TITLE'),lang('RESEARCH_PROJECT_BODY'),$span,$a);
@@ -414,7 +401,7 @@ function PrintJustForFunErrors($proj){
     $jff_found=$res::IsJustForFunProject($proj);
     if ($jff_found){
         $_SESSION["IsJustForFun"]= $jff_found;
-        $a='<a  target="_blank" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
+        $a='<a  target="_blank" class="btn btn-default" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
         $span='<span class="label label-danger">'.lang('DANGER').'</span>';
         $print=PrintTr(lang('JUST_FOR_FUN_PROJECT_TITLE'),lang('JUST_FOR_FUN_PROJECT_BODY'),$span,$a);
         $result["JustForFunErrors"]= array("Results"=>"null","Html"=>$print);
@@ -443,7 +430,7 @@ function PrintNumberOfFieldsInForms($DataDictionary,$max_recommended){
     if (!empty($array)){
         global $new_base_url;
         $link= $new_base_url . "i=" . rawurlencode("views/number_of_fields_by_form_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
+        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
         $span='<span class="label label-warning">'.lang('WARNING').'</span>';
         //$_SESSION["NumberOfFieldsByForm"]= $array;
         $print=PrintTr(lang('MAX_NUMBER_OF_RECORDS_TITLE'),lang('MAX_NUMBER_OF_RECORDS_BODY'),$span,$a);
@@ -477,7 +464,7 @@ function  MyFirstInstrumentError(){
     $res= new check_my_first_instrument_presence();
     $my_first_instrument_found=$res::IsMyFirstInstrument();
     if ($my_first_instrument_found){
-        $a='<a  target="_blank" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
+        $a='<a  target="_blank" class="btn btn-default" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
         $span='<span class="label label-warning">'.lang('WARNING').'</span>';
         $print=PrintTr(lang('MY_FIRST_INSTRUMENT_TITLE'),lang('MY_FIRST_INSTRUMENT_BODY'),$span,$a);
         $result["MyFirstInstrumentError"]= array("Results"=>"null","Html"=>$print);
@@ -491,7 +478,7 @@ function  NotDesignatedFormsErrors(){
     if (!empty($array)){
         global $new_base_url;
         $link= $new_base_url . "i=" . rawurlencode("views/undesignated_forms_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
+        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
         $span='<span class="label label-warning">'.lang('WARNING').'</span>';
         //$_SESSION["NotDesignatedFormsErrors"]= $array;
         $print=PrintTr(lang('NOT_DESIGNATED_FORMS_TITLE'),lang('NOT_DESIGNATED_FORMS_BODY'),$span,$a);
@@ -507,7 +494,9 @@ function PrintSuccess(){
     return PrintTr(lang('READY_TO_GO_TITLE'),lang('READY_TO_GO_BODY'),$span,$a);
 }
 
-$functName = $_REQUEST['f'];
+//$functName = $_REQUEST['f'];
+$functName = $_GET['f'];
+
 
 switch ($functName) {
     case "PrintRulesNames":
@@ -515,8 +504,12 @@ switch ($functName) {
         break;
     case "OtherOrUnknownErrors":
         $data_dictionary_array= \REDCap::getDataDictionary('array');
+       // $res = json_encode(PrintOtherOrUnknownErrors($data_dictionary_array, 95));
         $res = json_encode(PrintOtherOrUnknownErrors($data_dictionary_array, 95));
+        /* error_log("aqui abajo");
+         error_log($res);*/
         echo $res;
+
         break;
     case "BranchingLogicErrors":
         $data_dictionary_array= \REDCap::getDataDictionary('array');

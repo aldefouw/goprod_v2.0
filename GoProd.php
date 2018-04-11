@@ -7,7 +7,9 @@ class GoProd extends AbstractExternalModule
 {
     function hook_every_page_top($project_id)
 	{
-        if(PAGE == 'ProjectSetup/index.php' and isset($project_id)){
+	    $goprod_workflow=$this->getProjectSetting("gopprod-workflow");
+
+        if(PAGE == 'ProjectSetup/index.php' and isset($project_id) and $goprod_workflow==1){
             ?>
                 <script>
                     $(document).ready(function() {
@@ -30,7 +32,6 @@ class GoProd extends AbstractExternalModule
                                 $('.ui-dialog-buttonpane button').click();
                             },500);
                         }
-
                         if (ready_to_prod === '3'){
                             //in case of IRB ,  PI  or purpose errors found
                              displayEditProjPopup();

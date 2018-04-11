@@ -44,8 +44,8 @@ function loadResults(rules,project_id){
                         function() {
                             var newprogress=(count_rules/total_rules) * 100;
                             newprogress= parseInt(newprogress, 10);
-                            // $('#loader-count').text("  ["+count_rules+"/"+total_rules+ "] ("+newprogress+"%)" );
-                            $('#loader-count').text(" "+newprogress+"%" );
+                             $('#loader-count').text("  "+count_rules+"/"+total_rules+ " ("+newprogress+"%)" );
+                            //$('#loader-count').text(" "+newprogress+"%" );
                             if(count_rules===total_rules){
                                 if(count_problems_found===0){
                                     AllSet();
@@ -150,12 +150,12 @@ function Addstyles(){
             var find_more=$(this).find('.title-text-plus');
            // var find_icon=$(this).prev('.gp-icon');
             //console.log( find_plus );
-            if (find_more.text() === '(less)'){
+            if (find_more.text() === '(hide)'){
                // console.log(find_icon);
                 //find_icon.css('background-color', 'red');
-                find_more.text('(more)');}
+                find_more.text('(show)');}
             else{
-                find_more.text('(less)');}
+                find_more.text('(hide)');}
                 //find_icon.css('background-color', '#25C2E1');
                 $(this).children('.gp-body-content').slideToggle();
         });

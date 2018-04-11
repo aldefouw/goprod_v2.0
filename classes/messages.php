@@ -127,7 +127,7 @@ function lang($phrase){
             'PRODUCTION_WARNING' => '<div class="alert alert-warning alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Warning!</strong> This plugin may not work as expected in <strong style=\'color: green\'>Production</strong> mode. For better results, move back to <strong>Development</strong> mode.</div>',
             'VERSION_INFO' => '<div class="alert alert-warning alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Warning!</strong> This plugin may not work as expected in <strong style=\'color: green\'>REDCap versions less than  7.3.0</strong> After being on any page for more than 3 minutes, it would disable certain jQuery-enabled triggers, such as auto-complete drop-down fields on data entry forms and any custom Bootstrap components.</div>',
             'TITLE' => 'Move to Production Check List',
-            'GO_PROD' => 'Check and Move Project to PRODUCTION',
+            'GO_PROD' => 'Review and Move Project to production',
             'STARTING' => 'Collecting Meta Data',
             'MAIN_TEXT' => 'If the thought of losing the data you have entered into your REDCap project sounds painful, you should be in production mode. Production mode helps protect your data from accidental mistakes. This plugin will allow you to verify if your project is ready to move to production mode or if you first need to fix something.  <a href="https://medwiki.stanford.edu/x/SRMzAw" > <u>When do I move to Production Mode?</u></a>',
 
