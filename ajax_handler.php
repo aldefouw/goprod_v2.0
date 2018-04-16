@@ -34,9 +34,6 @@ if (isset($_GET['i'])) {
     exit(); //to avoid loading again all rules
 }
 
-
-function PrintRulesNames(){
-
 $RuleNames = array(
 
     "OtherOrUnknownErrors",
@@ -62,7 +59,9 @@ $RuleNames = array(
     //"VariableNamesWithTheSameNameThanAnEventName",
     // "ResearchErrors",
     // "JustForFunErrors",
-    );
+);
+
+function PrintRulesNames($RuleNames){
      echo json_encode($RuleNames);
 }
 
@@ -71,18 +70,15 @@ function PrintTr($title_text,$body_text,$span_label,$a_tag){
        $value=
 
         '<tr class="gp-tr" style="display: none">
-            <td  class="gp-icon" width="20">   
-                    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-                    
-            </td>
+           
+        
             <td class="gp-info-content">
                 <div class="gp-title-content ">
                     <strong>
                         '.$title_text. ' </strong> <span class="title-text-plus" style="color: #7ec6d7"><small>(hide)</small></span>
-                     
                 </div>
                     
-                <div class="gp-body-content overflow " >
+                <div class="gp-body-content overflow " style="color: #585858" >
                     <p>
                         ' .$body_text.' 
                     </p>
@@ -101,58 +97,90 @@ function PrintTr($title_text,$body_text,$span_label,$a_tag){
        return $value;
 
 }
-function PrintOtherOrUnknownErrors($DataDictionary, $similarity){
+
+//Print the level of risk or the rule
+function PrintLevelOfRisk($type){
+
+    switch ($type) {
+        case "warning":
+            $risk_title=lang('WARNING');
+            $risk_color='text-warning';
+            //$risk_icon='glyphicon glyphicon-exclamation-sign';
+            $risk_icon='glyphicon glyphicon-warning-sign';
+            break;
+        case "danger":
+            $risk_title=lang('DANGER');
+            $risk_color='text-danger';
+            $risk_icon='glyphicon glyphicon-fire';
+            break;
+        case "success":
+            $risk_title=lang('SUCCESS');
+            $risk_color='text-success';
+            $risk_icon='glyphicon glyphicon-thumbs-up';
+            break;
+        case "info":
+            $risk_title=lang('INFO');
+            $risk_color='text-info';
+            $risk_icon='glyphicon glyphicon-info-sign';
+            break;
+        default: //just in case
+            $risk_title=lang('INFO');
+            $risk_color='text-info';
+            $risk_icon='glyphicon glyphicon-info-sign';
+    }
+     return '<abbr title='.$risk_title.'><span class=" fa-2x '.$risk_icon.' '.$risk_color.'" aria-hidden="true"></span></abbr>';
+}
+
+function PrintAHref($link_to_view){
+    global $new_base_url;
+    $link= $new_base_url . "i=" . rawurlencode($link_to_view);
+    return '<a href="#ResultsModal" role="button" class="btn  btn-default" data-toggle="modal" data-load-remote='.$link.' data-is-loaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
+}
+
+//function PrintRule($link_rule,$link_rule_view){
+//    include_once $link_rule;
+//    $res= eval_rule();
+//    $array=$res::CheckOtherOrUnknown($DataDictionary, $similarity);
+//
+//}
+function PrintOtherOrUnknownErrors(){
         include_once "classes/Check_other_or_unknown.php";
         $res= new check_other_or_unknown();
-        $array=$res::CheckOtherOrUnknown($DataDictionary, $similarity);
+        $array=$res::CheckOtherOrUnknown();
 
         if(!empty($array)){
-            global $new_base_url;
-            $link= $new_base_url . "i=" . rawurlencode("views/other_or_unknown_view.php");
-
-           //$link="views/other_or_unknown_view.php";
-            $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-is-loaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
-            $span='<span class="label label-warning">'.lang('WARNING').'</span>';
+            $a=PrintAHref("views/other_or_unknown_view.php");
+            $span=PrintLevelOfRisk('warning');
             $print=PrintTr(lang('OTHER_OR_UNKNOWN_TITLE'),lang('OTHER_OR_UNKNOWN_BODY'),$span,$a);
             $result["OtherOrUnknownErrors"]= array("Results"=>$array,"Html"=>$print);
            return $result;
         }else return false;
 
     }
-function PrintBranchingLogicErrors($DataDictionary){
 
+function PrintBranchingLogicErrors($DataDictionary){
         include_once "classes/Check_presence_of_branching_and_calculated_variables.php";
         $res= new check_presence_of_branching_and_calculated_variables();
         $array=$res::CheckIfBranchingLogicVariablesExist($DataDictionary);
         if (!empty($array)){
-            global $new_base_url;
-            $link= $new_base_url . "i=" . rawurlencode("views/presence_of_branching_logic_variables_view.php");
-            //$link= $module->getUrl("views/presence_of_branching_logic_variables_view.php");
-            $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
-            $span='<span class="label label-danger">'.lang('DANGER').'</span>';
+            $a=PrintAHref("views/presence_of_branching_logic_variables_view.php");
+            $span=PrintLevelOfRisk('danger');
             $print=PrintTr(lang('BRANCHING_LOGIC_TITLE'),lang('BRANCHING_LOGIC_BODY'),$span,$a);
             $result["BranchingLogicErrors"]= array("Results"=>$array,"Html"=>$print);
             return $result;
-
-
         }else return false;
     }
+
 function PrintCalculatedFieldsErrors($DataDictionary){
     include_once "classes/Check_presence_of_branching_and_calculated_variables.php";
     $res= new check_presence_of_branching_and_calculated_variables();
     $array=$res::CheckIfCalculationVariablesExist($DataDictionary);
     if (!empty($array)){
-        global $new_base_url;
-        $link= $new_base_url . "i=" . rawurlencode("views/presence_of_calculated_variables_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
-        $span='<span class="label label-danger">'.lang('DANGER').'</span>';
-        //$_SESSION["CalculatedFieldsErrors"]= $array;
-
+        $a=PrintAHref("views/presence_of_calculated_variables_view.php");
+        $span=PrintLevelOfRisk('danger');
         $print=PrintTr(lang('CALCULATED_FIELDS_TITLE'),lang('CALCULATED_FIELDS_BODY'),$span,$a);
         $result["CalculatedFieldsErrors"]= array("Results"=>$array,"Html"=>$print);
         return $result;
-
-
     }else return false;
 }
 function PrintASILogicErrors(){
@@ -160,18 +188,11 @@ function PrintASILogicErrors(){
     $res= new check_presence_of_branching_and_calculated_variables();
     $array=$res::CheckIfASILogicVariablesExist();
     if (!empty($array)){
-        global $new_base_url;
-        $link= $new_base_url . "i=" . rawurlencode("views/asi_logic_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
-        $span='<span class="label label-danger">'.lang('DANGER').'</span>';
-       // $_SESSION["ASILogicErrors"]= $array;
-
+        $a=PrintAHref("views/asi_logic_view.php");
+        $span=PrintLevelOfRisk('danger');
         $print=PrintTr(lang('ASI_LOGIC_TITLE'),lang('ASI_LOGIC_BODY'),$span,$a);
         $result["ASILogicErrors"]= array("Results"=>$array,"Html"=>$print);
         return $result;
-
-
-
     }else return false;
 
 }
@@ -180,19 +201,11 @@ function PrintQueueLogicErrors(){
     $res= new check_presence_of_branching_and_calculated_variables();
     $array=$res::CheckIfQueueLogicVariablesExist();
     if (!empty($array)){
-        global $new_base_url;
-        $link= $new_base_url . "i=" . rawurlencode("views/queue_logic_view.php");
-
-        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
-        $span='<span class="label label-danger">'.lang('DANGER').'</span>';
-
-
-
+        $a=PrintAHref("views/queue_logic_view.php");
+        $span=PrintLevelOfRisk('danger');
         $print=PrintTr(lang('QUEUE_LOGIC_TITLE'),lang('QUEUE_LOGIC_BODY'),$span,$a);
         $result["QueueLogicErrors"]= array("Results"=>$array,"Html"=>$print);
         return $result;
-
-
     }else return false;
 
 }
@@ -201,37 +214,25 @@ function PrintDataQualityLogicErrors(){
     $res= new check_presence_of_branching_and_calculated_variables();
     $array=$res::CheckIfDataQualityLogicVariablesExist();
     if (!empty($array)){
-        global $new_base_url;
-        $link= $new_base_url . "i=" . rawurlencode("views/data_quality_logic_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
-        $span='<span class="label label-warning">'.lang('WARNING').'</span>';
-
+        $a=PrintAHref("views/data_quality_logic_view.php");
+        $span=PrintLevelOfRisk('warning');
         $print=PrintTr(lang('DATA_QUALITY_LOGIC_TITLE'),lang('DATA_QUALITY_LOGIC_BODY'),$span,$a);
         $result["DataQualityLogicErrors"]= array("Results"=>$array,"Html"=>$print);
         return $result;
-
-
-
     }else return false;
 
 }
+
 function PrintReportsLogicErrors(){
     include_once "classes/Check_presence_of_branching_and_calculated_variables.php";
     $res= new check_presence_of_branching_and_calculated_variables();
     $array=$res::CheckIfReportsLogicVariablesExist();
     if (!empty($array)){
-        global $new_base_url;
-        $link= $new_base_url . "i=" . rawurlencode("views/reports_logic_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
-        $span='<span class="label label-warning">'.lang('WARNING').'</span>';
+        $a=PrintAHref("views/reports_logic_view.php");
+        $span=PrintLevelOfRisk('warning');
         $print=PrintTr(lang('REPORTS_LOGIC_TITLE'),lang('REPORTS_LOGIC_BODY'),$span,$a);
         $result["ReportsLogicErrors"]= array("Results"=>$array,"Html"=>$print);
-
         return $result;
-
-
-
-
     }else return  false;
 
 }
@@ -240,19 +241,11 @@ function PrintTodayInCalculationsErrors($DataDictionary){
     $res= new check_presence_of_branching_and_calculated_variables();
     $array=$res::CheckIfTodayExistInCalculations($DataDictionary);
     if (!empty($array)){
-        global $new_base_url;
-        $link= $new_base_url . "i=" . rawurlencode("views/today_calculations_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
-        $span='<span class="label label-warning">'.lang('WARNING').'</span>';
-        //$_SESSION["TodayExistInCalculations"]= $array;
-
+        $a=PrintAHref("views/today_calculations_view.php");
+        $span=PrintLevelOfRisk('warning');
         $print=PrintTr(lang('CALCULATED_TODAY_TITLE'),lang('CALCULATED_TODAY_BODY'),$span,$a);
         $result["TodayInCalculationsErrors"]= array("Results"=>$array,"Html"=>$print);
-
         return $result;
-
-
-
     }else return false;
 }
 function PrintVariableNamesWithTheSameNameAsAnEventNameErrors(){
@@ -260,19 +253,11 @@ function PrintVariableNamesWithTheSameNameAsAnEventNameErrors(){
     $res= new check_presence_of_branching_and_calculated_variables();
     $array=$res::VariableNamesWithTheSameNameAsAnEventName();
     if (!empty($array)){
-        global $new_base_url;
-        $link= $new_base_url . "i=" . rawurlencode("views/variables_with_same_name_as_event_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
-        $span='<span class="label label-warning">'.lang('WARNING').'</span>';
-        //$_SESSION["VariableNamesWithTheSameNameThanAnEventName"]= $array;
-
+        $a=PrintAHref("views/variables_with_same_name_as_event_view.php");
+        $span=PrintLevelOfRisk('warning');
         $print=PrintTr(lang('VAR_NAMES_EVENT_NAMES_TITLE'),lang('VAR_NAMES_EVENT_NAMES_BODY'),$span,$a);
         $result["VariableNamesWithTheSameNameThanAnEventName"]= array("Results"=>$array,"Html"=>$print);
-
         return $result;
-
-
-
     }else return false;
 
 
@@ -282,16 +267,12 @@ function PrintDatesConsistentErrors($DataDictionary){
     $res= new check_dates_consistency();
     $array=$res::IsDatesConsistent($DataDictionary);
     if (!empty($array)){
-        global $new_base_url;
-        $link= $new_base_url . "i=" . rawurlencode("views/dates_consistency_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
-        $span='<span class="label label-warning">'.lang('WARNING').'</span>';
+        $a=PrintAHref("views/dates_consistency_view.php");
+        $span=PrintLevelOfRisk('warning');
         $print=PrintTr(lang('DATE_CONSISTENT_TITLE'),lang('DATE_CONSISTENT_BODY'),$span,$a);
         $result["DatesConsistentErrors"]= array("Results"=>$array,"Html"=>$print);
         return $result;
-
     }else return false;
-
 
 }
 function PrintYesNoConsistentErrors($DataDictionary){
@@ -299,10 +280,8 @@ function PrintYesNoConsistentErrors($DataDictionary){
     $res= new check_consistency_for_lists();
     $array=$res::IsYesNoConsistent($DataDictionary);
     if (!empty($array)){
-        global $new_base_url;
-            $link= $new_base_url . "i=" . rawurlencode("views/consistency_yes_no_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
-        $span='<span class="label label-warning">'.lang('WARNING').'</span>';
+        $a=PrintAHref("views/consistency_yes_no_view.php");
+        $span=PrintLevelOfRisk('warning');
         $_SESSION["YesNoConsistentErrors"]= $array;
         $print=PrintTr(lang('YES_NO_TITLE'),lang('YES_NO_BODY'),$span,$a);
         $result["YesNoConsistentErrors"]= array("Results"=>$array,"Html"=>$print);
@@ -317,16 +296,12 @@ function PrintPositiveNegativeConsistentErrors($DataDictionary){
     $res= new check_consistency_for_lists();
     $array=$res::IsPositiveNegativeConsistent($DataDictionary);
     if (!empty($array)){
-        global $new_base_url;
-        $link= $new_base_url . "i=" . rawurlencode("views/consistency_positive_negative_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
-        $span='<span class="label label-warning">'.lang('WARNING').'</span>';
+        $a=PrintAHref("views/consistency_positive_negative_view.php");
+        $span=PrintLevelOfRisk('warning');
         $print=PrintTr(lang('POSITIVE_NEGATIVE_TITLE'),lang('POSITIVE_NEGATIVE_BODY'),$span,$a);
         $result["PositiveNegativeConsistentErrors"]= array("Results"=>$array,"Html"=>$print);
         return $result;
-
     }else return  false ;
-
 
 }
 function PrintIdentifiersErrors($DataDictionary){
@@ -336,8 +311,8 @@ function PrintIdentifiersErrors($DataDictionary){
     if (!$identifiers_found){
 
         $a='<a  target="_blank"  role="button" class="btn btn-default" href=" '.APP_PATH_WEBROOT . 'index.php?pid='.$_GET['pid'].'&route=IdentifierCheckController:index" >'.lang('EDIT').'</a>';
-        $span='<span class="label label-warning">'.lang('WARNING').'</span>';
-
+        //$span='<span class="label label-warning">'.lang('WARNING').'</span>';
+        $span=PrintLevelOfRisk('warning');
         $print=PrintTr(lang('IDENTIFIERS_TITLE'),lang('IDENTIFIERS_BODY'),$span,$a);
         $result["IdentifiersError"]= array("Results"=>"null","Html"=>$print);
 
@@ -346,14 +321,14 @@ function PrintIdentifiersErrors($DataDictionary){
 
     }else return false;
 }
-function PrintPIErrors($proj){
+function PrintPIErrors(){
     include_once "classes/Check_pi_irb_type.php";
     $res= new check_pi_irb_type();
-    $pi_found=$res::PIExist($proj);
+    $pi_found=$res::PIExist();
     if (!$pi_found){
-        $a='<a  target="_blank" role="button" class="btn btn-default" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
-        $span='<span class="label label-danger">'.lang('DANGER').'</span>';
-
+        $a='<a  target="_blank" role="button" class="btn btn-default" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('VIEW').'</a>';
+        //$span='<span class="label label-danger">'.lang('DANGER').'</span>';
+        $span=PrintLevelOfRisk('danger');
         $print=PrintTr(lang('PI_TITLE'),lang('PI_BODY'),$span,$a);
         $result["PIErrors"]= array("Results"=>"null","Html"=>$print);
 
@@ -363,14 +338,14 @@ function PrintPIErrors($proj){
 
 
 }
-function PrintIRBErrors($proj){
+function PrintIRBErrors(){
     include_once "classes/Check_pi_irb_type.php";
     $res= new check_pi_irb_type();
-    $pi_found=$res::IRBExist($proj);
+    $pi_found=$res::IRBExist();
     if (!$pi_found){
-        $a='<a  target="_blank" class="btn btn-default" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
-        $span='<span class="label label-danger">'.lang('DANGER').'</span>';
-
+        $a='<a  target="_blank" class="btn btn-default" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('VIEW').'</a>';
+        //$span='<span class="label label-danger">'.lang('DANGER').'</span>';
+        $span=PrintLevelOfRisk('danger');
         $print=PrintTr(lang('IRB_TITLE'),lang('IRB_BODY'),$span,$a);
         $result["IRBErrors"]= array("Results"=>"null","Html"=>$print);
 
@@ -380,14 +355,14 @@ function PrintIRBErrors($proj){
 
 
 }
-function PrintResearchErrors($proj){
+function PrintResearchErrors(){
     include_once "classes/Check_pi_irb_type.php";
     $res= new check_pi_irb_type();
-    $research_found=$res::IsAResearchProject($proj);
+    $research_found=$res::IsAResearchProject();
     if (!$research_found){
-        $a='<a  target="_blank" class="btn btn-default" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
-        $span='<span class="label label-info">'.lang('INFO').'</span>';
-
+        $a='<a  target="_blank" class="btn btn-default" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('VIEW').'</a>';
+        //$span='<span class="label label-info">'.lang('INFO').'</span>';
+        $span=PrintLevelOfRisk('info');
         $print=PrintTr(lang('RESEARCH_PROJECT_TITLE'),lang('RESEARCH_PROJECT_BODY'),$span,$a);
         $result["ResearchErrors"]= array("Results"=>"null","Html"=>$print);
 
@@ -395,14 +370,15 @@ function PrintResearchErrors($proj){
 
     }else return false;
 }
-function PrintJustForFunErrors($proj){
+function PrintJustForFunErrors(){
     include_once "classes/Check_pi_irb_type.php";
     $res= new check_pi_irb_type();
-    $jff_found=$res::IsJustForFunProject($proj);
+    $jff_found=$res::IsJustForFunProject();
     if ($jff_found){
         $_SESSION["IsJustForFun"]= $jff_found;
-        $a='<a  target="_blank" class="btn btn-default" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
-        $span='<span class="label label-danger">'.lang('DANGER').'</span>';
+        $a='<a  target="_blank" class="btn btn-default" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('VIEW').'</a>';
+        //$span='<span class="label label-danger">'.lang('DANGER').'</span>';
+        $span=PrintLevelOfRisk('danger');
         $print=PrintTr(lang('JUST_FOR_FUN_PROJECT_TITLE'),lang('JUST_FOR_FUN_PROJECT_BODY'),$span,$a);
         $result["JustForFunErrors"]= array("Results"=>"null","Html"=>$print);
         return $result;
@@ -417,80 +393,76 @@ function PrintTestRecordsErrors(){
     $array=$res::CheckTestRecordsAndExports();
     if (!empty($array) and $Proj->project['status']==0){
         $a= '<u>Exports:</u>'.$array[0].'<br><u> Records: </u>'.$array[1];
-        $span='<span class="label label-danger">'.lang('DANGER').'</span>';
+        //$span='<span class="label label-danger">'.lang('DANGER').'</span>';
+        $span=PrintLevelOfRisk('danger');
         $print=PrintTr(lang('TEST_RECORDS_TITLE'),lang('TEST_RECORDS_BODY'),$span,$a);
         $result["TestRecordsErrors"]= array("Results"=>"null","Html"=>$print);
         return $result;
     }else return false;
 }
-function PrintNumberOfFieldsInForms($DataDictionary,$max_recommended){
+function PrintNumberOfFieldsInForms($DataDictionary ){
     include_once 'classes/Check_number_of_fields_by_form.php';
     $res= new check_number_of_fields_by_form();
-    $array=$res::getFormsWithToManyFields($DataDictionary,$max_recommended);
+    $array=$res::getFormsWithToManyFields($DataDictionary );
     if (!empty($array)){
-        global $new_base_url;
-        $link= $new_base_url . "i=" . rawurlencode("views/number_of_fields_by_form_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
-        $span='<span class="label label-warning">'.lang('WARNING').'</span>';
-        //$_SESSION["NumberOfFieldsByForm"]= $array;
+        $a=PrintAHref("views/number_of_fields_by_form_view.php");
+        $span=PrintLevelOfRisk('warning');
         $print=PrintTr(lang('MAX_NUMBER_OF_RECORDS_TITLE'),lang('MAX_NUMBER_OF_RECORDS_BODY'),$span,$a);
         $result["NumberOfFieldsByForm"]= array("Results"=>$array,"Html"=>$print);
         return $result;
     }else return false;
 
 }
-function PrintValidatedFields($DataDictionary,$min_percentage){
+function PrintValidatedFields($DataDictionary){
     include_once 'classes/Check_field_validation.php';
     $res= new check_field_validation();
-    $array=$res::getMinimumOfValidatedFields($DataDictionary,$min_percentage);
+    $array=$res::getMinimumOfValidatedFields($DataDictionary );
 
     if (!empty($array)){
         $a= '<u>'.lang('VALIDATED_FIELDS').'</u>'.$array[0].'<br><u>'.lang('TEXT_BOX_FIELDS').'</u>'.$array[1];
-        $span='<span class="label label-warning">'.lang('WARNING').'</span>';
-
+        //$span='<span class="label label-warning">'.lang('WARNING').'</span>';
+        $span=PrintLevelOfRisk('warning');
 
         $print=PrintTr(lang('NUMBER_VALIDATED_RECORDS_TITLE'),lang('NUMBER_VALIDATED_RECORDS_BODY'),$span,$a);
         $result["ValidatedFields"]= array("Results"=>"null","Html"=>$print);
         return $result;
-
     }else{
-
         return false;
     }
-
 }
+
 function  MyFirstInstrumentError(){
     include_once "classes/Check_my_first_instrument_presence.php";
     $res= new check_my_first_instrument_presence();
     $my_first_instrument_found=$res::IsMyFirstInstrument();
     if ($my_first_instrument_found){
         $a='<a  target="_blank" class="btn btn-default" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
-        $span='<span class="label label-warning">'.lang('WARNING').'</span>';
+        //$span='<span class="label label-warning">'.lang('WARNING').'</span>';
+        $span=PrintLevelOfRisk('warning');
         $print=PrintTr(lang('MY_FIRST_INSTRUMENT_TITLE'),lang('MY_FIRST_INSTRUMENT_BODY'),$span,$a);
         $result["MyFirstInstrumentError"]= array("Results"=>"null","Html"=>$print);
         return $result;
     }else return false;
 }
+
 function  NotDesignatedFormsErrors(){
     include_once "classes/Check_un_designated_longitudinal_forms.php";
     $res= new check_un_designated_longitudinal_forms();
     $array=$res::NotDesignatedForms();
     if (!empty($array)){
-        global $new_base_url;
-        $link= $new_base_url . "i=" . rawurlencode("views/undesignated_forms_view.php");
-        $a='<a href="#ResultsModal" role="button" class="btn btn-default" data-toggle="modal" data-load-remote='.$link.' data-isloaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').' </a>';
-        $span='<span class="label label-warning">'.lang('WARNING').'</span>';
-        //$_SESSION["NotDesignatedFormsErrors"]= $array;
+        $a=PrintAHref("views/undesignated_forms_view.php");
+        $span=PrintLevelOfRisk('warning');
         $print=PrintTr(lang('NOT_DESIGNATED_FORMS_TITLE'),lang('NOT_DESIGNATED_FORMS_BODY'),$span,$a);
         $result["NotDesignatedFormsErrors"]= array("Results"=>$array,"Html"=>$print);
         return $result;
-
     }else return false;
 }
+
 function PrintSuccess(){
 //TODO: send directly to move to production screen
     $a='<a  target="_blank" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
-    $span='<span class="label label-success">'.lang('SUCCESS').'</span>';
+    //$span='<span class="label label-success">'.lang('SUCCESS').'</span>';
+    $span=PrintLevelOfRisk('success');
     return PrintTr(lang('READY_TO_GO_TITLE'),lang('READY_TO_GO_BODY'),$span,$a);
 }
 
@@ -498,18 +470,33 @@ function PrintSuccess(){
 $functName = $_GET['f'];
 
 
+//function callrule(){
+//    $args=
+//        call_user_func_array($functName,);
+//
+//}
+//
+//if (in_array($functName,$RuleNames)){
+//
+//}
+
+//foreach ($DataDictionary as $field_name=>$field_attributes){
+
+
+
+
+
 switch ($functName) {
     case "PrintRulesNames":
-        PrintRulesNames();
+        PrintRulesNames($RuleNames);
         break;
     case "OtherOrUnknownErrors":
-        $data_dictionary_array= \REDCap::getDataDictionary('array');
+        //$data_dictionary_array= \REDCap::getDataDictionary('array');
        // $res = json_encode(PrintOtherOrUnknownErrors($data_dictionary_array, 95));
-        $res = json_encode(PrintOtherOrUnknownErrors($data_dictionary_array, 95));
+        $res = json_encode(PrintOtherOrUnknownErrors());
         /* error_log("aqui abajo");
          error_log($res);*/
         echo $res;
-
         break;
     case "BranchingLogicErrors":
         $data_dictionary_array= \REDCap::getDataDictionary('array');
@@ -567,21 +554,21 @@ switch ($functName) {
         echo $res;
         break;
     case "PIErrors":
-        $res = json_encode(PrintPIErrors($Proj));
+        $res = json_encode(PrintPIErrors());
         echo $res;
         break;
     case "IRBErrors":
-        $res = json_encode(PrintIRBErrors($Proj));
+        $res = json_encode(PrintIRBErrors());
         echo $res;
 
         break;
     case "ResearchErrors":
-        $res = json_encode(PrintResearchErrors($Proj));
+        $res = json_encode(PrintResearchErrors());
         echo $res;
 
         break;
     case "JustForFunErrors":
-        $res = json_encode(PrintJustForFunErrors($Proj));
+        $res = json_encode(PrintJustForFunErrors());
         echo $res;
         break;
     case "TestRecordsErrors":
@@ -590,13 +577,13 @@ switch ($functName) {
         break;
     case "NumberOfFieldsByForm":
         $data_dictionary_array= \REDCap::getDataDictionary('array');
-        $res = json_encode(PrintNumberOfFieldsInForms($data_dictionary_array, 100));
+        $res = json_encode(PrintNumberOfFieldsInForms($data_dictionary_array ));
         echo $res;
         break;
 
     case "ValidatedFields":
         $data_dictionary_array= \REDCap::getDataDictionary('array');
-        $res = json_encode(PrintValidatedFields($data_dictionary_array, 0.05));
+        $res = json_encode(PrintValidatedFields($data_dictionary_array));
         echo $res;
         break;
     case "MyFirstInstrumentError":

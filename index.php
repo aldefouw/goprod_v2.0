@@ -86,8 +86,8 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
         <table  id="go_prod_table" style="display: none"  class="table table-striped" >
                 <thead id="go_prod_thead">
                     <tr>
-                        <th>
-                        </th>
+<!--                        <th>-->
+<!--                        </th>-->
                         <th>
                             <h4 class="projhdr"><?php echo lang('VALIDATION');?></h4>
                         </th>
@@ -131,6 +131,10 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
         var geturl_ajax="<?php echo $module->getUrl('ajax_handler.php'); ?>";
     </script>
     <script type="text/javascript" src="<?php echo $module->getUrl("js/ajax_calls.js");?>"> </script>
+
+
+
+
 
 <?php
 

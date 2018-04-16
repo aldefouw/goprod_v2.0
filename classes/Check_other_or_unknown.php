@@ -230,7 +230,8 @@ require_once 'utilities.php';
     }
 
 
-    public static function CheckOtherOrUnknown($DataDictionary, $similarity){
+    public static function CheckOtherOrUnknown($similarity = 95){
+        $DataDictionary=\REDCap::getDataDictionary('array');
         $List= self::getLists($DataDictionary);
         $Words=self::getKeyWords();
         $Ids=self::getIDs();

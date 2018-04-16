@@ -49,7 +49,7 @@
 .overflow::-webkit-scrollbar-thumb {
     -webkit-border-radius: 10px;
     border-radius: 10px;
-    background: rgba(52, 184, 246, 0.65);
+    background: rgba(216, 216, 216, 0.24);
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
 
@@ -110,7 +110,10 @@ table.go_prod_table tr {
     vertical-align: middle !important;
 }
 
-
+.tab {
+    display:inline-block;
+    margin-left: 40px;
+}
 
 /*modal to load datatable results*/
 .modal {
@@ -147,7 +150,10 @@ table.go_prod_table tr {
     100% { transform: rotate(360deg); }
 }
 
-
+#gp-tr {
+    border-radius: 5px !important;
+    border: 5px solid white !important;
+}
 
 .icon-flag.logo-icon-success {
     width: 28px;  /* 14px * 2*/

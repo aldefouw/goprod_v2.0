@@ -137,6 +137,7 @@ function AllSet(){
 
 function Addstyles(){
         //Gray Background
+        $('.gp-tr').css("border-radius","5px");
         $('.gp-info-content').css( 'cursor', 'pointer' );
         $('.gp-tr').hover(function(){
             $(this).css("background","#d9e1f9");

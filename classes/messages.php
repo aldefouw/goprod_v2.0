@@ -17,7 +17,7 @@ namespace Stanford\GoProd;
 //TODO: the names of the columns in the view files and the close button are hard coded.. create lang variables them.
 function lang($phrase){
         static $lang = array(
-            'OTHER_OR_UNKNOWN_TITLE' => '"99" or "98" coding recommended for "other" and/or "unknown" values in drop-down lists, radio-buttons or check-boxes.',
+            'OTHER_OR_UNKNOWN_TITLE' => 'Unrecommended coding for "other" and/or "unknown" values in drop-down lists, radio-buttons or check-boxes.',
             'OTHER_OR_UNKNOWN_BODY' =>'It is common to include an "other" or "unknown" option at the end of a dropdown list. It is encouraged to use different coding for these answers (in general other=99 and unknown=98). There are two reasons for this: <p>1. You can easily add additional choices without needing to recode your values; and 2. when you are using statistical software it is apparent which values correspond to special codes. For example, the following is NOT recommended: </p><small><ul class="list-group" style=" padding-left: 50px; width: 215px; "><li class="list-group-item">1, Dr. Jones</li><li class="list-group-item">2, Dr. Parker </li><li class="list-group-item">3, Dr. Smith</li><li class="list-group-item">4, Other </li></ul></small><p>Say you have collected data for 100 records and you now want to add Dr. Rose to the list. A common mistake is the following: </p><small><ul class="list-group" style=" padding-left: 50px; width: 215px; "><li class="list-group-item">1, Dr. Jones</li><li class="list-group-item">2, Dr. Parker </li><li class="list-group-item">3, Dr. Smith</li><li class="list-group-item">4, Dr. Rose <br><strong>(DON\'T DO IT THIS WAY)</strong></li><li class="list-group-item">5, Other</li></ul></small><p>If, before the change, you had 20 records as \'other\' with a value of 4, they would all instantly be transferred to Dr. Rose. This usually isn\'t what is intended. A better design is something like: </p><small><ul class="list-group" style=" padding-left: 50px; padding-top: 0px; width: 215px; "><li class="list-group-item">1, Dr. Jones</li><li class="list-group-item">2, Dr. Parker </li><li class="list-group-item">3, Dr. Smith</li><li class="list-group-item">99, Other</li></ul></small><p>Now you can add additional members to the list during the project without needing to recode. And, when you analyze your data the other value is easily identified.</p>',
             'YES_NO_TITLE'=>'Inconsistencies in coding for yes/no questions.',
             'YES_NO_BODY' => 'When data is analyzed in statistical software you often only see the \'coded\' values.  So, it is important to be consistent across your project so the codes don\'t arbitrarily change from question to question.  In REDCap, the standard for \'Yes\' is 1 and \'No\' is 0.  If you select the Yes/No question type this is how it will be coded.
@@ -27,7 +27,7 @@ function lang($phrase){
             'POSITIVE_NEGATIVE_BODY' =>'When data is analyzed in statistical software you often only see the \'coded\' values.  So, it is important to be consistent across your project so the codes don\'t arbitrarily change from question to question.',
 
             'IDENTIFIERS_TITLE' =>'No fields tagged as identifiers.',
-            'IDENTIFIERS_BODY' =>'<div class="alert alert-danger" role="alert">All fields with protected health information (PHI) should be marked as identifiers</div>',
+            'IDENTIFIERS_BODY' =>'All fields with protected health information (PHI) should be marked as identifiers',
 
             'PI_TITLE' =>'Missing PI name and last name.',
             'PI_BODY' =>'For a research project the name of the principal investigator (PI) is required. Please add it in the "Modify project title, purpose, etc." button under the Project Setup-> Modify project title, purpose, etc. -> Name of P.I. (if applicable):.',
@@ -93,16 +93,16 @@ function lang($phrase){
             'DANGER' => 'Danger',
             'INFO' => 'Info',
             'SUCCESS' => 'Success',
-            'VIEW' => 'View',
+            'VIEW' => 'Review',
             'EDIT' => 'Edit',
             'PROJECT_SETUP' => 'Project Setup',
             'PROJECT_GO_PROD' => 'Project Setup',
             'USER_RIGHTS' => 'Sorry, only users who CAN edit this project are allowed to run this plugin.',
             'LOADING' => 'Loading...',
             'WIKI' => 'Wiki Page',
-            'VALIDATION' => 'Issues that you may need to fix',
-            'RESULT' => 'Type',
-            'OPTIONS' => 'Options',
+            'VALIDATION' => 'Please review the following list of possible issues',
+            'RESULT' => 'Status',
+            'OPTIONS' => 'Actions',
             'RUN' => 'Run Check List',
             'YES' => 'Yes',
             'NO' => 'No',

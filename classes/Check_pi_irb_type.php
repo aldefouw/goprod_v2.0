@@ -17,7 +17,8 @@ class check_pi_irb_type{
      * @param $Proj
      * @return bool --True if the PI is found in the research project
      */
-    public static function PIExist($Proj){
+    public static function PIExist(){
+        global $Proj;
         $first_name =trim($Proj->project['project_pi_firstname']);
         $last_name=trim($Proj->project['project_pi_lastname']);
         $purpose=trim($Proj->project['purpose']);
@@ -30,7 +31,8 @@ class check_pi_irb_type{
      * @param $Proj
      * @return bool -- True if the IRB Number is set
      */
-    public static function IRBExist($Proj){
+    public static function IRBExist(){
+        global $Proj;
     $purpose=trim($Proj->project['purpose']);
     $irb_number=$Proj->project['project_irb_number'];
     return $purpose === "2" and strlen(trim($irb_number)) > 0 ? true : false;
@@ -46,7 +48,8 @@ class check_pi_irb_type{
      * @param $Proj
      * @return bool -- True if Purpose of this project= Research
      */
-    public static function IsAResearchProject($Proj){ // "2" for research
+    public static function IsAResearchProject(){ // "2" for research
+        global $Proj;
         $purpose=$Proj->project['purpose'];
 
         return $purpose === "2" ? true : false;
@@ -56,7 +59,8 @@ class check_pi_irb_type{
      * @param $Proj
      * @return bool -- True if Purpose of this project= Research
      */
-    public static function IsJustForFunProject($Proj){ // "0" for research
+    public static function IsJustForFunProject(){ // "0" for research
+        global $Proj;
         $purpose=$Proj->project['purpose'];
         return $purpose === "0" ? true : false;
     }

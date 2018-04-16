@@ -12,7 +12,7 @@ use \REDCap as REDCap;
 class check_field_validation
 {
 
-    public static function getMinimumOfValidatedFields($DataDictionary,$min_percentage){
+    public static function getMinimumOfValidatedFields($DataDictionary,$min_percentage = 0.05){
        // $var= array();
         $count_validated_fields=0;
         $count_fields=0; // count fields that can be validated

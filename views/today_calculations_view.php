@@ -24,7 +24,6 @@ namespace Stanford\GoProd;
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('CLOSE')?></button>
     </div>
 </div>
-
 <script>
     var result = sessionStorage.getItem("TodayInCalculationsErrors");
     dataSet =jQuery.parseJSON(result);
@@ -43,7 +42,7 @@ namespace Stanford\GoProd;
                 { title: "Instrument" },
                 { title: "Variable / Field Name" },
                 { title: "Field Label" },
-                { title: "Missing Variable" },
+                { title: "Calculation" },
                 { title: "Edit" }
             ],
 

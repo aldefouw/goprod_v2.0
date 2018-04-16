@@ -44,8 +44,19 @@ namespace Stanford\GoProd;
 <script>
     var result = sessionStorage.getItem("BranchingLogicErrors");
     dataSet =jQuery.parseJSON(result);
-
-
+    cols =[
+        { title: "Instrument" },
+        { title: "Variable / Field Name" },
+        { title: "Field Label" },
+        { title: "Missing Variable" },
+        { title: "Edit" }
+    ];
+    defs= [
+        { "visible": false, "targets": 0 },
+        {"className": "dt-center", "targets": 2},
+        {"className": "dt-center", "targets": 3},
+        { "width": "25px", "targets": 3}
+    ];
 
     $(document).ready(function() {
 
@@ -55,22 +66,9 @@ namespace Stanford\GoProd;
             "searching": false,
 
             data: dataSet,
-            columns: [
-                { title: "Instrument" },
-                { title: "Variable / Field Name" },
-                { title: "Field Label" },
-                { title: "Missing Variable" },
-                { title: "Edit" }
-            ],
+            columns:cols ,
 
-            "columnDefs": [
-                { "visible": false, "targets": 0 },
-
-                {"className": "dt-center", "targets": 2},
-                {"className": "dt-center", "targets": 3},
-                { "width": "25px", "targets": 3}
-
-            ],
+            "columnDefs": defs,
             "order": [[ 0, 'asc' ]],
             "displayLength": 15,
             "drawCallback": function ( settings ) {
