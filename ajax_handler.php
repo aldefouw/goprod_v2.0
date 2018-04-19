@@ -9,6 +9,7 @@
 /** @var \Stanford\GoProd\GoProd $module */
 include_once "classes/utilities.php";
 
+
 //if(!isset($_SESSION['data_dictionary'])){$_SESSION['data_dictionary'] = \REDCap::getDataDictionary('array');}
  //$data_dictionary_array= \REDCap::getDataDictionary('array');
 
@@ -34,35 +35,35 @@ if (isset($_GET['i'])) {
     exit(); //to avoid loading again all rules
 }
 
-$RuleNames = array(
 
-    "OtherOrUnknownErrors",
-    "BranchingLogicErrors",
-    "YesNoConsistentErrors",
-    "PositiveNegativeConsistentErrors",
-    "DatesConsistentErrors",
-    "CalculatedFieldsErrors",
-    "ASILogicErrors",
-    "QueueLogicErrors",
-    "DataQualityLogicErrors",
-    "ReportsLogicErrors",
-    "TodayInCalculationsErrors",
-    "IdentifiersError",
-    "PIErrors",
-    "IRBErrors",
-    "TestRecordsErrors",
-    "NumberOfFieldsByForm",
-    "ValidatedFields",
-    "MyFirstInstrumentError",
-    "NotDesignatedFormsErrors"
-    //"AllSet",   //"PrintSuccess"
-    //"VariableNamesWithTheSameNameThanAnEventName",
-    // "ResearchErrors",
-    // "JustForFunErrors",
-);
 
-function PrintRulesNames($RuleNames){
-     echo json_encode($RuleNames);
+function PrintRulesNames(){
+    $RuleNames = array(
+
+        "OtherOrUnknownErrors",
+        "BranchingLogicErrors",
+        "YesNoConsistentErrors",
+        "PositiveNegativeConsistentErrors",
+        "DatesConsistentErrors",
+        "CalculatedFieldsErrors",
+        "ASILogicErrors",
+        "QueueLogicErrors",
+        "DataQualityLogicErrors",
+        "ReportsLogicErrors",
+        "TodayInCalculationsErrors",
+        "IdentifiersErrors",
+        "PIErrors",
+        "IRBErrors",
+        "TestRecordsErrors",
+        "NumberOfFieldsByForm",
+        "ValidatedFields",
+        "MyFirstInstrumentError",
+        "NotDesignatedFormsErrors",
+        //"VariableNamesWithTheSameNameThanAnEventName",
+        "ResearchErrors",
+        "JustForFunErrors"
+    );
+     return $RuleNames;
 }
 
 function PrintTr($title_text,$body_text,$span_label,$a_tag){
@@ -100,8 +101,9 @@ function PrintTr($title_text,$body_text,$span_label,$a_tag){
 
 //Print the level of risk or the rule
 function PrintLevelOfRisk($type){
-
+    $size='fa-2x';
     switch ($type) {
+
         case "warning":
             $risk_title=lang('WARNING');
             $risk_color='text-warning';
@@ -117,6 +119,7 @@ function PrintLevelOfRisk($type){
             $risk_title=lang('SUCCESS');
             $risk_color='text-success';
             $risk_icon='glyphicon glyphicon-thumbs-up';
+            $size='fa-5x';
             break;
         case "info":
             $risk_title=lang('INFO');
@@ -128,7 +131,7 @@ function PrintLevelOfRisk($type){
             $risk_color='text-info';
             $risk_icon='glyphicon glyphicon-info-sign';
     }
-     return '<abbr title='.$risk_title.'><span class=" fa-2x '.$risk_icon.' '.$risk_color.'" aria-hidden="true"></span></abbr>';
+     return '<abbr title='.$risk_title.'><span class="'.$size.' '.$risk_icon.' '.$risk_color.'" aria-hidden="true"></span></abbr>';
 }
 
 function PrintAHref($link_to_view){
@@ -143,11 +146,27 @@ function PrintAHref($link_to_view){
 //    $array=$res::CheckOtherOrUnknown($DataDictionary, $similarity);
 //
 //}
+
+
+//function CallRule($RuneName){
+//    $res =  call_user_func('\Stanford\GoProd\Print'.$RuneName);
+//}
 function PrintOtherOrUnknownErrors(){
+
+        // $array= call_user_func(array(__NAMESPACE__ .'\check_other_or_unknown', 'CheckOtherOrUnknown')); // As of PHP 5.3.0
+
+
+
+     // $array=call_user_func(__NAMESPACE__ .'\check_other_or_unknown::CheckOtherOrUnknown');
+
+       // error_log(  __NAMESPACE__ .'\classes\check_other_or_unknown::CheckOtherOrUnknown');
+       // error_log( print_r($res, TRUE));
+
+
+
         include_once "classes/Check_other_or_unknown.php";
         $res= new check_other_or_unknown();
         $array=$res::CheckOtherOrUnknown();
-
         if(!empty($array)){
             $a=PrintAHref("views/other_or_unknown_view.php");
             $span=PrintLevelOfRisk('warning');
@@ -155,13 +174,12 @@ function PrintOtherOrUnknownErrors(){
             $result["OtherOrUnknownErrors"]= array("Results"=>$array,"Html"=>$print);
            return $result;
         }else return false;
-
     }
 
-function PrintBranchingLogicErrors($DataDictionary){
+function PrintBranchingLogicErrors( ){
         include_once "classes/Check_presence_of_branching_and_calculated_variables.php";
         $res= new check_presence_of_branching_and_calculated_variables();
-        $array=$res::CheckIfBranchingLogicVariablesExist($DataDictionary);
+        $array=$res::CheckIfBranchingLogicVariablesExist( );
         if (!empty($array)){
             $a=PrintAHref("views/presence_of_branching_logic_variables_view.php");
             $span=PrintLevelOfRisk('danger');
@@ -171,10 +189,10 @@ function PrintBranchingLogicErrors($DataDictionary){
         }else return false;
     }
 
-function PrintCalculatedFieldsErrors($DataDictionary){
+function PrintCalculatedFieldsErrors( ){
     include_once "classes/Check_presence_of_branching_and_calculated_variables.php";
     $res= new check_presence_of_branching_and_calculated_variables();
-    $array=$res::CheckIfCalculationVariablesExist($DataDictionary);
+    $array=$res::CheckIfCalculationVariablesExist( );
     if (!empty($array)){
         $a=PrintAHref("views/presence_of_calculated_variables_view.php");
         $span=PrintLevelOfRisk('danger');
@@ -236,10 +254,10 @@ function PrintReportsLogicErrors(){
     }else return  false;
 
 }
-function PrintTodayInCalculationsErrors($DataDictionary){
+function PrintTodayInCalculationsErrors( ){
     include_once "classes/Check_presence_of_branching_and_calculated_variables.php";
     $res= new check_presence_of_branching_and_calculated_variables();
-    $array=$res::CheckIfTodayExistInCalculations($DataDictionary);
+    $array=$res::CheckIfTodayExistInCalculations( );
     if (!empty($array)){
         $a=PrintAHref("views/today_calculations_view.php");
         $span=PrintLevelOfRisk('warning');
@@ -262,10 +280,10 @@ function PrintVariableNamesWithTheSameNameAsAnEventNameErrors(){
 
 
 }
-function PrintDatesConsistentErrors($DataDictionary){
+function PrintDatesConsistentErrors( ){
     include "classes/Check_dates_consistency.php";
     $res= new check_dates_consistency();
-    $array=$res::IsDatesConsistent($DataDictionary);
+    $array=$res::IsDatesConsistent( );
     if (!empty($array)){
         $a=PrintAHref("views/dates_consistency_view.php");
         $span=PrintLevelOfRisk('warning');
@@ -275,10 +293,10 @@ function PrintDatesConsistentErrors($DataDictionary){
     }else return false;
 
 }
-function PrintYesNoConsistentErrors($DataDictionary){
+function PrintYesNoConsistentErrors( ){
     include_once "classes/Check_consistency_for_lists.php";
     $res= new check_consistency_for_lists();
-    $array=$res::IsYesNoConsistent($DataDictionary);
+    $array=$res::IsYesNoConsistent( );
     if (!empty($array)){
         $a=PrintAHref("views/consistency_yes_no_view.php");
         $span=PrintLevelOfRisk('warning');
@@ -291,10 +309,10 @@ function PrintYesNoConsistentErrors($DataDictionary){
 
 
 }
-function PrintPositiveNegativeConsistentErrors($DataDictionary){
+function PrintPositiveNegativeConsistentErrors( ){
     include_once "classes/Check_consistency_for_lists.php";
     $res= new check_consistency_for_lists();
-    $array=$res::IsPositiveNegativeConsistent($DataDictionary);
+    $array=$res::IsPositiveNegativeConsistent( );
     if (!empty($array)){
         $a=PrintAHref("views/consistency_positive_negative_view.php");
         $span=PrintLevelOfRisk('warning');
@@ -304,17 +322,17 @@ function PrintPositiveNegativeConsistentErrors($DataDictionary){
     }else return  false ;
 
 }
-function PrintIdentifiersErrors($DataDictionary){
+function PrintIdentifiersErrors( ){
     include_once "classes/Check_identifiers.php";
     $res= new check_identifiers();
-    $identifiers_found=$res::AnyIdentifier($DataDictionary);
+    $identifiers_found=$res::AnyIdentifier( );
     if (!$identifiers_found){
 
         $a='<a  target="_blank"  role="button" class="btn btn-default" href=" '.APP_PATH_WEBROOT . 'index.php?pid='.$_GET['pid'].'&route=IdentifierCheckController:index" >'.lang('EDIT').'</a>';
         //$span='<span class="label label-warning">'.lang('WARNING').'</span>';
         $span=PrintLevelOfRisk('warning');
         $print=PrintTr(lang('IDENTIFIERS_TITLE'),lang('IDENTIFIERS_BODY'),$span,$a);
-        $result["IdentifiersError"]= array("Results"=>"null","Html"=>$print);
+        $result["IdentifiersErrors"]= array("Results"=>"null","Html"=>$print);
 
         return $result;
 
@@ -400,10 +418,10 @@ function PrintTestRecordsErrors(){
         return $result;
     }else return false;
 }
-function PrintNumberOfFieldsInForms($DataDictionary ){
+function PrintNumberOfFieldsByForm(){
     include_once 'classes/Check_number_of_fields_by_form.php';
     $res= new check_number_of_fields_by_form();
-    $array=$res::getFormsWithToManyFields($DataDictionary );
+    $array=$res::getFormsWithToManyFields();
     if (!empty($array)){
         $a=PrintAHref("views/number_of_fields_by_form_view.php");
         $span=PrintLevelOfRisk('warning');
@@ -413,10 +431,10 @@ function PrintNumberOfFieldsInForms($DataDictionary ){
     }else return false;
 
 }
-function PrintValidatedFields($DataDictionary){
+function PrintValidatedFields(){
     include_once 'classes/Check_field_validation.php';
     $res= new check_field_validation();
-    $array=$res::getMinimumOfValidatedFields($DataDictionary );
+    $array=$res::getMinimumOfValidatedFields();
 
     if (!empty($array)){
         $a= '<u>'.lang('VALIDATED_FIELDS').'</u>'.$array[0].'<br><u>'.lang('TEXT_BOX_FIELDS').'</u>'.$array[1];
@@ -431,7 +449,7 @@ function PrintValidatedFields($DataDictionary){
     }
 }
 
-function  MyFirstInstrumentError(){
+function  PrintMyFirstInstrumentError(){
     include_once "classes/Check_my_first_instrument_presence.php";
     $res= new check_my_first_instrument_presence();
     $my_first_instrument_found=$res::IsMyFirstInstrument();
@@ -445,7 +463,7 @@ function  MyFirstInstrumentError(){
     }else return false;
 }
 
-function  NotDesignatedFormsErrors(){
+function  PrintNotDesignatedFormsErrors(){
     include_once "classes/Check_un_designated_longitudinal_forms.php";
     $res= new check_un_designated_longitudinal_forms();
     $array=$res::NotDesignatedForms();
@@ -458,151 +476,172 @@ function  NotDesignatedFormsErrors(){
     }else return false;
 }
 
-function PrintSuccess(){
-//TODO: send directly to move to production screen
-    $a='<a  target="_blank" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
-    //$span='<span class="label label-success">'.lang('SUCCESS').'</span>';
-    $span=PrintLevelOfRisk('success');
-    return PrintTr(lang('READY_TO_GO_TITLE'),lang('READY_TO_GO_BODY'),$span,$a);
-}
+//function PrintSuccess(){
+////TODO: send directly to move to production screen
+//    $a='<a  target="_blank" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('PROJECT_SETUP').'</a>';
+//    //$span='<span class="label label-success">'.lang('SUCCESS').'</span>';
+//    $span=PrintLevelOfRisk('success');
+//    return PrintTr(lang('READY_TO_GO_TITLE'),lang('READY_TO_GO_BODY'),$span,$a);
+//}
 
 //$functName = $_REQUEST['f'];
 $functName = $_GET['f'];
 
 
-//function callrule(){
-//    $args=
-//        call_user_func_array($functName,);
-//
-//}
-//
-//if (in_array($functName,$RuleNames)){
-//
-//}
-
-//foreach ($DataDictionary as $field_name=>$field_attributes){
-
-
-
-
-
-switch ($functName) {
-    case "PrintRulesNames":
-        PrintRulesNames($RuleNames);
-        break;
-    case "OtherOrUnknownErrors":
-        //$data_dictionary_array= \REDCap::getDataDictionary('array');
-       // $res = json_encode(PrintOtherOrUnknownErrors($data_dictionary_array, 95));
-        $res = json_encode(PrintOtherOrUnknownErrors());
-        /* error_log("aqui abajo");
-         error_log($res);*/
-        echo $res;
-        break;
-    case "BranchingLogicErrors":
-        $data_dictionary_array= \REDCap::getDataDictionary('array');
-        $res = json_encode(PrintBranchingLogicErrors($data_dictionary_array));
-        echo $res;
-        break;
-    case "CalculatedFieldsErrors":
-        $data_dictionary_array= \REDCap::getDataDictionary('array');
-        $res = json_encode(PrintCalculatedFieldsErrors($data_dictionary_array));
-        echo $res;
-        break;
-    case "ASILogicErrors":
-        $res = json_encode(PrintASILogicErrors());
-        echo $res;
-        break;
-    case "QueueLogicErrors":
-        $res = json_encode(PrintQueueLogicErrors());
-        echo $res;
-        break;
-    case "DataQualityLogicErrors":
-        $res = json_encode(PrintDataQualityLogicErrors());
-        echo $res;
-        break;
-    case "ReportsLogicErrors":
-        $res = json_encode(PrintReportsLogicErrors());
-        echo $res;
-        break;
-    case "TodayInCalculationsErrors":
-        $data_dictionary_array= \REDCap::getDataDictionary('array');
-        $res = json_encode(PrintTodayInCalculationsErrors($data_dictionary_array));
-        echo $res;
-        break;
-    case "VariableNamesWithTheSameNameThanAnEventName":
-        //echo PrintVariableNamesWithTheSameNameAsAnEventNameErrors($data_dictionary_array);
-        break;
-    case "DatesConsistentErrors":
-        $data_dictionary_array= \REDCap::getDataDictionary('array');
-        $res = json_encode(PrintDatesConsistentErrors($data_dictionary_array));
-        echo $res;
-        break;
-    case "YesNoConsistentErrors":
-        $data_dictionary_array= \REDCap::getDataDictionary('array');
-        $res = json_encode(PrintYesNoConsistentErrors($data_dictionary_array));
-        echo $res;
-
-        break;
-    case "PositiveNegativeConsistentErrors":
-        $data_dictionary_array= \REDCap::getDataDictionary('array');
-        $res = json_encode(PrintPositiveNegativeConsistentErrors($data_dictionary_array));
-        echo $res;
-        break;
-    case "IdentifiersError":
-        $data_dictionary_array= \REDCap::getDataDictionary('array');
-        $res = json_encode(PrintIdentifiersErrors($data_dictionary_array));
-        echo $res;
-        break;
-    case "PIErrors":
-        $res = json_encode(PrintPIErrors());
-        echo $res;
-        break;
-    case "IRBErrors":
-        $res = json_encode(PrintIRBErrors());
-        echo $res;
-
-        break;
-    case "ResearchErrors":
-        $res = json_encode(PrintResearchErrors());
-        echo $res;
-
-        break;
-    case "JustForFunErrors":
-        $res = json_encode(PrintJustForFunErrors());
-        echo $res;
-        break;
-    case "TestRecordsErrors":
-        $res = json_encode(PrintTestRecordsErrors());
-        echo $res;
-        break;
-    case "NumberOfFieldsByForm":
-        $data_dictionary_array= \REDCap::getDataDictionary('array');
-        $res = json_encode(PrintNumberOfFieldsInForms($data_dictionary_array ));
-        echo $res;
-        break;
-
-    case "ValidatedFields":
-        $data_dictionary_array= \REDCap::getDataDictionary('array');
-        $res = json_encode(PrintValidatedFields($data_dictionary_array));
-        echo $res;
-        break;
-    case "MyFirstInstrumentError":
-        $res = json_encode(MyFirstInstrumentError());
-        echo $res;
-
-        break;
-    case "NotDesignatedFormsErrors":
-        $res = json_encode(NotDesignatedFormsErrors());
-        echo $res;
-
-        break;
-    case "AllSet":
-        echo PrintSuccess();
-        break;
-    default:
-        //echo "<B>Not Valid Rule</B> <br>".$functName;
-        break;
+if($functName==="PrintRulesNames"){
+    $res= PrintRulesNames();
+    echo json_encode($res);
+    exit();
 }
+
+try{
+    //error_log(">>>==$functName  esta en el arreglo::::: ");
+    $res =  call_user_func('\Stanford\GoProd\Print'.$functName);
+    $res = json_encode($res);
+    ///  error_log(":::este es el RES de la funcion:::");
+    //     error_log($res);
+    // $res = json_encode(PrintJustForFunErrors());
+    //PrintJustForFunErrors
+    echo  $res;
+
+}catch (Exception $e) {
+    $msg= 'Message: ' .$e->getMessage();
+    error_log("####### $msg >>>>No esta ===>$functName ");
+} finally
+{
+    exit();
+}
+
+
+
+
+
+
+
+//
+//
+//
+//switch ($functName) {
+//    case "PrintRulesNames":
+//        PrintRulesNames($RuleNames);
+//       // call_user_func_array(__NAMESPACE__."\PrintRulesNames",$RuleNames);
+//
+//        break;
+//    case "OtherOrUnknownErrors":
+//        //$data_dictionary_array= \REDCap::getDataDictionary('array');
+//       // $res = json_encode(PrintOtherOrUnknownErrors($data_dictionary_array, 95));
+//        $res = json_encode(PrintOtherOrUnknownErrors());
+//        /* error_log("aqui abajo");
+//         error_log($res);*/
+//        echo $res;
+//        break;
+//    case "BranchingLogicErrors":
+//
+//        $res = json_encode(PrintBranchingLogicErrors());
+//        echo $res;
+//        break;
+//    case "CalculatedFieldsErrors":
+//
+//        $res = json_encode(PrintCalculatedFieldsErrors());
+//        echo $res;
+//        break;
+//    case "ASILogicErrors":
+//        $res = json_encode(PrintASILogicErrors());
+//        echo $res;
+//        break;
+//    case "QueueLogicErrors":
+//        $res = json_encode(PrintQueueLogicErrors());
+//        echo $res;
+//        break;
+//    case "DataQualityLogicErrors":
+//        $res = json_encode(PrintDataQualityLogicErrors());
+//        echo $res;
+//        break;
+//    case "ReportsLogicErrors":
+//        $res = json_encode(PrintReportsLogicErrors());
+//        echo $res;
+//        break;
+//    case "TodayInCalculationsErrors":
+//
+//        $res = json_encode(PrintTodayInCalculationsErrors());
+//        echo $res;
+//        break;
+//    case "VariableNamesWithTheSameNameThanAnEventName":
+//        //echo PrintVariableNamesWithTheSameNameAsAnEventNameErrors($data_dictionary_array);
+//        break;
+//    case "DatesConsistentErrors":
+//
+//        $res = json_encode(PrintDatesConsistentErrors());
+//        echo $res;
+//        break;
+//    case "YesNoConsistentErrors":
+//
+//        $res = json_encode(PrintYesNoConsistentErrors());
+//        echo $res;
+//
+//        break;
+//    case "PositiveNegativeConsistentErrors":
+//
+//        $res = json_encode(PrintPositiveNegativeConsistentErrors());
+//        echo $res;
+//        break;
+//    case "IdentifiersError":
+//
+//        $res = json_encode(PrintIdentifiersErrors());
+//        echo $res;
+//        break;
+//    case "PIErrors":
+//        $res = json_encode(PrintPIErrors());
+//        echo $res;
+//        break;
+//    case "IRBErrors":
+//        $res = json_encode(PrintIRBErrors());
+//        echo $res;
+//
+//        break;
+//    case "ResearchErrors":
+//        $res = json_encode(PrintResearchErrors());
+//        echo $res;
+//
+//        break;
+//    case "JustForFunErrors":
+//         $res = json_encode(PrintJustForFunErrors());
+//        //$res =  call_user_func(array(__NAMESPACE__ , 'PrintJustForFunErrors'));
+//        //$res =  call_user_func('\Stanford\GoProd\PrintJustForFunErrors');
+//        //$res= json_encode($res);
+//        echo $res;
+//        break;
+//    case "TestRecordsErrors":
+//        $res = json_encode(PrintTestRecordsErrors());
+//        echo $res;
+//        break;
+//    case "NumberOfFieldsByForm":
+//        $res = json_encode(PrintNumberOfFieldsInForms());
+//        echo $res;
+//        break;
+//
+//    case "ValidatedFields":
+//
+//        $res = json_encode(PrintValidatedFields());
+//        echo $res;
+//        break;
+//    case "MyFirstInstrumentError":
+//        $res = json_encode(MyFirstInstrumentError());
+//        echo $res;
+//
+//        break;
+//    case "NotDesignatedFormsErrors":
+//        $res = json_encode(NotDesignatedFormsErrors());
+//        echo $res;
+//
+//        break;
+//    case "AllSet":
+//        echo PrintSuccess();
+//        break;
+//    default:
+//        //echo "<B>Not Valid Rule</B> <br>".$functName;
+//        break;
+//}
 
 //todo: Metrics
 /*to capture the metrics*/

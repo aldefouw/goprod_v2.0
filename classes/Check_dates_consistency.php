@@ -96,8 +96,8 @@ class check_dates_consistency
      * @param $DataDictionary
      * @return array
      */
-    public static function IsDatesConsistent ($DataDictionary){
-
+    public static function IsDatesConsistent ( ){
+        $DataDictionary= \REDCap::getDataDictionary('array');
         $array=self::getDateQuestions($DataDictionary,self::getDateTypes());
         return self::FindDateConsistencyProblems($array);
 

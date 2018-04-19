@@ -245,9 +245,9 @@ class check_presence_of_branching_and_calculated_variables
      * @param $DataDictionary
      * @return array
      */
-    public static function CheckIfBranchingLogicVariablesExist($DataDictionary){
+    public static function CheckIfBranchingLogicVariablesExist(){
         //global $Proj;
-
+        $DataDictionary= \REDCap::getDataDictionary('array');
         $var= array();
         $branching_fields=self::getBranchingLogicFields($DataDictionary);
         $BranchingLogicArray=self::ExtractVariables($branching_fields);
@@ -267,9 +267,9 @@ class check_presence_of_branching_and_calculated_variables
      * @param $DataDictionary
      * @return array
      */
-    public static function CheckIfCalculationVariablesExist($DataDictionary){
+    public static function CheckIfCalculationVariablesExist( ){
         //global $Proj;
-
+        $DataDictionary= \REDCap::getDataDictionary('array');
         $var= array();
         $calculated_fields=self::getCalculatedFields($DataDictionary);
         $calculated_fields_array=self::ExtractVariables($calculated_fields);
@@ -286,8 +286,8 @@ class check_presence_of_branching_and_calculated_variables
         return $var;
     }
 
-    public static function CheckIfTodayExistInCalculations($DataDictionary){
-
+    public static function CheckIfTodayExistInCalculations( ){
+        $DataDictionary= \REDCap::getDataDictionary('array');
         $var=array();
         $today_fields=self::getCalculatedFields($DataDictionary);
         $today_list=self::getTodayCalculations($today_fields);

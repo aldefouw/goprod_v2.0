@@ -227,8 +227,8 @@ return $FilteredOut;
      * @param $DataDictionary
      * @return array
      */
-public static function IsYesNoConsistent($DataDictionary) {
-
+public static function IsYesNoConsistent( ) {
+    $DataDictionary= \REDCap::getDataDictionary('array');
         $yes_no_array= self::getLists($DataDictionary);
         $all_list_questions=  self::Transform($yes_no_array);
         $yes_words=self::getYesWords();
@@ -249,8 +249,8 @@ public static function IsYesNoConsistent($DataDictionary) {
      * @param $DataDictionary
      * @return array
      */
-public static function IsPositiveNegativeConsistent($DataDictionary) {
-
+public static function IsPositiveNegativeConsistent( ) {
+        $DataDictionary= \REDCap::getDataDictionary('array');
         $positive_negative_array= self::getLists($DataDictionary);
         $all_list_questions=  self::Transform($positive_negative_array);
         $positive_words=self::getPositiveWords();

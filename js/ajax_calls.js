@@ -12,6 +12,7 @@ function loadResults(rules,project_id){
    count_rules=0;
    total_rules= rules.length;
    count_problems_found=0;
+
     $("#go_prod_tbody").hide();
     $('#go_prod_table').fadeIn();
     $('#gp-starting').hide();
@@ -24,7 +25,14 @@ function loadResults(rules,project_id){
                     if(data !== "false") {
                         count_problems_found++;
                         var json_parsed = jQuery.parseJSON(data);
-                        sessionStorage.setItem(val, JSON.stringify(json_parsed[val]["Results"]));
+
+                        try{
+                            sessionStorage.setItem(val, JSON.stringify(json_parsed[val]["Results"]));
+                        }catch(err){
+                            console.log("problem with the rule:");
+                            console.log(val);
+                        }
+
                         //printing the data Html in the index page
                         data = json_parsed[val]["Html"];
                        ////console.log($new);
@@ -48,7 +56,9 @@ function loadResults(rules,project_id){
                             //$('#loader-count').text(" "+newprogress+"%" );
                             if(count_rules===total_rules){
                                 if(count_problems_found===0){
-                                    AllSet();
+                                    //AllSet();
+                                    $('#go_prod_table').hide();
+                                    $('#allset1').fadeIn();
                                 }
                                 Addstyles();
                             }
@@ -73,8 +83,17 @@ function loadResults(rules,project_id){
 }
 
 function Workflow(result,project_id ){
+    //remove JustForFunErrors ResearchErrors from the cheklist since they are cheked before the other rules... this is done to avoid repetition... it can be improved>
+    var ResearchErrors = "ResearchErrors";
+    result.splice($.inArray(ResearchErrors, result),1);
+    var JustForFunErrors = "JustForFunErrors";
+    result.splice($.inArray(JustForFunErrors, result),1);
+
+
     var urlcall=GetPath("JustForFunErrors",project_id);
+
         $.get( urlcall, function(data) {
+
             $('#final-info').fadeIn("slow");
             //console.log(data);
             var json_parsed = jQuery.parseJSON(data);
@@ -91,11 +110,14 @@ function Workflow(result,project_id ){
                 $('#gp-starting').hide();
             }
             else{
+
+
                 //checking if it's not research
                 var notresearch=GetPath("ResearchErrors",project_id);
                 $.get( notresearch, function(data1) {
                     if(data1 !== "false") {
                         // if it's not research remove the IRB and the PI from the list
+
                         var PIRemove = "PIErrors";
                         result.splice($.inArray(PIRemove, result),1);
                         var IRBRemove = "IRBErrors";
@@ -119,21 +141,21 @@ function Workflow(result,project_id ){
         });
 }
 
-function AllSet(){
-    //var allset="classes/ajax_handler.php?f=AllSet&pid="+project_id;
-    var allset=GetPath("AllSet",project_id);
-
-    $.get( allset, function(data) {
-        $("#go_prod_tbody").show();
-        $("#go_prod_tbody").append(data);
-        var find_more=$('.gp-info-content').find('.title-text-plus');
-        find_more.text(" \\ (•◡•) /");
-        $('.gp-info-content').children('.gp-body-content').show();
-        $('.loader').hide();
-        $('.gp-tr').show();
-        }
-    );
-}
+// function AllSet(){
+//     //var allset="classes/ajax_handler.php?f=AllSet&pid="+project_id;
+//     var allset=GetPath("PrintSuccess",project_id);
+//
+//     $.get( allset, function(data) {
+//         $("#go_prod_tbody").show();
+//         $("#go_prod_tbody").append(data);
+//         var find_more=$('.gp-info-content').find('.title-text-plus');
+//         find_more.text(" \\ (•◡•) /");
+//         $('.gp-info-content').children('.gp-body-content').show();
+//         $('.loader').hide();
+//         $('.gp-tr').show();
+//         }
+//     );
+// }
 
 function Addstyles(){
         //Gray Background
@@ -182,6 +204,7 @@ function Addstyles(){
 
 $( document ).ready(function() {
     $("#go_prod_go_btn").click(function(){
+        $('#allset1').hide();
         $('#loader-count').text("");
         $('#gp-loader').show();
         $('#gp-starting').show();
@@ -200,5 +223,5 @@ $( document ).ready(function() {
     $("#ResultsModal").on('hidden.bs.modal', function () {
         $(this).text("");
     });
-    console.log( "ready CO!" );
+    console.log( "ready COL!" );
 });

@@ -107,6 +107,27 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
             <div  class="loader"></div>
         </div>
 
+<!--SUCCESS!:: IF we can not find any problem then show this        -->
+<table class="table table-sm center"  id="allset1" style="display: none; alignment: center">
+   <tr>
+       <td style="border: none">
+            <strong>
+                <h2>
+                    <?php echo lang('READY_TO_GO_TITLE'); ?>
+                </h2>
+            </strong>
+       </td>
+   </tr>
+   <tr>
+        <td  style="border: none">
+            <span class="fa-5x glyphicon glyphicon-thumbs-up text-success" aria-hidden="true"></span>
+        </td>
+    </tr>
+    <tr class="gp-tr">
+        <td class="gp-title-content " style="border: none"> <?php echo lang('READY_TO_GO_BODY'); ?></td>
+    </tr>
+</table>
+
     </div>
 
     <!--REUSABLE MODAL -->

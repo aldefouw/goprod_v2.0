@@ -43,7 +43,8 @@ class check_number_of_fields_by_form
     }
 
 
-    public static function getFormsWithToManyFields($dd_array,$maximum_recommended= 100){
+    public static function getFormsWithToManyFields($maximum_recommended= 100){
+        $dd_array= \REDCap::getDataDictionary('array');
         $var = array();
         //Call the Data Dictionary
         //$dd_array = REDCap::getDataDictionary('array');
