@@ -83,19 +83,19 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
         <div class="progress skill-bar ">
             <div class="progress-bar progress-bar-warning progress-bar-striped "  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
-        <table  id="go_prod_table" style="display: none"  class="table table-striped" >
+        <table  id="go_prod_table" style="display: none"  class="table" >
                 <thead id="go_prod_thead">
                     <tr>
 <!--                        <th>-->
 <!--                        </th>-->
                         <th>
-                            <h4 class="projhdr"><?php echo lang('VALIDATION');?></h4>
+                            <h4 class="col_lable"><strong> <?php echo lang('VALIDATION');?></strong></h4>
                         </th>
                         <th width="100">
-                            <h4 class="projhdr center"><?php echo lang('RESULT');?></h4>
+                            <h4 class=" col_lable center"><strong><?php echo lang('RESULT');?> </strong></h4>
                         </th>
                         <th width="100">
-                            <h4 class="projhdr center"><?php echo lang('OPTIONS');?></h4>
+                            <h4 class=" col_lable center"><strong><?php echo lang('OPTIONS');?></strong></h4>
                         </th>
                     </tr>
                 </thead>
@@ -132,17 +132,20 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
 
     <!--REUSABLE MODAL -->
     <div id="ResultsModal" class="modal fade">
-        <div class="modal-dialog modal-md">
-            <div class="modal-content">
-                <div class="modal-header">
-                </div>
-                <div class="modal-body">
-                    <p><?php echo lang('LOADING');?></p>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
+<!--        <div class="modal-dialog modal-md">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                </div>-->
+<!--                <div class="modal-body">-->
+<!--                    <p>--><?php //echo lang('LOADING');?><!--</p>-->
+                    <div id="gp-loader"   >
+                        <div  class="loader"></div>
+                    </div>
+<!--                </div>-->
+<!--            </div>-->
+<!--             /.modal-content-->
+<!--        </div>-->
+
     </div>
 
     <!--Ajax calls -->

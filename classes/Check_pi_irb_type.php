@@ -40,10 +40,6 @@ class check_pi_irb_type{
 
 
 
-
-
-
-
     /**
      * @param $Proj
      * @return bool -- True if Purpose of this project= Research

@@ -38,6 +38,8 @@ if (isset($_GET['i'])) {
 
 
 function PrintRulesNames(){
+
+
     $RuleNames = array(
 
         "OtherOrUnknownErrors",
@@ -63,7 +65,23 @@ function PrintRulesNames(){
         "ResearchErrors",
         "JustForFunErrors"
     );
-     return $RuleNames;
+    $RuleNames = array(); //__DIR__
+    //define('CLASSES',__DIR__.'/classes/');
+    $url= __DIR__.'/rules/';
+    error_log("URL: $url");
+    //foreach (glob($url) as $filename)
+    //foreach ( scandir(dirname(__FILE__)) as $filename)
+    foreach (scandir($url) as $filename)
+    {
+        if(ctype_upper(substr($filename, 0, 1)) ){
+            $filename=preg_replace('/\.[^.]+$/','',$filename);
+            array_push($RuleNames, $filename);
+            error_log("REGLA: $filename");
+            //include rule
+        }
+    }
+    error_log( print_r($RuleNames, TRUE));
+    return $RuleNames;
 }
 
 function PrintTr($title_text,$body_text,$span_label,$a_tag){
@@ -74,22 +92,22 @@ function PrintTr($title_text,$body_text,$span_label,$a_tag){
            
         
             <td class="gp-info-content">
-                <div class="gp-title-content ">
-                    <strong>
-                        '.$title_text. ' </strong> <span class="title-text-plus" style="color: #7ec6d7"><small>(hide)</small></span>
+                <div class="gp-title-content">
+                      <b>'.$title_text.' </b> 
+                     <span class="title-text-plus" style="color: #7ec6d7"><small>(hide)</small></span> 
                 </div>
                     
                 <div class="gp-body-content overflow " style="color: #585858" >
-                    <p>
+                    <h5 class="list-group-item-text" >
                         ' .$body_text.' 
-                    </p>
+                    </h5>
                 </div>
             </td>
             <td class="center " width="100">               
                     '.$span_label.' 
             </td>
             <td class="gp-actions center" width="100">               
-                 <div class="gp-actions-link" style="display: none"><small>'.$a_tag.'</small></div>
+                 <div class="gp-actions-link" style="display: none">'.$a_tag.'</div>
                  
             </td>
         </tr>';
@@ -137,7 +155,7 @@ function PrintLevelOfRisk($type){
 function PrintAHref($link_to_view){
     global $new_base_url;
     $link= $new_base_url . "i=" . rawurlencode($link_to_view);
-    return '<a href="#ResultsModal" role="button" class="btn  btn-default" data-toggle="modal" data-load-remote='.$link.' data-is-loaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
+    return '<a href="#ResultsModal" role="button"   class="btn  btn-default btn-lg review_btn" data-toggle="modal" data-load-remote='.$link.' data-is-loaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
 }
 
 //function PrintRule($link_rule,$link_rule_view){
@@ -148,25 +166,77 @@ function PrintAHref($link_to_view){
 //}
 
 
-//function CallRule($RuneName){
-//    $res =  call_user_func('\Stanford\GoProd\Print'.$RuneName);
+
+
+function CallRule($RuneName){
+    //$res =  call_user_func('\Stanford\GoProd\Print'.$RuneName);
+    $phat_to_rule='rules/'.$RuneName.'.php';
+    if(!@include_once($phat_to_rule)){ error_log("Failed to include:: $phat_to_rule");}
+    // call function
+    //error_log("se  include:: $phat_to_rule");
+       // $RuneName="/".$RuneName;
+       if (!(function_exists(__NAMESPACE__."\\".$RuneName))) {
+           error_log( "Problem loading  $RuneName does not exist");
+           exit();
+     }
+
+     //Call the Rule
+
+     $array = call_user_func(__NAMESPACE__."\\".$RuneName);
+    // error_log("este es el array primero con $RuneName");
+    // error_log( print_r($array, TRUE));
+
+     //crete HTML if results
+    error_log("Este es el array RESULTS:");
+    error_log( print_r($array['results'], TRUE));
+    //if(!empty($array['results'])){
+    if(is_array($array['results']) or $array['results']===true){
+
+        $a=PrintAHref("views/other_or_unknown_view.php");
+        $span=PrintLevelOfRisk($array['risk']);
+        $print=PrintTr($array['title'],$array['body'],$span,$a);
+        error_log("este es el array result");
+        error_log( print_r($array['results'], TRUE));
+        $array=$array['results'];
+        $result[$RuneName]= array("Results"=>$array,"Html"=>$print);
+        $res = json_encode($result);
+        error_log("esto Retorna la funcion Call RUle con $RuneName");
+        error_log( print_r($res, TRUE));
+
+        echo $res;
+
+    }
+
+    else {
+        error_log(">>>>>Callrule retorno Falso con $RuneName<<<<<");
+          $res=json_encode(false);
+
+          echo $res;}
+
+
+
+}
+
+
+
+//foreach (glob("classes/*.php") as $filename)
+//{
+//    include_once $filename;
 //}
+
+
 function PrintOtherOrUnknownErrors(){
-
         // $array= call_user_func(array(__NAMESPACE__ .'\check_other_or_unknown', 'CheckOtherOrUnknown')); // As of PHP 5.3.0
-
-
-
      // $array=call_user_func(__NAMESPACE__ .'\check_other_or_unknown::CheckOtherOrUnknown');
-
        // error_log(  __NAMESPACE__ .'\classes\check_other_or_unknown::CheckOtherOrUnknown');
        // error_log( print_r($res, TRUE));
-
-
-
         include_once "classes/Check_other_or_unknown.php";
         $res= new check_other_or_unknown();
         $array=$res::CheckOtherOrUnknown();
+
+        // include_once "classes/Check_other_or_unknown.php";
+    //$array=TestOAU();
+
         if(!empty($array)){
             $a=PrintAHref("views/other_or_unknown_view.php");
             $span=PrintLevelOfRisk('warning');
@@ -377,16 +447,18 @@ function PrintResearchErrors(){
     include_once "classes/Check_pi_irb_type.php";
     $res= new check_pi_irb_type();
     $research_found=$res::IsAResearchProject();
-    if (!$research_found){
-        $a='<a  target="_blank" class="btn btn-default" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('VIEW').'</a>';
+    if ($research_found) {
+        return false;
+    } else {
+        $a = '<a  target="_blank" class="btn btn-default" href=" ' . APP_PATH_WEBROOT . 'ProjectSetup/index.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
         //$span='<span class="label label-info">'.lang('INFO').'</span>';
-        $span=PrintLevelOfRisk('info');
-        $print=PrintTr(lang('RESEARCH_PROJECT_TITLE'),lang('RESEARCH_PROJECT_BODY'),$span,$a);
-        $result["ResearchErrors"]= array("Results"=>"null","Html"=>$print);
+        $span = PrintLevelOfRisk('info');
+        $print = PrintTr(lang('RESEARCH_PROJECT_TITLE'), lang('RESEARCH_PROJECT_BODY'), $span, $a);
+        $result["ResearchErrors"] = array("Results" => "null", "Html" => $print);
 
         return $result;
 
-    }else return false;
+    }
 }
 function PrintJustForFunErrors(){
     include_once "classes/Check_pi_irb_type.php";
@@ -493,26 +565,33 @@ if($functName==="PrintRulesNames"){
     echo json_encode($res);
     exit();
 }
-
-try{
-    //error_log(">>>==$functName  esta en el arreglo::::: ");
-    $res =  call_user_func('\Stanford\GoProd\Print'.$functName);
-    $res = json_encode($res);
-    ///  error_log(":::este es el RES de la funcion:::");
-    //     error_log($res);
-    // $res = json_encode(PrintJustForFunErrors());
-    //PrintJustForFunErrors
-    echo  $res;
-
-}catch (Exception $e) {
-    $msg= 'Message: ' .$e->getMessage();
-    error_log("####### $msg >>>>No esta ===>$functName ");
-} finally
-{
-    exit();
-}
-
-
+CallRule($functName);
+//try{
+//
+//    //error_log(">>>==$functName  esta en el arreglo::::: ");
+//    //$res =  call_user_func('\Stanford\GoProd\Print'.$functName);
+//
+//    $res=CallRule($functName);
+//    if(!$res){
+//        $res = json_encode($res);
+//        echo $res;
+//        exit();
+//        }
+//    $res = json_encode($res);
+//       error_log(":::este es el RES de la funcion::: $functName");
+//          error_log($res);
+//    echo  $res;
+//
+//
+//}catch (Exception $e) {
+//    $msg= 'Message: ' .$e->getMessage();
+//    error_log("####### $msg >>>>No esta ===>$functName ");
+//} finally
+//{
+//    exit();
+//}
+//
+//
 
 
 

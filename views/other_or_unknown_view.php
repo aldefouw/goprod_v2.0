@@ -19,7 +19,7 @@ namespace Stanford\GoProd;
 
 <div class="panel panel-default">
    <!-- Default panel contents -->
-    <div class="panel-heading"><div class="projhdr"> <?php echo lang('OTHER_OR_UNKNOWN_TITLE')?> </div></div>
+    <div class="panel-heading"><h4> <?php echo lang('OTHER_OR_UNKNOWN_TITLE')?> </h4></div>
     <div class="panel-body">
 
     </div>
@@ -28,7 +28,7 @@ namespace Stanford\GoProd;
     <table id="other_or_unknown_data_table" class=" display " width="100%" cellspacing="0"></table>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('CLOSE')?></button>
+        <button type="button" class="btn btn-default review_btn" data-dismiss="modal"><?php echo lang('CLOSE')?></button>
 
     </div>
 
@@ -38,9 +38,13 @@ namespace Stanford\GoProd;
 
 
 <script>
-    var result = sessionStorage.getItem("OtherOrUnknownErrors");
+    var result = sessionStorage.getItem("OtherOrUnknown");
     dataSet =jQuery.parseJSON(result);
 
+    // console.log("session storage");
+    // for (i = 0; i < sessionStorage.length; i++) {
+    //     console.log(sessionStorage.key(i) + "=[" + sessionStorage.getItem(sessionStorage.key(i)) + "]");
+    // }
 
 
     $(document).ready(function() {
