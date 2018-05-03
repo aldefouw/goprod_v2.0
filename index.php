@@ -83,7 +83,7 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
         <div class="progress skill-bar ">
             <div class="progress-bar progress-bar-warning progress-bar-striped "  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
-        <table  id="go_prod_table" style="display: none"  class="table" >
+        <table  id="go_prod_table" style="display: none"  class="table table-striped" >
                 <thead id="go_prod_thead">
                     <tr>
 <!--                        <th>-->
@@ -108,7 +108,7 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
         </div>
 
 <!--SUCCESS!:: IF we can not find any problem then show this        -->
-<table class="table table-sm center"  id="allset1" style="display: none; alignment: center">
+<table class="table table-sm center"  id="allset1" style="display: none; alignment: center" >
    <tr>
        <td style="border: none">
             <strong>
@@ -131,7 +131,7 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
     </div>
 
     <!--REUSABLE MODAL -->
-    <div id="ResultsModal" class="modal fade">
+    <div id="ResultsModal" class="modal modal-lg fade">
 <!--        <div class="modal-dialog modal-md">-->
 <!--            <div class="modal-content">-->
 <!--                <div class="modal-header">-->
@@ -155,7 +155,6 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
         var geturl_ajax="<?php echo $module->getUrl('ajax_handler.php'); ?>";
     </script>
     <script type="text/javascript" src="<?php echo $module->getUrl("js/ajax_calls.js");?>"> </script>
-
 
 
 
@@ -214,6 +213,18 @@ if($status == 0 or USERID == 'alvaro'){ //USERID == 'alvaro1' and
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     <script type="text/javascript">
         /*Auto Run the report if the  URL  variable is to_prod_plugin=2 */
         $( document ).ready(function() {
@@ -223,6 +234,9 @@ if($status == 0 or USERID == 'alvaro'){ //USERID == 'alvaro1' and
             if (ready_to_prod === '2'){
                 $('button[id="go_prod_go_btn"]').click();
             }
+
+
+
         });
     </script>
     <script type="text/javascript">
@@ -232,5 +246,7 @@ if($status == 0 or USERID == 'alvaro'){ //USERID == 'alvaro1' and
             location.href = production;
         };
     </script>
+
+
     <?php
 }

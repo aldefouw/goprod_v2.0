@@ -205,6 +205,7 @@ function Addstyles(){
     $(function() {
         $('[data-load-remote]').on('click',function(e) {
             e.preventDefault();
+
             var $this = $(this);
             var remote = $this.data('load-remote');
             if(remote) {
@@ -236,8 +237,17 @@ $( document ).ready(function() {
             }});//cierra ajax call
     });//cierra on click
     //Clean the Modal before refreshing
+
+
+
     $("#ResultsModal").on('hidden.bs.modal', function () {
         $(this).text("");
+
     });
+
+
+
+
     console.log( "ready COL!" );
 });
+

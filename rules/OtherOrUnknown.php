@@ -15,7 +15,7 @@ function OtherOrUnknown(){
     $Rule['title']=lang('OTHER_OR_UNKNOWN_TITLE');
     $Rule['body']=lang('OTHER_OR_UNKNOWN_BODY');
     $Rule['risk']="warning"; // level of risk: warning, danger or info.
-   //$Rule['labels']=["titulo1","titulo1","titulo1","titulo1","titulo1"];
+
 
     $phat_to_rule= dirname(dirname(__FILE__)) . '/classes/Check_other_or_unknown.php';
 

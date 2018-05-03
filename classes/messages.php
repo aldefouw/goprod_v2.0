@@ -136,9 +136,11 @@ function lang($phrase){
               'SETTINGS_RULE'=>' Rule/Checklist',
               'SETTINGS_OPTIONS'=>'Options',
               'SETTINGS_ALERT_LEVEL'=>'Alert Level',
-              'SETTINGS_ACTIVE'=>'Active'
+              'SETTINGS_ACTIVE'=>'Active',
 
-
+            'RESULTS_TABLE_HEADER1'=>'Where',
+            'RESULTS_TABLE_HEADER2'=>'Possible issue',
+            'RESULTS_TABLE_HEADER3'=>'Direct link'
 
 
         );

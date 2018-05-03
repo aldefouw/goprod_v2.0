@@ -16,20 +16,46 @@
 namespace Stanford\GoProd;
 ?>
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css">
+<div class="panel panel-default" style=" width: 100% ">
 
-<div class="panel panel-default">
+
    <!-- Default panel contents -->
-    <div class="panel-heading"><h4> <?php echo lang('OTHER_OR_UNKNOWN_TITLE')?> </h4></div>
+    <div class="panel-heading"><h5> <strong><?php echo lang('OTHER_OR_UNKNOWN_TITLE')?>  </strong></h5></div>
     <div class="panel-body">
 
-    </div>
-    <div style="padding: 1px">
-    <!-- Table -->
-    <table id="other_or_unknown_data_table" class=" display " width="100%" cellspacing="0"></table>
+        <ul id="myTab" class="nav nav-tabs nav-justified ">
+            <li id="focus-tab"><a href="#home" data-target="#home" data-toggle="tab">Issues</a></li>
+            <li ><a href="#profile" data-target="#profile" data-toggle="tab">Is this not a problem? </a></li>
+        </ul>
+
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade in active" id="home">
+                <div style="padding: 0">
+                    <table id="issues-table" class="table stripe responsive display table-result" width="100%" cellspacing="0"></table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="profile">
+                <table>
+                    <tr>
+                        <td><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                It has survived not only five centuries, but also the leap into electronic typesetting,
+                                remaining essentially unchanged. It was popularised in the 1960s with the release of
+                                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                                software like Aldus PageMaker including versions of Lorem Ipsum.</p></td>
+                        <td>
+                            <button type="button" class="btn btn-default review_btn" data-dismiss="modal"><?php echo lang('CLOSE')?></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default review_btn" data-dismiss="modal"><?php echo lang('CLOSE')?></button>
-
     </div>
 
 </div>
@@ -38,6 +64,23 @@ namespace Stanford\GoProd;
 
 
 <script>
+
+    $('#focus-tab').tab('show');
+    var columns = [
+        { "title":<?php echo json_encode(lang('RESULTS_TABLE_HEADER1'));?> },
+        { "title":<?php echo json_encode(lang('RESULTS_TABLE_HEADER1'));?>},
+        { "title":<?php echo json_encode(lang('RESULTS_TABLE_HEADER1'));?>},
+        { "title":<?php echo json_encode(lang('RESULTS_TABLE_HEADER2'));?>},
+        { "title":<?php echo json_encode(lang('RESULTS_TABLE_HEADER3'));?>}
+    ];
+    //var columns = [
+    //    { "title":"asdf" },
+    //    { "title": "asdf"},
+    //    { "title":"asdf"},
+    //    { "title":"asdf"},
+    //    { "title":<?php //echo json_encode(lang('RESULTS_TABLE_HEADER3'));?>//}
+    //];
+
     var result = sessionStorage.getItem("OtherOrUnknown");
     dataSet =jQuery.parseJSON(result);
 
@@ -49,25 +92,24 @@ namespace Stanford\GoProd;
 
     $(document).ready(function() {
 
-        var table =  $('#other_or_unknown_data_table').DataTable({
+
+
+        var table =  $('#issues-table').DataTable({
 
              "paging":         false,
             "searching": false,
+            //"lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
+            // "scrollY":        "500px",
+            // "scrollCollapse": true,
+            // "paging":         false,
 
             data: dataSet,
-            columns: [
-                { title: "Instrument " },
-                { title: "Variable / Field Name" },
-                { title: "Field Label" },
-                { title: "Options/Choices" },
-                { title: "Edit" }
-            ],
+            columns: columns,
 
             "columnDefs": [
                 { "visible": false, "targets": 0 },
                 {"className": "dt-left", "targets": 2},
                 {"className": "dt-left", "targets": 3},
-
                 {"className": "dt-center", "targets": 4},
                 { "width": "25px", "targets": 4}
 
@@ -94,7 +136,7 @@ namespace Stanford\GoProd;
 
 
         // Order by the grouping
-        $('#other_or_unknown_data_table tbody').on( 'click', 'tr.group', function () {
+        $('#issues-table tbody').on( 'click', 'tr.group', function () {
             var currentOrder = table.order()[0];
             if ( currentOrder[0] === 0 && currentOrder[1] === 'asc' ) {
                 table.order( [ 0, 'desc' ] ).draw();

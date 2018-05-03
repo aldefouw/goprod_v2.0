@@ -5,7 +5,10 @@
     color: white !important; /* Add a text color */
     padding: 14px 28px !important; /* Add some padding */
     cursor: pointer !important; /* Add a pointer cursor on mouse-over */
-    background-color: #0e90d2 !important;
+    background-color: #1e88e5 !important;
+    -webkit-transition-duration: 0.4s !important; /* Safari */
+    transition-duration: 0.4s !important;
+
 }
 
 
@@ -20,7 +23,7 @@
 .review_btn{
     border-radius:  5% !important;
     color: white !important;
-    background-color: #0e90d2 !important;
+    background-color: #1e88e5 !important;
     font-size: 16px !important;
     padding: 12px 15px !important;
     -webkit-transition-duration: 0.4s !important; /* Safari */
@@ -30,29 +33,82 @@
 .review_btn:hover {
     outline: none;
     box-shadow: 0 12px 16px 0 rgba(158, 158, 158, 0.24), 0 17px 50px 0 rgba(235, 235, 235, 0.03);
-    background-color: #4CAF50 !important; /* Green */
-
+    background-color: white !important; /* Green */
+    color: #1e88e5 !important;
 
 }
+
+/*.nav-tabs.nav-justified>li>a {*/
+
+    /*border-radius: 0 0 0 0 !important;*/
+
+/*}*/
+.nav-tabs.nav-justified>li>a:hover {
+    border-bottom: 1px solid  #1e88e5 !important;
+    border-top: none !important;
+    background-color: white !important;
+    color: #1e88e5 !important;
+
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)  !important;*/
+    /*background-color: #cccccc !important; !* Green *!*/
+}
+.nav-tabs.nav-justified>li>a {
+    /*border-top: 1px solid #1e88e5 !important;*/
+    border-right: 0 solid !important;
+    border-left: 0 solid !important;
+    /*border-bottom: 2px solid  #f9ab3d !important;*/
+    /*border-bottom: 1px solid !important;*/
+    color: white !important;
+    background: #1e88e5 !important;
+    -webkit-transition-duration: 0.4s !important; /* Safari */
+    transition-duration: 0.4s !important;
+
+}
+.nav-tabs.nav-justified>li.active>a {
+    border-top: 1px solid #1e88e5 !important;
+    border-right: 1px solid !important;
+    border-left: 1px solid !important;
+    box-shadow:  none  !important;
+    border-bottom: 0 solid !important;
+
+    color: #1e88e5 !important;
+    background: white !important;
+
+     /*color: red !important;*/
+}
+
+.nav-tabs{
+
+    /*border-bottom: #0a709e;*/
+    /*background-color: #1e88e5 !important;*/
+
+}
+
 
 
 .panel  {
     -webkit-border-radius: 0 !important;
     -moz-border-radius: 0 !important;
     border-radius: 0 !important;
+    overflow: hidden !important;
 }
+
 
 .panel-heading {
     padding: 11px 30px;
     border-bottom: 0 solid transparent;
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
-    color: white !important;
-    background-color: #4CAF50 !important;
+    color: #1e88e5  !important;
+    /*background-color: #ffffff !important;*/
+}
+
+.panel-body {
+    padding: 1px !important;
 }
 
 .col_lable{
-    color: #1d76ba !important;
+    color: #1e88e5 !important;
 
 }
 
@@ -63,7 +119,7 @@
 }
 
 .overflow{
-    scrollbar-face-color: #367CD2;
+    scrollbar-face-color: #1e88e5;
     scrollbar-shadow-color: #FFFFFF;
     scrollbar-highlight-color: #FFFFFF;
     scrollbar-3dlight-color: #FFFFFF;
@@ -149,6 +205,17 @@ table.go_prod_table tr {
     vertical-align: middle !important;
 }
 
+.table#issues-table th{
+
+    /*background: none repeat scroll 0 0 #33c2ff !important;*/
+    color: #1e88e5 !important;
+}
+/*.table#issues-table tr{*/
+
+    /*background: none repeat scroll 0 0 white !important;*/
+/*}*/
+
+
 .tab {
     display:inline-block;
     margin-left: 40px;
@@ -158,15 +225,24 @@ table.go_prod_table tr {
 .modal {
 
     padding:  5% 25%  5%  25% !important;
-
+    position: fixed !important;
     width: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
+
+/*.modal-open .modal{*/
+
+    /*overflow-y: hidden !important;*/
+/*}*/
 
 /* loading effect*/
 
 .loader {
     border: 1px solid #f9ab3d;
-    border-top: 1px solid #0e90d2  ;
+    border-top: 1px solid #1e88e5  ;
     background-color: #fffbfd;
     border-radius: 50%;
     width: 15px !important;
