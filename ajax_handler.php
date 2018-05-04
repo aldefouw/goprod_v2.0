@@ -97,7 +97,7 @@ function PrintTr($title_text,$body_text,$span_label,$a_tag){
                      <span class="title-text-plus" style="color: #7ec6d7"><small>(hide)</small></span> 
                 </div>
                     
-                <div class="gp-body-content overflow " style="color: #585858" >
+                <div class="gp-body-content overflow  gp-text-color" >
                     <h5 class="list-group-item-text" >
                         ' .$body_text.' 
                     </h5>
