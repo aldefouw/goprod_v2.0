@@ -26,7 +26,7 @@ namespace Stanford\GoProd;
 
         <ul id="myTab" class="nav nav-tabs nav-justified ">
             <li id="focus-tab"><a href="#home" data-target="#home" data-toggle="tab"><?php echo lang('ISSUES')?></a></li>
-            <li ><a href="#profile" data-target="#profile" data-toggle="tab"><?php echo lang('SKIP_RULE')?> <span class="glyphicon glyphicon-fast-forward" style="color: #f9ab3d" aria-hidden="true"></span> </a></li>
+            <li ><a href="#profile" data-target="#profile" data-toggle="tab"><?php echo lang('SKIP_RULE')?> <span class="glyphicon glyphicon-fast-forward orange_color" aria-hidden="true"></span> </a></li>
         </ul>
 
         <div id="myTabContent" class="tab-content">

@@ -8,6 +8,19 @@
     --text-color: #585858;
 }
 
+.orange_color{
+    color:var(--orange-color) !important;
+}
+.blue_color{
+    color:var(--blue-color) !important;
+}
+.white_color{
+    color:var(--white-color) !important;
+}
+.text_color{
+    color:var(--text-color) !important;
+}
+
 
 /* RUN main button */
 #go_prod_go_btn {
