@@ -147,7 +147,7 @@ require_once 'utilities.php';
         foreach ($array as $list){
             if ($variable_name==$list[1]){
                 if($to_highlight==$list[3]){
-                    $table .='<tr><td class="bg-info" style="color: red" ><strong>'.$list[2].'</strong></td><td class="bg-info" style="color: red"><strong>'.$list[3].'</strong></td></tr>';
+                    $table .='<tr><td class="bg-info red_color"  ><strong>'.$list[2].'</strong></td><td class="bg-info red_color"  ><strong>'.$list[3].'</strong></td></tr>';
 
                 }else{
                     $table .='<tr><td>'.$list[2].'</td><td>'.$list[3].'</td></tr>';

@@ -5,7 +5,9 @@
     --blue-color:#1e88e5;
     --white-color: white;
     --orange-color: #f9ab3d;
+    --red-color: red;
     --text-color: #585858;
+
 }
 
 .orange_color{
@@ -17,6 +19,10 @@
 .white_color{
     color:var(--white-color) !important;
 }
+.red_color{
+    color:var(--red-color) !important;
+}
+
 .text_color{
     color:var(--text-color) !important;
 }
