@@ -72,7 +72,7 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
 <link rel="stylesheet" href="<?php echo $module->getUrl("styles/go_prod_styles.css");   error_log($module->getUrl('views',$noAuth=false)); ?>">
     <div class="projhdr"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> <?php echo lang('TITLE'); ?> </div>
     <div id="main-container">
-        <div> <span><?php echo lang('MAIN_TEXT');?></span> </div>
+        <div class="gp-text-color"> <span   ><?php echo lang('MAIN_TEXT');?></span> </div>
             <p></p>
         <button id="go_prod_go_btn" class="btn btn-md btn-primary btn-block">
             <span id="gp-run" ><?php echo lang('RUN');?></span>

@@ -92,7 +92,7 @@ function PrintTr($title_text,$body_text,$span_label,$a_tag){
            
         
             <td class="gp-info-content">
-                <div class="gp-title-content">
+                <div class="gp-title-content gp-text-color">
                       <b>'.$title_text.' </b> 
                      <span class="title-text-plus" style="color: #7ec6d7"><small>(hide)</small></span> 
                 </div>

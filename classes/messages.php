@@ -140,7 +140,10 @@ function lang($phrase){
 
             'RESULTS_TABLE_HEADER1'=>'Where',
             'RESULTS_TABLE_HEADER2'=>'Possible issue',
-            'RESULTS_TABLE_HEADER3'=>'Direct link'
+            'RESULTS_TABLE_HEADER3'=>'Direct link',
+
+            'ISSUES'=>'Issues',
+            'SKIP_RULE'=>'This is not a problem (Skip)'
 
 
         );

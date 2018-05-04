@@ -25,31 +25,22 @@ namespace Stanford\GoProd;
     <div class="panel-body">
 
         <ul id="myTab" class="nav nav-tabs nav-justified ">
-            <li id="focus-tab"><a href="#home" data-target="#home" data-toggle="tab">Issues</a></li>
-            <li ><a href="#profile" data-target="#profile" data-toggle="tab">Is this not a problem? </a></li>
+            <li id="focus-tab"><a href="#home" data-target="#home" data-toggle="tab"><?php echo lang('ISSUES')?></a></li>
+            <li ><a href="#profile" data-target="#profile" data-toggle="tab"><?php echo lang('SKIP_RULE')?> <span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span> </a></li>
         </ul>
 
         <div id="myTabContent" class="tab-content">
             <div class="tab-pane fade in active" id="home">
-                <div style="padding: 0">
+                <br>
                     <table id="issues-table" class="table stripe responsive display table-result" width="100%" cellspacing="0"></table>
-                </div>
+
             </div>
             <div class="tab-pane fade" id="profile">
-                <table>
-                    <tr>
-                        <td><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                It has survived not only five centuries, but also the leap into electronic typesetting,
-                                remaining essentially unchanged. It was popularised in the 1960s with the release of
-                                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                                software like Aldus PageMaker including versions of Lorem Ipsum.</p></td>
-                        <td>
-                            <button type="button" class="btn btn-default review_btn" data-dismiss="modal"><?php echo lang('CLOSE')?></button>
-                        </td>
-                    </tr>
-                </table>
+
+
+                            <?php include_once 'skip_form.php'; ?>
+
+
             </div>
         </div>
 
@@ -111,7 +102,7 @@ namespace Stanford\GoProd;
                 {"className": "dt-left", "targets": 2},
                 {"className": "dt-left", "targets": 3},
                 {"className": "dt-center", "targets": 4},
-                { "width": "25px", "targets": 4}
+                { "width": "150px", "targets": 4}
 
             ],
             "order": [[ 0, 'asc' ]],
