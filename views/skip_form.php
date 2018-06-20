@@ -57,9 +57,10 @@
 <script type="text/javascript">
     function SkipSubmitFunction()
     {
-        var geturl_ajax="<?php echo $module->getUrl('update_rule_options.php'); ?>";
-        var getrulename="<?php echo '#'.$_GET['rule']; ?>";
 
+        var getrulename="<?php echo '#'.$_GET['rule']; ?>";
+        var geturl_ajax="<?php echo $module->getUrl('update_rule_options.php').'&rule='.$_GET['rule']; ?>";
+console.log(geturl_ajax);
         $.get( geturl_ajax, function( data ) {
             $("#testp").text(data);
             $(getrulename).hide();
