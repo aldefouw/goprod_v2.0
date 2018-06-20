@@ -87,3 +87,26 @@ function logIt($msg, $level = "INFO") {
 
 
 
+//function PrintPencilIcon($link){
+//    return '<a href=' . $link . ' target="_blank" ><img src=' . APP_PATH_IMAGES .'pencil.png></a>';
+//
+//}
+
+/*  Save-load-Update data from external project     */
+
+function LoadAllData($pid){
+
+
+}
+
+
+
+
+
+function CheckIfRuleIsActive($Rule,$pid_stats){
+
+
+
+
+
+}

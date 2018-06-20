@@ -4,7 +4,7 @@
 
 
 function GetPath(rulename,project_id){
-    url= geturl_ajax+"&f="+rulename;
+    url= geturl_ajax+"&rule="+rulename;
     return url;
 }
 

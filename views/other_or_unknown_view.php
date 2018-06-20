@@ -14,133 +14,70 @@
 //echo  $_SESSION["t"];
 //echo '<pre>' . print_r($_SESSION["OtherOrUnknownErrors"], TRUE) . '</pre>';
 namespace Stanford\GoProd;
+
+
+/** @var \Stanford\GoProd\GoProd $module */
+
+
 ?>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css">
 <div class="panel panel-default" style=" width: 100% ">
-
-
    <!-- Default panel contents -->
     <div class="panel-heading"><h5> <strong><?php echo lang('OTHER_OR_UNKNOWN_TITLE')?>  </strong></h5></div>
     <div class="panel-body">
-
         <ul id="myTab" class="nav nav-tabs nav-justified ">
             <li id="focus-tab"><a href="#home" data-target="#home" data-toggle="tab"><?php echo lang('ISSUES')?></a></li>
             <li ><a href="#profile" data-target="#profile" data-toggle="tab"><?php echo lang('SKIP_RULE')?> <span class="glyphicon glyphicon-fast-forward orange_color" aria-hidden="true"></span> </a></li>
         </ul>
-
         <div id="myTabContent" class="tab-content">
             <div class="tab-pane fade in active" id="home">
                 <br>
                     <table id="issues-table" class="table stripe responsive display table-result" width="100%" cellspacing="0"></table>
-
             </div>
             <div class="tab-pane fade" id="profile">
+                  <?php
 
-
-                            <?php include_once 'skip_form.php'; ?>
-
+                  include_once  $module->getModulePath().'classes/ReadWriteLogging.php';
+                  $res= new namespace\ReadWriteLogging(14);
+                  include_once 'skip_form.php';
+                  ?>
 
             </div>
         </div>
-
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default review_btn" data-dismiss="modal"><?php echo lang('CLOSE')?></button>
+        <button type="button" id="close_modal" class="btn btn-default review_btn" data-dismiss="modal"><?php echo lang('CLOSE')?></button>
     </div>
-
 </div>
 
-
-
-
 <script>
-
     $('#focus-tab').tab('show');
     var columns = [
-        { "title":<?php echo json_encode(lang('RESULTS_TABLE_HEADER1'));?> },
-        { "title":<?php echo json_encode(lang('RESULTS_TABLE_HEADER1'));?>},
         { "title":<?php echo json_encode(lang('RESULTS_TABLE_HEADER1'));?>},
         { "title":<?php echo json_encode(lang('RESULTS_TABLE_HEADER2'));?>},
         { "title":<?php echo json_encode(lang('RESULTS_TABLE_HEADER3'));?>}
     ];
-    //var columns = [
-    //    { "title":"asdf" },
-    //    { "title": "asdf"},
-    //    { "title":"asdf"},
-    //    { "title":"asdf"},
-    //    { "title":<?php //echo json_encode(lang('RESULTS_TABLE_HEADER3'));?>//}
-    //];
 
     var result = sessionStorage.getItem("OtherOrUnknown");
     dataSet =jQuery.parseJSON(result);
-
-    // console.log("session storage");
-    // for (i = 0; i < sessionStorage.length; i++) {
-    //     console.log(sessionStorage.key(i) + "=[" + sessionStorage.getItem(sessionStorage.key(i)) + "]");
-    // }
-
-
     $(document).ready(function() {
-
-
-
-        var table =  $('#issues-table').DataTable({
-
-             "paging":         false,
-            "searching": false,
-            //"lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
-            // "scrollY":        "500px",
-            // "scrollCollapse": true,
-            // "paging":         false,
-
+        $('#issues-table').DataTable( {
             data: dataSet,
-            columns: columns,
-
-            "columnDefs": [
-                { "visible": false, "targets": 0 },
-                {"className": "dt-left", "targets": 2},
-                {"className": "dt-left", "targets": 3},
-                {"className": "dt-center", "targets": 4},
-                { "width": "150px", "targets": 4}
-
+            "paging":   false,
+            "ordering": false,
+            "info":     false,
+            "searching": false,
+            columnDefs: [
+                { "title": "Unique Instrument Name",   "targets": 0},
+                { "title": "Instrument Label",  "targets": 1 },
+                { "title": "Designate Instruments for My Events",  "targets": 2 },
+                {"className": "dt-center", "targets": 1},
+                {"className": "dt-left", "targets": 0},
+                {"className": "dt-center", "targets": 2},
+                { "width": "25px", "targets": 2}
             ],
-            "order": [[ 0, 'asc' ]],
-            "displayLength": 15,
-            "drawCallback": function ( settings ) {
-                var api = this.api();
-                var rows = api.rows( {page:'current'} ).nodes();
-                var last=null;
-
-                api.column(0, {page:'current'} ).data().each( function ( group, i ) {
-                    if ( last !== group ) {
-                        $(rows).eq( i ).before(
-                            '<tr class="group"><td colspan="4"><h5>Instrument: <strong><u>'+group+'</u></strong></h5></td></tr>'
-
-                        );
-
-                        last = group;
-                    }
-                } );
-            }
+            columns: columns
         } );
-
-
-        // Order by the grouping
-        $('#issues-table tbody').on( 'click', 'tr.group', function () {
-            var currentOrder = table.order()[0];
-            if ( currentOrder[0] === 0 && currentOrder[1] === 'asc' ) {
-                table.order( [ 0, 'desc' ] ).draw();
-            }
-            else {
-                table.order( [ 0, 'asc' ] ).draw();
-            }
-        }
-
-
-
-        );
     } );
-
 </script>
-

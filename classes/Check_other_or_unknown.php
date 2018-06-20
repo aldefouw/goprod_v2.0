@@ -187,6 +187,8 @@ require_once 'utilities.php';
         return $to_fix_array;
 }
 
+
+
     /**
      * @param $array
      * @param $Ids
@@ -211,6 +213,7 @@ require_once 'utilities.php';
 
                 }
                      $link_to_edit = '<a href=' . $link_path . ' target="_blank" ><img src=' . APP_PATH_IMAGES .'pencil.png></a>';
+
                     // Adding : Intrument Name, instrument
 
 
@@ -237,6 +240,9 @@ require_once 'utilities.php';
         $Ids=self::getIDs();
         $REDCapList= self::Transform($List);
         $AllOther =self::FindOtherOrUnknown($REDCapList,$Words,$similarity);
+
+
+
         return self::ListOfOtherOrUnknownWithProblems($AllOther,$Ids);
 
 

@@ -14,7 +14,6 @@ namespace Stanford\GoProd;
 /** @var \Stanford\GoProd\GoProd $module */
 
 
-
 include_once APP_PATH_DOCROOT . "ProjectGeneral/header.php";
 
 //$module = new GoProd();
@@ -168,8 +167,8 @@ exit();
 
 echo USERID;
 echo $status;
-error_log("goprod_workflow VARIABLE");
-error_log($goprod_workflow);
+//error_log("goprod_workflow VARIABLE");
+//error_log($goprod_workflow);
 
 
 /*Remove the go to production button if the project is already in production mode*/

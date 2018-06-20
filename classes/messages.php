@@ -143,7 +143,10 @@ function lang($phrase){
             'RESULTS_TABLE_HEADER3'=>'Direct link',
 
             'ISSUES'=>'Issues',
-            'SKIP_RULE'=>'This is not a problem (Skip)'
+            'SKIP_RULE'=>'This is not a problem (Skip)',
+            'INSTRUMENT'=>'Instrument:',
+            'VARIABLE_NAME'=>'Variable Name:',
+            'LABEL'=>'Label:'
 
 
         );

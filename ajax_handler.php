@@ -16,7 +16,7 @@ include_once "classes/utilities.php";
 //project information
 //global $Proj;
 //require_once 'messages.php';
-
+$PathRulesFolder="/rules/";
 $current_url = $_SERVER['REQUEST_URI'];
 $base = $current_url;
 $new_base_url = $base . "&";
@@ -80,17 +80,19 @@ function PrintRulesNames(){
             //include rule
         }
     }
-    error_log( print_r($RuleNames, TRUE));
+   // error_log( print_r($RuleNames, TRUE));
     return $RuleNames;
 }
 
-function PrintTr($title_text,$body_text,$span_label,$a_tag){
+
+
+
+function PrintTr($title_text,$body_text,$span_label,$a_tag,$rulename){
+
 
        $value=
 
-        '<tr class="gp-tr" style="display: none">
-           
-        
+        '<tr class="gp-tr" id="'.$rulename.'" style="display: none">
             <td class="gp-info-content">
                 <div class="gp-title-content gp-text-color">
                       <b>'.$title_text.' </b> 
@@ -107,8 +109,7 @@ function PrintTr($title_text,$body_text,$span_label,$a_tag){
                     '.$span_label.' 
             </td>
             <td class="gp-actions center" width="100">               
-                 <div class="gp-actions-link" style="display: none">'.$a_tag.'</div>
-                 
+                 <div class="gp-actions-link" style="display: none">'.$a_tag.'</div>    
             </td>
         </tr>';
       // $value=htmlentities(stripslashes(utf8_encode($value)), ENT_QUOTES);
@@ -187,21 +188,22 @@ function CallRule($RuneName){
     // error_log( print_r($array, TRUE));
 
      //crete HTML if results
-    error_log("Este es el array RESULTS:");
-    error_log( print_r($array['results'], TRUE));
+    //error_log("Este es el array RESULTS:");
+   // error_log( print_r($array['results'], TRUE));
     //if(!empty($array['results'])){
     if(is_array($array['results']) or $array['results']===true){
 
+
         $a=PrintAHref("views/other_or_unknown_view.php");
         $span=PrintLevelOfRisk($array['risk']);
-        $print=PrintTr($array['title'],$array['body'],$span,$a);
-        error_log("este es el array result");
-        error_log( print_r($array['results'], TRUE));
+        $print=PrintTr($array['title'],$array['body'],$span,$a,$RuneName);
+       // error_log("este es el array result");
+       // error_log( print_r($array['results'], TRUE));
         $array=$array['results'];
         $result[$RuneName]= array("Results"=>$array,"Html"=>$print);
         $res = json_encode($result);
-        error_log("esto Retorna la funcion Call RUle con $RuneName");
-        error_log( print_r($res, TRUE));
+      //  error_log("esto Retorna la funcion Call RUle con $RuneName");
+      //  error_log( print_r($res, TRUE));
 
         echo $res;
 
@@ -557,7 +559,7 @@ function  PrintNotDesignatedFormsErrors(){
 //}
 
 //$functName = $_REQUEST['f'];
-$functName = $_GET['f'];
+$functName = $_GET['rule'];
 
 
 if($functName==="PrintRulesNames"){

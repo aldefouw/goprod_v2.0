@@ -5,18 +5,17 @@
  * Date: 5/3/18
  * Time: 3:45 PM
  */
+
+//namespace Stanford\GoProd;
+//include_once "classes/ReadWriteLogging.php";
 ?>
 
-<form class="form-horizontal">
+<form class="form-horizontal" onsubmit="return SkipSubmitFunction()">
     <fieldset>
-
-
-
         <!-- Textarea -->
         <div class="form-group" style="padding: 5%">
-            <table   >
+            <table>
                 <tr>
-
                     <td>
                         <label for="textarea">
                             Use this option if you consider this is not an issue or if the remain issues are not a problem for your REDCap Database.
@@ -25,37 +24,49 @@
                 </tr>
                 <tr>
                     <td>
-                            <textarea class="form-control" id="textarea" name="textarea">default text</textarea>
-                        </td>
+                            <textarea class="form-control" id="textarea" name="textarea">provide a reason..</textarea>
+                    </td>
                 </tr>
                 <tr>
                     <td>
-                        <p>
-                            Please note that future problems with omitting this recommendation may result in additional support costs for your project.
+                        <p id="testp">
+                            Please notice that future problems related with omitting this recommendation may result in additional support costs for your project.
+                            <?php echo $_GET['rule'].$_GET['pid'];
+//                            $res->UpdateConfig($_GET['rule'],"alvarologsss".rand(2,88));
+//                            $res->SetConfig($_GET['rule'],"valor");
+//                            $res->GetConfig($_GET['rule']);
+//                            echo $res->PrintConfig($_GET['rule']);
+                            ?>
                         </p>
                     </td>
                 </tr>
                 <tr><td>
-                        <div  >
+                        <div>
                             <label class="checkbox-inline" for="checkboxes-0">
                                 <input type="checkbox" name="checkboxes" id="checkboxes-0" value="1">
-                                1
+                                I understand.
                             </label>
-                            <button id="singlebutton" name="singlebutton" class="btn btn-default btn-sm">Send</button>
+                            <button id="gp_skip_button" name="gp_skip_button" class="btn btn-warning   btn-md">Skip this recommendation</button>
                         </div>
                     </td>
                 </tr>
             </table>
-
-
-
         </div>
-
-
-
-
-
-
     </fieldset>
 </form>
+<script type="text/javascript">
+    function SkipSubmitFunction()
+    {
+        var geturl_ajax="<?php echo $module->getUrl('update_rule_options.php'); ?>";
+        var getrulename="<?php echo '#'.$_GET['rule']; ?>";
 
+        $.get( geturl_ajax, function( data ) {
+            $("#testp").text(data);
+            $(getrulename).hide();
+            $("#ResultsModal").hide();
+            $("#close_modal").click();
+            //alert( "Load was performed." );
+        });
+        return false;
+    }
+</script>
