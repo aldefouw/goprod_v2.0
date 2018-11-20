@@ -30,7 +30,7 @@
                 <tr>
                     <td>
                         <p id="testp">
-                            Please notice that future problems related with omitting this recommendation may result in additional support costs for your project.
+                            Please notice that future problems related with the omission of this recommendation may result in additional support costs for your project.
                             <?php echo $_GET['rule'].$_GET['pid'];
 //                            $res->UpdateConfig($_GET['rule'],"alvarologsss".rand(2,88));
 //                            $res->SetConfig($_GET['rule'],"valor");
@@ -42,10 +42,10 @@
                 </tr>
                 <tr><td>
                         <div>
-                            <label class="checkbox-inline" for="checkboxes-0">
-                                <input type="checkbox" name="checkboxes" id="checkboxes-0" value="1">
-                                I understand.
-                            </label>
+<!--                            <label class="checkbox-inline" for="checkboxes-0">-->
+<!--                                <input type="checkbox" name="checkboxes" id="checkboxes-0" value="1">-->
+<!--                                I understand.-->
+<!--                            </label>-->
                             <button id="gp_skip_button" name="gp_skip_button" class="btn btn-warning   btn-md">Skip this recommendation</button>
                         </div>
                     </td>
@@ -57,17 +57,16 @@
 <script type="text/javascript">
     function SkipSubmitFunction()
     {
-
         var getrulename="<?php echo '#'.$_GET['rule']; ?>";
         var geturl_ajax="<?php echo $module->getUrl('update_rule_options.php').'&rule='.$_GET['rule']; ?>";
-console.log(geturl_ajax);
-        $.get( geturl_ajax, function( data ) {
-            $("#testp").text(data);
-            $(getrulename).hide();
-            $("#ResultsModal").hide();
-            $("#close_modal").click();
-            //alert( "Load was performed." );
+        //console.log(geturl_ajax);
+        $.get( geturl_ajax, function() {
+            location.reload();
+            // $("#close_modal").click();
+            // $(getrulename).hide();
+            // $("#go_prod_go_btn").click();
         });
-        return false;
+
+         return false;
     }
 </script>

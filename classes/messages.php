@@ -142,8 +142,8 @@ function lang($phrase){
             'RESULTS_TABLE_HEADER2'=>'Possible issue',
             'RESULTS_TABLE_HEADER3'=>'Direct link',
 
-            'ISSUES'=>'Issues',
-            'SKIP_RULE'=>'This is not a problem (Skip)',
+            'ISSUES'=>'Issues Found',
+            'SKIP_RULE'=>'Not a Problem',
             'INSTRUMENT'=>'Instrument:',
             'VARIABLE_NAME'=>'Variable Name:',
             'LABEL'=>'Label:'

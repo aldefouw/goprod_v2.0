@@ -142,7 +142,7 @@ require_once 'utilities.php';
 
 // create the table with the choices
     public static function getChoices($array,$variable_name,$to_highlight ){
-        $table='<table id="gp-results-table" class="table table-sm"  style="width:80%; border-color: inherit;" border="1">';
+        $table='<table  class="table table-sm gp-results-table"  style="width:100%; border-color: inherit;" border="1">';
 
         foreach ($array as $list){
             if ($variable_name==$list[1]){

@@ -51,6 +51,8 @@ class ReadWriteLogging
             // Found config!
             $row = db_fetch_assoc($q);
             $this->config = json_decode($row['sql_log'], true);
+
+
             if (isset($this->config['triggers'])) {
                 $this->triggers = json_decode(htmlspecialchars_decode($this->config['triggers'], ENT_QUOTES), true);
             }
@@ -77,9 +79,41 @@ class ReadWriteLogging
     public function UpdateConfig($rulename,$value){
          $this->config[$rulename]=$value;
     }
+
     public function PrintConfig($rulename){
-       return $this->config[$rulename];
+
+        return $this->config[$rulename];
+
     }
 
+// input: all rule names array , returns array of currently active rules
+    public function GetActiveRules($AllRules){
+        //$array= array();
+        foreach ($AllRules as $rule){
+              $this->GetConfig($rule);
+              error_log("AQUI##  $rule");
+              //error_log(print_r($AllRules,TRUE));
+              error_log(print_r($this->config,TRUE));
+              error_log("AQUI## FIN");
+              $test=(string)$this->PrintConfig($rule);
+              if($test==='0'){
+                  error_log("all test: $test and ruel is  $rule");
+                  error_log($test);
+                  error_log("all rules: ");
+                  error_log(print_r($AllRules,TRUE));
+                  $index = array_search($rule, $AllRules);
+                  if($index !== false){
+                      unset($AllRules[$index]);
+                  }else
+                  {
+                      error_log("entro al ese  y el index es:::$index");
+                      exit();
+                  }
 
+                  error_log("reglas22 removiendolas rules:::::::$AllRules::::::::$index");
+                  error_log(print_r($AllRules,TRUE));
+              }
+        }
+     return $AllRules;
+    }
 }

@@ -13,20 +13,24 @@ namespace Stanford\GoProd;
 
 function InstrumentVariableLabelToHTML($instrument,$VariableName,$Label){
 
-    return '<table style="width:80%; border-color: inherit;" border="1">
+    return '<table class="gp-label-table">
                 <tr>
                     <td><strong>'.lang('INSTRUMENT').'</strong></td>
-                    <td>'.$instrument.'</td>
+                    <td >'.$instrument.'</td>
                 </tr>
                 <tr>
                     <td><strong>'.lang('VARIABLE_NAME').'</strong></td>
                     <td>'.$VariableName.'</td>
                 </tr>
-                <tr>
+                <tr >
                     <td><strong>'.lang('LABEL').'</strong></td>
                     <td>'.$Label.'</td>
                 </tr>
          </table>';
+
+
+
+
 }
 
 /**

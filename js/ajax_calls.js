@@ -28,6 +28,8 @@ function loadResults(rules,project_id){
                 count_problems_found++;
                 try{
                     sessionStorage.setItem(val, JSON.stringify(json_parsed[val]["Results"]));
+                    console.log("problem with the ruleddddd:");
+                    console.log(val);
                 }catch(err){
                     console.log("problem with the rule:");
                     console.log(val);
@@ -81,7 +83,7 @@ function loadResults(rules,project_id){
 }
 
 function Workflow(result,project_id ){
-    //remove JustForFunErrors ResearchErrors from the cheklist since they are cheked before the other rules... this is done to avoid repetition... it can be improved>
+    //remove JustForFunErrors ResearchErrors from the checklist since they are checked before the other rules... this is done to avoid repetition... it can be improved>
     var ResearchErrors = "ResearchErrors";
     result.splice($.inArray(ResearchErrors, result),1);
     var JustForFunErrors = "JustForFunErrors";
@@ -91,20 +93,18 @@ function Workflow(result,project_id ){
     $.get( urlcall, function(data) {
 
         $('#final-info').fadeIn("slow");
-        console.log("etra aqui");
-        console.log(data);
+       // console.log("etra aqui");
+       // console.log(data);
         //var json_parsed = jQuery.parseJSON(data);
         var json_parsed = JSON.parse(data);
-        console.log("este es el json_parced justforfun");
-        console.log(json_parsed);
+        //console.log("este es el json_parced justforfun");
+        //console.log(json_parsed);
 
         if(json_parsed !== false){
             //var data = ["Banana", "Orange", "Apple", "Mango"];
 
-
-
-            console.log("paso el false Jusrforfun");
-            console.log(data);
+           // console.log("paso el false Justforfun");
+           // console.log(data);
 
             //console.log(Ftest);
             data=json_parsed["JustForFunErrors"]["Html"];
@@ -197,28 +197,14 @@ function Addstyles(){
         //find_icon.css('background-color', '#25C2E1');
         $(this).children('.gp-body-content').slideToggle();
     });
-    /*this code remove the content from the modal when is closed */
-    $("#ResultsModal").on('hidden.bs.modal', function (e) {
-        e.preventDefault();
-    });
-    /* This code load the content of the link in the same modal */
-    $(function() {
-        $('[data-load-remote]').on('click',function(e) {
-            e.preventDefault();
 
-            var $this = $(this);
-            var remote = $this.data('load-remote');
-            if(remote) {
-                $($this.data('remote-target')).load(remote);
-                $this.data('isloaded', true)
-            }
-        });
-    });
     $('#go_prod_go_btn').prop("disabled",false);
     $('#gp-loader').hide();
 }
 
+
 $( document ).ready(function() {
+
     $("#go_prod_go_btn").click(function(){
         $('#allset1').hide();
         $('#loader-count').text("");
@@ -236,14 +222,18 @@ $( document ).ready(function() {
                 Workflow(result,project_id);
             }});//cierra ajax call
     });//cierra on click
-    //Clean the Modal before refreshing
+
+
+    var ResultsModal =$("#ResultsModal");
+        ResultsModal.on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var url = button.data('link'); // Extract info from data-* attributes
+            $("#remote-html").load(url);
+            //$('.lds-ripple').hide();
 
 
 
-    $("#ResultsModal").on('hidden.bs.modal', function () {
-        $(this).text("");
-
-    });
+        });
 
 
 

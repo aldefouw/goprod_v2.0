@@ -8,7 +8,7 @@
 
 /** @var \Stanford\GoProd\GoProd $module */
 include_once "classes/utilities.php";
-
+include_once  'classes/ReadWriteLogging.php';
 
 //if(!isset($_SESSION['data_dictionary'])){$_SESSION['data_dictionary'] = \REDCap::getDataDictionary('array');}
  //$data_dictionary_array= \REDCap::getDataDictionary('array');
@@ -68,7 +68,7 @@ function PrintRulesNames(){
     $RuleNames = array(); //__DIR__
     //define('CLASSES',__DIR__.'/classes/');
     $url= __DIR__.'/rules/';
-    error_log("URL: $url");
+   // error_log("URL: $url");
     //foreach (glob($url) as $filename)
     //foreach ( scandir(dirname(__FILE__)) as $filename)
     foreach (scandir($url) as $filename)
@@ -76,11 +76,22 @@ function PrintRulesNames(){
         if(ctype_upper(substr($filename, 0, 1)) ){
             $filename=preg_replace('/\.[^.]+$/','',$filename);
             array_push($RuleNames, $filename);
-            error_log("REGLA: $filename");
+           // error_log("REGLA: $filename");
             //include rule
         }
     }
-   // error_log( print_r($RuleNames, TRUE));
+
+
+    //filter skiped rules::
+        //load skipped rules from logg
+    $res= new ReadWriteLogging($_GET['pid']);
+
+    $RuleNames=$res->GetActiveRules($RuleNames);
+   // error_log("RULENAMES:::::::");
+        // remove skyped rules from the Rulenames list
+  //  error_log( print_r($RuleNames, TRUE) );
+  //  error_log("FIN >>>>>RULENAMES:::::::");
+
     return $RuleNames;
 }
 
@@ -88,7 +99,6 @@ function PrintRulesNames(){
 
 
 function PrintTr($title_text,$body_text,$span_label,$a_tag,$rulename){
-
 
        $value=
 
@@ -100,9 +110,9 @@ function PrintTr($title_text,$body_text,$span_label,$a_tag,$rulename){
                 </div>
                     
                 <div class="gp-body-content overflow  gp-text-color" >
-                    <h5 class="list-group-item-text" >
+                    <p class="list-group-item-text" >
                         ' .$body_text.' 
-                    </h5>
+                    </p>
                 </div>
             </td>
             <td class="center " width="100">               
@@ -113,9 +123,7 @@ function PrintTr($title_text,$body_text,$span_label,$a_tag,$rulename){
             </td>
         </tr>';
       // $value=htmlentities(stripslashes(utf8_encode($value)), ENT_QUOTES);
-
        return $value;
-
 }
 
 //Print the level of risk or the rule
@@ -127,28 +135,28 @@ function PrintLevelOfRisk($type){
             $risk_title=lang('WARNING');
             $risk_color='text-warning';
             //$risk_icon='glyphicon glyphicon-exclamation-sign';
-            $risk_icon='glyphicon glyphicon-warning-sign';
+            $risk_icon='fa fa-exclamation-triangle';
             break;
         case "danger":
             $risk_title=lang('DANGER');
             $risk_color='text-danger';
-            $risk_icon='glyphicon glyphicon-fire';
+            $risk_icon='fa fa-fire';
             break;
         case "success":
             $risk_title=lang('SUCCESS');
             $risk_color='text-success';
-            $risk_icon='glyphicon glyphicon-thumbs-up';
+            $risk_icon='fa fa-thumbs-up';
             $size='fa-5x';
             break;
         case "info":
             $risk_title=lang('INFO');
             $risk_color='text-info';
-            $risk_icon='glyphicon glyphicon-info-sign';
+            $risk_icon='fa fa-info-circle';
             break;
         default: //just in case
             $risk_title=lang('INFO');
             $risk_color='text-info';
-            $risk_icon='glyphicon glyphicon-info-sign';
+            $risk_icon='fa fa-info-circle';
     }
      return '<abbr title='.$risk_title.'><span class="'.$size.' '.$risk_icon.' '.$risk_color.'" aria-hidden="true"></span></abbr>';
 }
@@ -156,7 +164,7 @@ function PrintLevelOfRisk($type){
 function PrintAHref($link_to_view){
     global $new_base_url;
     $link= $new_base_url . "i=" . rawurlencode($link_to_view);
-    return '<a href="#ResultsModal" role="button"   class="btn  btn-default btn-lg review_btn" data-toggle="modal" data-load-remote='.$link.' data-is-loaded="false" data-remote-target="#ResultsModal">'.lang('VIEW').'</a>';
+    return '<a href="#ResultsModal" role="button"   class="btn  btn-default btn-lg review_btn" data-toggle="modal" data-link='.$link.' data-is-loaded="false">'.lang('VIEW').'</a>';
 }
 
 //function PrintRule($link_rule,$link_rule_view){

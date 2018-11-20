@@ -24,7 +24,11 @@ include_once  'classes/ReadWriteLogging.php';
                             $res= new ReadWriteLogging($_GET['pid']);
                             //echo $_GET['rule'].$_GET['pid'];
                             //include_once 'classes/ReadWriteLogging.php';
-                            $res->UpdateConfig($_GET['rule'],"alvarologAJAXX".rand(2,88));
-                            $res->SetConfig($_GET['rule'],"ss");
+                            $res->UpdateConfig($_GET['rule'],"0");
+                            $res->SetConfig($_GET['rule'],"0");
                             $res->GetConfig($_GET['rule']);
+                            error_log($res->PrintConfig($_GET['rule']) );
                            // echo $res->PrintConfig($_GET['rule']);
+/// update the Rule list
+///
+///

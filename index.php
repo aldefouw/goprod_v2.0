@@ -68,7 +68,13 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
 
 ?>
 
-<link rel="stylesheet" href="<?php echo $module->getUrl("styles/go_prod_styles.css");   error_log($module->getUrl('views',$noAuth=false)); ?>">
+
+
+
+
+
+
+    <link rel="stylesheet" href="<?php echo $module->getUrl("styles/go_prod_styles.css");?>">
     <div class="projhdr"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> <?php echo lang('TITLE'); ?> </div>
     <div id="main-container">
         <div class="gp-text-color"> <span   ><?php echo lang('MAIN_TEXT');?></span> </div>
@@ -79,8 +85,8 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
             <span id="gp-extra-time" style="display: none" ><?php echo lang('LOADING_EXTRA_TIME');?> </span>
             <span id="gp-starting" style="display: none" ><?php echo lang('STARTING');?></span>
         </button>
-        <div class="progress skill-bar ">
-            <div class="progress-bar progress-bar-warning progress-bar-striped "  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress">
+            <div class="progress-bar bg-warning progress-bar-striped "  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         <table  id="go_prod_table" style="display: none"  class="table table-striped" >
                 <thead id="go_prod_thead">
@@ -88,13 +94,13 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
 <!--                        <th>-->
 <!--                        </th>-->
                         <th>
-                            <h4 class="col_lable"><strong> <?php echo lang('VALIDATION');?></strong></h4>
+                            <h6 class="col_lable"><strong> <?php echo lang('VALIDATION');?></strong></h6>
                         </th>
                         <th width="100">
-                            <h4 class=" col_lable center"><strong><?php echo lang('RESULT');?> </strong></h4>
+                            <h6 class=" col_lable center"><strong><?php echo lang('RESULT');?> </strong></h6>
                         </th>
                         <th width="100">
-                            <h4 class=" col_lable center"><strong><?php echo lang('OPTIONS');?></strong></h4>
+                            <h6 class=" col_lable center"><strong><?php echo lang('OPTIONS');?></strong></h6>
                         </th>
                     </tr>
                 </thead>
@@ -103,7 +109,8 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
                 </tbody>
         </table>
         <div id="gp-loader"  style="display: none"  >
-            <div  class="loader"></div>
+<!--            <div  class="loader"></div>-->
+            <div class="lds-ripple"><div></div><div></div></div>
         </div>
 
 <!--SUCCESS!:: IF we can not find any problem then show this        -->
@@ -127,24 +134,31 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
     </tr>
 </table>
 
+
+
     </div>
 
     <!--REUSABLE MODAL -->
-    <div id="ResultsModal" class="modal modal-lg fade">
-<!--        <div class="modal-dialog modal-md">-->
-<!--            <div class="modal-content">-->
-<!--                <div class="modal-header">-->
-<!--                </div>-->
-<!--                <div class="modal-body">-->
-<!--                    <p>--><?php //echo lang('LOADING');?><!--</p>-->
-                    <div id="gp-loader"   >
-                        <div  class="loader"></div>
-                    </div>
-<!--                </div>-->
-<!--            </div>-->
-<!--             /.modal-content-->
-<!--        </div>-->
+<!--    <div id="ResultsModal" class="modal modal-lg fade">-->
+<!--        <div id="feeds1"><b>45</b> feeds found.</div>-->
+<!--                    <div id="gp-loader"><div class="lds-ripple"><div></div><div></div></div></div>-->
+<!--    </div>-->
 
+    <div id="ResultsModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog  " role="document">
+            <div class="modal-content">
+
+                <div  class="modal-body">
+
+                    <div id="remote-html">
+                        <div id="gp-loader"><div class="lds-ripple"><div></div><div></div></div></div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
     </div>
 
     <!--Ajax calls -->
@@ -154,8 +168,6 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
         var geturl_ajax="<?php echo $module->getUrl('ajax_handler.php'); ?>";
     </script>
     <script type="text/javascript" src="<?php echo $module->getUrl("js/ajax_calls.js");?>"> </script>
-
-
 
 
 <?php
@@ -245,7 +257,9 @@ if($status == 0 or USERID == 'alvaro'){ //USERID == 'alvaro1' and
             location.href = production;
         };
     </script>
-
+<!---->
+<!--    <!-- Latest compiled and minified JavaScript -->
+<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
 
     <?php
 }
