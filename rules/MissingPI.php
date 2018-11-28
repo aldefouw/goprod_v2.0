@@ -8,7 +8,7 @@
 namespace Stanford\GoProd;
 
 
-function  PIExist(){
+function  MissingPI(){
 
     $Rule['title']=lang('PI_TITLE');
     $Rule['body']=lang('PI_BODY');
@@ -19,15 +19,6 @@ function  PIExist(){
     if(!@include_once($phat_to_rule)){ error_log("Failed to include:: $phat_to_rule");}
 
     $res= new check_pi_irb_type();
-    $pi_found=$res::PIExist();
-    if (!$pi_found){
-        // send an array with error
-        $Rule['results'] = array();
-
-        return $Rule;
-    }else {$Rule['results']=false;}
-
-return $Rule;
-
-
+    $Rule['results']=$res::MissingPI();
+    return $Rule;
 }

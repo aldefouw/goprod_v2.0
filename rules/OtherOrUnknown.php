@@ -9,8 +9,6 @@
 
 namespace Stanford\GoProd;
 
-
-
 function InstrumentVariableLabelToHTML($instrument,$VariableName,$Label){
 
     return '<table class="gp-label-table">
@@ -28,9 +26,6 @@ function InstrumentVariableLabelToHTML($instrument,$VariableName,$Label){
                 </tr>
          </table>';
 
-
-
-
 }
 
 /**
@@ -39,9 +34,9 @@ function InstrumentVariableLabelToHTML($instrument,$VariableName,$Label){
  */
 function TransformToThreeColumnsTable($array){
     $tmp=array();
-         $tmp[]=InstrumentVariableLabelToHTML($array[0],$array[1],$array[2]);
-        $tmp[]=$array[3];
-        $tmp[]=$array[4];
+         $tmp[]=InstrumentVariableLabelToHTML($array[0],$array[1],$array[2]); //where is
+        $tmp[]=$array[3];//error
+        $tmp[]=$array[4];// link
        return $tmp;
 }
 
@@ -68,11 +63,14 @@ function OtherOrUnknown(){
 //    $Rule['status'] //actvie- inactive -skiped
     $phat_to_rule= dirname(dirname(__FILE__)) . '/classes/Check_other_or_unknown.php';
     if(!@include_once($phat_to_rule)){ error_log("Failed to include:: $phat_to_rule");}
+
     $res= new check_other_or_unknown();
+
     $Rule['results']=TransformToThreeColumns($res::CheckOtherOrUnknown());
-    if(empty($Rule['results'])){$Rule['results']=false;}
 
+//    if(empty($Rule['results'])){
+//        $Rule['results']=false;
+//    }
     return $Rule;
-
 
 }

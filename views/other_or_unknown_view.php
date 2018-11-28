@@ -5,14 +5,7 @@
  * Date: 3/14/17
  * Time: 12:23 PM
  */
-// Call the REDCap Connect file in the main "redcap" directory
-//require_once "../../../redcap_connect.php";
-//require  '../classes/messages.php';
-//print_r( $_SESSION["OtherOrUnknownErrors"]);
 
-// echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
-//echo  $_SESSION["t"];
-//echo '<pre>' . print_r($_SESSION["OtherOrUnknownErrors"], TRUE) . '</pre>';
 namespace Stanford\GoProd;
 
 

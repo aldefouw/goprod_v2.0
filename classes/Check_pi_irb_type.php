@@ -15,50 +15,90 @@ use \REDCap as REDCap;
 class check_pi_irb_type{
     /**
      * @param $Proj
-     * @return bool --True if the PI is found in the research project
+     * @return array --True if the PI is found in the research project
      */
-    public static function PIExist(){
+    public static function MissingPI(){
         global $Proj;
         $first_name =trim($Proj->project['project_pi_firstname']);
         $last_name=trim($Proj->project['project_pi_lastname']);
         $purpose=trim($Proj->project['purpose']);
-        if (isset($purpose) and isset($last_name) and isset($first_name)){
-            return $purpose === "2" and strlen($first_name) > 0 and strlen($last_name) > 0 ? true : false;
+        $where="Project Setup ";//TODO: create the lang file variable
+        $issue="PI is missing";
+        $link='<a target="_blank" class="btn btn-link" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('VIEW').'</a>';
+        $array=self::CreateResultArray($where,$issue,$link);
+        if($purpose === "2" and strlen($first_name) == 0 and strlen($last_name) == 0){
+            return  $array;// with results - this is a JustFor fun project.
+        }else{
+            return array(); // no results. this is a real project
         }
 
+
+
     }
     /**
      * @param $Proj
-     * @return bool -- True if the IRB Number is set
+     * @return array -- True if the IRB Number is set
      */
-    public static function IRBExist(){
+    public static function MissingIRB(){
         global $Proj;
-    $purpose=trim($Proj->project['purpose']);
-    $irb_number=$Proj->project['project_irb_number'];
-    return $purpose === "2" and strlen(trim($irb_number)) > 0 ? true : false;
+        $irb_number=$Proj->project['project_irb_number'];
+        $where="Project Setup $irb_number";//TODO: create the lang file variable
+        $issue="IRB is missing";
+        $link='<a target="_blank" class="btn btn-link" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('VIEW').'</a>';
+        $array=self::CreateResultArray($where,$issue,$link);
+        $purpose=$Proj->project['purpose'];
+        if($purpose === "2" and strlen(trim($irb_number)) == 0){
+         return  $array;// with results - this is a JustFor fun project.
+        }else{
+             return array(); // no results. this is a real project
+        }
     }
-
-
-
     /**
      * @param $Proj
-     * @return bool -- True if Purpose of this project= Research
+     * @return array --
      */
     public static function IsAResearchProject(){ // "2" for research
         global $Proj;
-        $purpose=$Proj->project['purpose'];
 
-        return $purpose === "2" ? true : false;
+        $where="Project Setup";//TODO: create the lang file variable
+        $issue="This project is not for research";
+        $link='<a target="_blank" class="btn btn-link" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('VIEW').'</a>';
+        $array=self::CreateResultArray($where,$issue,$link);
+        $purpose=$Proj->project['purpose'];
+        if($purpose !== "2" and $purpose !== "0" ){
+            return  $array;// with results - this is a JustFor fun project.
+        }else{
+            return array(); // no results. this is a real project
+        }
+
     }
 
     /**
      * @param $Proj
-     * @return bool -- True if Purpose of this project= Research
+     * @return array
      */
-    public static function IsJustForFunProject(){ // "0" for research
+    public static function IsJustForFunProject(){ // "0" forFun
         global $Proj;
+
+        $where="Project Setup";//TODO: create the lang file variable
+        $issue="Not for fun project can not be moved to production mode";
+        $link='<a target="_blank" class="btn btn-link" href=" '.APP_PATH_WEBROOT.'ProjectSetup/index.php?to_prod_plugin=3&pid='.$_GET['pid'].'"  >'.lang('VIEW').'</a>';
+        $array=self::CreateResultArray($where,$issue,$link);
         $purpose=$Proj->project['purpose'];
-        return $purpose === "0" ? true : false;
+        if($purpose === "0"){
+            return  $array;// with results - this is a JustFor fun project.
+        }else{
+            return array(); // no results. this is a real project
+        }
     }
+
+    public static function CreateResultArray($where,$issue,$link){
+        $tmp=array();
+        array_push($tmp, $where, $issue,$link);
+        $tmp1[0]=$tmp;
+        return $tmp1;
+    }
+
+
 
 }

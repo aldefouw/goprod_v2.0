@@ -8,7 +8,7 @@
 namespace Stanford\GoProd;
 
 
-function  IRBExist(){
+function  MissingIRB(){
 
     $Rule['title']=lang('IRB_TITLE');
     $Rule['body']=lang('IRB_BODY');
@@ -19,15 +19,6 @@ function  IRBExist(){
     if(!@include_once($phat_to_rule)){ error_log("Failed to include:: $phat_to_rule");}
 
     $res= new check_pi_irb_type();
-    $IRB_found=$res::IRBExist();
-    if (!$IRB_found){
-        // send an array with error
-        $Rule['results'] = array();
-
-        return $Rule;
-    }else {$Rule['results']=false;}
-
-    return $Rule;
-
-
+    $Rule['results']=$res::MissingIRB();
+    return  $Rule;
 }

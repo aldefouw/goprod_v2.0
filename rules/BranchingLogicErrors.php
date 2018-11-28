@@ -23,7 +23,9 @@ function  BranchingLogicErrors(){
     $Rule['results']=$res::CheckIfBranchingLogicVariablesExist();
 
 //    error_log( print_r($array, TRUE));
+    error_log("IMPRIMIENDO OTHERUUUUUUU");
     error_log( print_r($Rule, TRUE));
+
     if(!empty($Rule)){
         return $Rule;
     }else return array();
