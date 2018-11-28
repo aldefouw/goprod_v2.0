@@ -22,13 +22,11 @@ function  BranchingLogicErrors(){
     $res= new check_presence_of_branching_and_calculated_variables();
     $Rule['results']=$res::CheckIfBranchingLogicVariablesExist();
 
-//    error_log( print_r($array, TRUE));
-    error_log("IMPRIMIENDO OTHERUUUUUUU");
-    error_log( print_r($Rule, TRUE));
+   error_log( "qqqqquiiiiiiiiiiiiiii;;;");
+   error_log( print_r($Rule, TRUE));
+    error_log( "finnnn;;;");
 
-    if(!empty($Rule)){
-        return $Rule;
-    }else return array();
+    return  $Rule;
 
 
 

@@ -74,10 +74,10 @@ function GetListOfActiveRules(){
         }
     }
 
-    //TODO: filter skiped rules::
+    //TODO: filter skipped rules::
     //load skipped rules from logg
-    $res= new ReadWriteLogging($_GET['pid']);
-    $RuleNames=$res->GetActiveRules($RuleNames);
+   // $res= new ReadWriteLogging($_GET['pid']);
+  //  $RuleNames=$res->GetActiveRules($RuleNames);
 
 
     return $RuleNames;
@@ -107,7 +107,7 @@ function CallRule($RuneName){
      //Call the Rule the function  call_user_func helps to call functions directly from a path  and save the result in $ResultRulesArray
      $ResultRulesArray = call_user_func(__NAMESPACE__."\\".$RuneName);
    //read the results sof the function: if the rule returns true, then extract the Html to present on the views - if not return false
-    if(!empty($ResultRulesArray['results'])){//is_array($ResultRulesArray['results']) and
+    if(!empty($ResultRulesArray['results'])){
         //if found problems
         $a=PrintAHref("views/results.php");// results.php is the DATA TABLE that shows the list of issues
         $span=PrintLevelOfRisk($ResultRulesArray['risk']);
