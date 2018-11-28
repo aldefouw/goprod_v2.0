@@ -17,7 +17,7 @@
 include_once "classes/utilities.php";
 include_once  'classes/ReadWriteLogging.php';
 
-$PathRulesFolder="rules/"; //folder with all rules
+$PathRulesFolder="rules/"; //folder with all rules is called in the code by using $GLOBALS['PathRulesFolder']
 
 
 
@@ -73,10 +73,13 @@ function GetListOfActiveRules(){
             array_push($RuleNames, $filename);
         }
     }
-    //filter skiped rules::
+
+    //TODO: filter skiped rules::
     //load skipped rules from logg
     $res= new ReadWriteLogging($_GET['pid']);
     $RuleNames=$res->GetActiveRules($RuleNames);
+
+
     return $RuleNames;
 }
 
@@ -86,7 +89,7 @@ function GetListOfActiveRules(){
 function CallRule($RuneName){
 
     //path to the rule folder
-   // $phat_to_rule='rules/'.$RuneName.'.php';
+
     $phat_to_rule=$GLOBALS['PathRulesFolder'].$RuneName.'.php';
 
     //Dynamic include the path of the rule in order to be called -- exit if fails
@@ -106,7 +109,7 @@ function CallRule($RuneName){
    //read the results sof the function: if the rule returns true, then extract the Html to present on the views - if not return false
     if(!empty($ResultRulesArray['results'])){//is_array($ResultRulesArray['results']) and
         //if found problems
-        $a=PrintAHref("views/other_or_unknown_view.php");//todo:vistas not ready yet
+        $a=PrintAHref("views/results.php");// results.php is the DATA TABLE that shows the list of issues
         $span=PrintLevelOfRisk($ResultRulesArray['risk']);
         $print=PrintTr($ResultRulesArray['title'],$ResultRulesArray['body'],$span,$a,$RuneName);
         $ResultRulesArray=$ResultRulesArray['results'];

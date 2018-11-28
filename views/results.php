@@ -58,16 +58,6 @@ namespace Stanford\GoProd;
 
 <script>
 
-//
-//    var recommendation="<?php //echo '#'.$_GET['rule'];?>//";
-//    var geturl_ajax="<?php //echo $module->getUrl('ajax_handler.php'); ?>//";
-//    var rec = $(recommendation).find( "td" ).html();
-//
-//    console.log(recommendation);
-//    $('#tab_issues').append(rec);
-
-
-
     $('#focus-tab').tab('show');
     var columns = [
         { "title":<?php echo json_encode(lang('RESULTS_TABLE_HEADER1'));?>},
@@ -106,9 +96,5 @@ namespace Stanford\GoProd;
             $(".gtp-card").removeClass("gtp-card fade show active").addClass("gtp-card").hide();
             $(href).addClass("fade show active").show();
         });
-
-
-
-
     } );
 </script>
