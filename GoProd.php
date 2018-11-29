@@ -8,7 +8,7 @@ class GoProd extends AbstractExternalModule
     function hook_every_page_top($project_id)
 	{
 
-        $this->log("Here", func_get_args());
+       // $this->log("Here", func_get_args());
 	    $goprod_workflow=$this->getProjectSetting("gopprod-workflow");
 
         if(PAGE == 'ProjectSetup/index.php' and isset($project_id) and $goprod_workflow==1){
@@ -43,21 +43,25 @@ class GoProd extends AbstractExternalModule
             <?php
         }
 	}
-    function log() {
-        $emLogger = \ExternalModules\ExternalModules::getModuleInstance('em_logger');
-        $emLogger->log($this->PREFIX, func_get_args(), "INFO");
-    }
 
-    function debug() {
-        // Check if debug enabled
-        if ($this->getSystemSetting('enable-system-debug-logging') || $this->getProjectSetting('enable-project-debug-logging')) {
-            $emLogger = \ExternalModules\ExternalModules::getModuleInstance('em_logger');
-            $emLogger->log($this->PREFIX, func_get_args(), "DEBUG");
-        }
-    }
 
-    function error() {
-        $emLogger = \ExternalModules\ExternalModules::getModuleInstance('em_logger');
-        $emLogger->log($this->PREFIX, func_get_args(), "ERROR");
-    }
+
+//
+//    function log() {
+//        $emLogger = \ExternalModules\ExternalModules::getModuleInstance('em_logger');
+//        $emLogger->log($this->PREFIX, func_get_args(), "INFO");
+//    }
+
+//    function debug() {
+//        // Check if debug enabled
+//        if ($this->getSystemSetting('enable-system-debug-logging') || $this->getProjectSetting('enable-project-debug-logging')) {
+//            $emLogger = \ExternalModules\ExternalModules::getModuleInstance('em_logger');
+//            $emLogger->log($this->PREFIX, func_get_args(), "DEBUG");
+//        }
+//    }
+
+//    function error() {
+//        $emLogger = \ExternalModules\ExternalModules::getModuleInstance('em_logger');
+//        $emLogger->log($this->PREFIX, func_get_args(), "ERROR");
+//    }
 }
