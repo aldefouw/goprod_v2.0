@@ -32,8 +32,6 @@ class check_pi_irb_type{
             return array(); // no results. this is a real project
         }
 
-
-
     }
     /**
      * @param $Proj
@@ -98,7 +96,5 @@ class check_pi_irb_type{
         $tmp1[0]=$tmp;
         return $tmp1;
     }
-
-
 
 }
