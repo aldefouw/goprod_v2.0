@@ -24,6 +24,9 @@ function  MissingPI(){
     $res= new check_pi_irb_type();
     $Rule['results']=$res::MissingPI();
 
+    //    error_log("*****MissingPI*************************************************");
+//    error_log(print_r($Rule, TRUE));
+//    error_log("******************************************************");
 
     return $Rule;
 }
@@ -31,18 +34,22 @@ function  MissingPI(){
 
 /** EXAMPLE OF THE RETURNED ARRAY
  *
- Array
+Array
 (
-    [title] => this is the tile of the rule
-    [body] => Here is the explanation  of why this is a problem.....
-    [risk] => danger
-    [results] => Array
+[title] => Missing PI name and last name.
+[body] => For a research project the name of the principal investigator (PI) is required. Please add it in the "Modify project title, purpose, etc." button under the Project Setup-> Modify project title, purpose, etc. -> Name of P.I. (if applicable):.
+[risk] => danger
+[results] => Array
         (
+        [0] => Array
+            (
+            [0] => Project Setup
+            [1] => PI is missing
+            [2] => <a target="_blank" class="btn btn-link" href=" /redcap/redcap_v8.9.2/ProjectSetup/index.php?to_prod_plugin=3&pid=15"  >Review</a>
+            )
 
         )
 
 )
- *
- *
  *
  * */

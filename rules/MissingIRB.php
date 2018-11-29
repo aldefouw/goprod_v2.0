@@ -22,12 +22,6 @@ function  MissingIRB(){
     $res= new check_pi_irb_type();
     $Rule['results']=$res::MissingIRB();
 
-
-    error_log("*****MissingIRB*************************************************");
-    error_log(print_r($Rule, TRUE));
-    error_log("******************************************************");
-
-
     return  $Rule;
 }
 
