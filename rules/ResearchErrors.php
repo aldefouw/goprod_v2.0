@@ -10,6 +10,8 @@ function ResearchErrors(){
 
     $phat_to_rule= dirname(dirname(__FILE__)) . '/classes/Check_pi_irb_type.php';
 
+   // $test= new CreateRuleHelper();
+
     if(!@include_once($phat_to_rule)){ error_log("Failed to include:: $phat_to_rule");}
     $res= new check_pi_irb_type();
     $Rule['results']=$res::IsAResearchProject();

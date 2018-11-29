@@ -14,11 +14,35 @@ function  MissingPI(){
     $Rule['body']=lang('PI_BODY');
     $Rule['risk']="danger"; // level of risk: warning, danger or info.
 
+
+
+
     $phat_to_rule= dirname(dirname(__FILE__)) . '/classes/Check_pi_irb_type.php';
 
     if(!@include_once($phat_to_rule)){ error_log("Failed to include:: $phat_to_rule");}
 
     $res= new check_pi_irb_type();
     $Rule['results']=$res::MissingPI();
+
+
     return $Rule;
 }
+
+
+/** EXAMPLE OF THE RETURNED ARRAY
+ *
+ Array
+(
+    [title] => this is the tile of the rule
+    [body] => Here is the explanation  of why this is a problem.....
+    [risk] => danger
+    [results] => Array
+        (
+
+        )
+
+)
+ *
+ *
+ *
+ * */
