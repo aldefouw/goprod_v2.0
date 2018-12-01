@@ -6,18 +6,17 @@
  * Time: 12:45 AM
  */
 // large proj for testing 5749 , PID 9748 5292
-// Call the REDCap Connect file in the main "redcap" directory
 
 namespace Stanford\GoProd;
 
-//require_once \ExternalModules\ExternalModules::getProjectHeaderPath();
+
 /** @var \Stanford\GoProd\GoProd $module */
 
 
 include_once APP_PATH_DOCROOT . "ProjectGeneral/header.php";
 
 //$module = new GoProd();
-
+global $Proj;
 
 //$test=$module->getSystemSetting("enabled");
 //$test=$module->getConfig();
@@ -56,9 +55,9 @@ require_once 'classes/utilities.php';
 //echo $_SERVER['DOCUMENT_ROOT'];
 //echo APP_PATH_WEBROOT;
 //echo redcap_info();
-
+$status=trim($Proj->project['status']);
 // Warning if project is in production mode
-if ($status == 1) {
+if ( $status == 1) {
     echo lang('PRODUCTION_WARNING');
 }
 //REDCap Version Warning
@@ -67,10 +66,6 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
 }
 
 ?>
-
-
-
-
 
 
 
@@ -91,8 +86,7 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
         <table  id="go_prod_table" style="display: none"  class="table table-striped" >
                 <thead id="go_prod_thead">
                     <tr>
-<!--                        <th>-->
-<!--                        </th>-->
+
                         <th>
                             <h6 class="col_lable"><strong> <?php echo lang('VALIDATION');?></strong></h6>
                         </th>
@@ -108,8 +102,8 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
                 <tbody id="go_prod_tbody">
                 </tbody>
         </table>
+
         <div id="gp-loader"  style="display: none"  >
-<!--            <div  class="loader"></div>-->
             <div class="lds-ripple"><div></div><div></div></div>
         </div>
 
@@ -118,9 +112,9 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
    <tr>
        <td style="border: none">
             <strong>
-                <h2>
+
                     <?php echo lang('READY_TO_GO_TITLE'); ?>
-                </h2>
+
             </strong>
        </td>
    </tr>
@@ -139,24 +133,15 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
     </div>
 
     <!--REUSABLE MODAL -->
-<!--    <div id="ResultsModal" class="modal modal-lg fade">-->
-<!--        <div id="feeds1"><b>45</b> feeds found.</div>-->
-<!--                    <div id="gp-loader"><div class="lds-ripple"><div></div><div></div></div></div>-->
-<!--    </div>-->
 
     <div id="ResultsModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog  " role="document">
             <div class="modal-content">
-
                 <div  class="modal-body">
-
                     <div id="remote-html">
                         <div id="gp-loader"><div class="lds-ripple"><div></div><div></div></div></div>
                     </div>
-
-
                 </div>
-
             </div>
         </div>
     </div>
@@ -179,9 +164,6 @@ exit();
 
 echo USERID;
 echo $status;
-//error_log("goprod_workflow VARIABLE");
-//error_log($goprod_workflow);
-
 
 /*Remove the go to production button if the project is already in production mode*/
 if($status == 0 or USERID == 'alvaro'){ //USERID == 'alvaro1' and
@@ -222,20 +204,6 @@ if($status == 0 or USERID == 'alvaro'){ //USERID == 'alvaro1' and
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <script type="text/javascript">
         /*Auto Run the report if the  URL  variable is to_prod_plugin=2 */
         $( document ).ready(function() {
@@ -246,8 +214,6 @@ if($status == 0 or USERID == 'alvaro'){ //USERID == 'alvaro1' and
                 $('button[id="go_prod_go_btn"]').click();
             }
 
-
-
         });
     </script>
     <script type="text/javascript">
@@ -257,9 +223,6 @@ if($status == 0 or USERID == 'alvaro'){ //USERID == 'alvaro1' and
             location.href = production;
         };
     </script>
-<!---->
-<!--    <!-- Latest compiled and minified JavaScript -->
-<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
 
     <?php
 }
