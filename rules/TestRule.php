@@ -18,6 +18,7 @@ function  TestRule(){
 
     if(!@include_once($phat_to_rule)){ error_log("Failed to include:: $phat_to_rule");}
 
+
     $res= new check_other_or_unknown();
     $Rule['results']=$res::CheckOtherOrUnknown();
 
