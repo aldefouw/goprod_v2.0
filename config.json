@@ -39,7 +39,7 @@
 	"system-settings": [
 		{
 			"key": "gopprod-workflow",
-			"name": "<b>Modify the move to production workflow:</b> <br><i>Replace the behavior  or the 'Move Project to roduction' button on the Project Setup</i>",
+			"name": "<b>Modify the move to production workflow:</b> <br><i>Replace the behavior  or the 'Move Project to Production' button on the Project Setup</i> <br>You must remove any  Custom message when moving project to production on the general configuration",
 			"required": false,
 			"allow-project-overrides": false,
 			"default": "1",

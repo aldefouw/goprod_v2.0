@@ -17,7 +17,7 @@
 include_once "classes/utilities.php";
 include_once  'classes/ReadWriteLogging.php';
 
-$PathRulesFolder="rules/"; //folder with all rules is called in the code by using $GLOBALS['PathRulesFolder']
+//$PathRulesFolder="rules/"; //folder with all rules is called in the code by using $GLOBALS['PathRulesFolder']
 
 
 

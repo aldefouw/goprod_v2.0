@@ -19,7 +19,6 @@ class GoProd extends AbstractExternalModule
                         //find and hide the current go to prod button
                         var MoveProd=  $( "button[onclick='btnMoveToProd()']" );
                         MoveProd.hide();
-                        link =  <?php  echo json_encode('/go_prod/index.php?pid='.$_GET['pid'].'&to_prod_plugin=2')?>;
                         //add the new go to pro button
                         gopro_button= '<button id="go_prod_plugin" class="btn btn-defaultrc btn-xs fs13">'+ '<?php echo lang('GO_PROD');?>' +'</button>';
                         MoveProd.after(gopro_button);
@@ -31,9 +30,9 @@ class GoProd extends AbstractExternalModule
                         if (ready_to_prod === '1'){
                             MoveProd.click();
                             $( 'div[aria-describedby="certify_prod"]' ).hide();
-                            setTimeout(function(){
-                                $('.ui-dialog-buttonpane button').click();
-                            },500);
+                            // setTimeout(function(){
+                            // $('.ui-dialog-buttonpane button').click();
+                            // },500);
                         }
                         if (ready_to_prod === '3'){
                             //in case of IRB ,  PI  or purpose errors found
