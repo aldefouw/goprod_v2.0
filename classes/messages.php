@@ -42,6 +42,9 @@ function lang($phrase){
             'JUST_FOR_FUN_PROJECT_TITLE' => 'The purpose of this project is "<u>Practice/Just for Fun.</u>"',
             'JUST_FOR_FUN_PROJECT_BODY' => 'There is no reason to move this project into production mode.  There are NO additional features that are enabled when moving to production. You can test and even collect data in development mode. If this is a research project, please change the purpose of the project: <br> <strong>1.</strong> Go to Project Setup.<br> <strong>2.</strong> Click on the "Modify project title, purpose, etc.." button located in the panel named "Modify Project Settings". <br> <strong>3.</strong> Change the purpose of the project.',
 
+            'NOT_RX_OR_QI_TITLE' => 'The purpose of this project is "<u>Neither Research nor Quality Improvement.</u>"',
+            'NOT_RX_OR_QI_BODY' => 'Your project does not have to be reviewed by our REDCap Staff as its purpose is neither Research nor Quality Improvement. Yet, you can request your project to be reviewed or you can continue by moving your project to Production Mode in which you can start collecting data immediately.',
+
             'DATE_CONSISTENT_TITLE' => 'Date format inconsistencies.',
             'DATE_CONSISTENT_BODY' => 'Your project uses different date formats (i.e, mix of mdy and ymd). <strong> You should validate consistently across all dates.</strong> When data is analyzed in statistical software you often only see the unformatted values.  So, it is important to be consistent across your project so the date formats don\'t arbitrarily change from question to question. For example, May 1, 2012 could be formatted as MDY (05-01-2012) or DMY (01-05-2012). Naively, this could be interpreted as both May 1, 2012 AND January 5, 2012 ',
 
