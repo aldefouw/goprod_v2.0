@@ -125,10 +125,9 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
     </tr>
     <tr class="gp-tr">
         <td class="gp-title-content " style="border: none"> <?php echo lang('READY_TO_GO_BODY'); ?></td>
+
     </tr>
 </table>
-
-
 
     </div>
 
@@ -145,7 +144,10 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
             </div>
         </div>
     </div>
-
+    <!-- em@partners.org: Adding Go to Production button-->
+    <div align="center">
+    <button id="go_prod_accept_all1" class=" btn btn-md btn-success text-center " style="display: none;"> <?php echo lang('I_AGREE');?> </button>
+    </div>
     <!--Ajax calls -->
     <script>
       //psssing php variables
@@ -154,16 +156,28 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
     </script>
     <script type="text/javascript" src="<?php echo $module->getUrl("js/ajax_calls.js");?>"> </script>
 
+    <script type="text/javascript">
 
+        document.getElementById("go_prod_accept_all1").onclick = function(){
+            // em@partners.org: 1. There is a bug in the next line that doesn't grab the entire URL address.
+            //                     I had to add 'https://' by hand, and the server name by php.
+            //                  2. Intented GoProd usage is meant to link the end of GoProd to the Production workflow
+            //                     in which the user clicks the "Send request to move to production" button after
+            //                     the GoProd takes them to the "Move to Prod" window. That's why we're using the
+            //                     tag of to_prod_plugin=3.
+            production = <?php  echo json_encode('https://'.$_SERVER['SERVER_NAME'].APP_PATH_WEBROOT.'ProjectSetup/index.php?pid='.$_GET['pid'].'&to_prod_plugin=3')?>;
+            location.href = production;
+        };
+    </script>
 <?php
 
 $goprod_workflow=$module->getProjectSetting("gopprod-workflow");
 if ($goprod_workflow==0){
 exit();
 }
-
-echo USERID;
-echo $status;
+//em@partners removing echos for UserID and status
+//echo USERID;
+//echo $status;
 
 /*Remove the go to production button if the project is already in production mode*/
 if($status == 0 or USERID == 'alvaro'){ //USERID == 'alvaro1' and
@@ -209,19 +223,12 @@ if($status == 0 or USERID == 'alvaro'){ //USERID == 'alvaro1' and
         $( document ).ready(function() {
 
             ready_to_prod = <?php echo json_encode($_GET["to_prod_plugin"])?>;
-
+          //  window.alert(ready_to_prod);
             if (ready_to_prod === '2'){
                 $('button[id="go_prod_go_btn"]').click();
             }
 
         });
-    </script>
-    <script type="text/javascript">
-
-        document.getElementById("go_prod_accept_all").onclick = function () {
-            production = <?php  echo json_encode(APP_PATH_WEBROOT.'ProjectSetup/index.php?pid='.$_GET['pid'].'&to_prod_plugin=1')?>;
-            location.href = production;
-        };
     </script>
 
     <?php
