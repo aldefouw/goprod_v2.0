@@ -139,6 +139,8 @@ function lang($phrase){
               'SETTINGS_RULE'=>' Rule/Checklist',
               'SETTINGS_OPTIONS'=>'Options',
               'SETTINGS_ALERT_LEVEL'=>'Alert Level',
+              'RECOMMENDED_VALUES'=>'Recommended Values',
+              'RECOMMENDED_KEYWORDS'=>'Recommended Keywords',
               'SETTINGS_ACTIVE'=>'Active',
 
             'RESULTS_TABLE_HEADER1'=>'Where',

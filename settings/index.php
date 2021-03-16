@@ -8,15 +8,17 @@
 
 namespace Stanford\GoProd;
 
-// echo '<pre>' . print_r($_SESSION["NotDesignatedFormsErrors"], TRUE) . '</pre>';
-//require  '../classes/messages.php';
+//This is the ACTUAL configuration
+$file = $GLOBALS['modulePath'].'/settings/config.json';
 
-//$file = "../settings/tsconfig.json";
-$file = "tsconfig.json";
+//This is the source we're copying from if the ACTUAL configuration doesn't exist yet
+$source = $GLOBALS['modulePath'].'/base_config/config.json';
+
+//If the ACTUAL configuration doesn't exist, copy it form the base configuration
+if(!file_exists($file)) copy($source, $file);
+
+//Decode the file into JSON format from the ACTUAL configuration
 $json = json_decode(file_get_contents($file),TRUE);
-
-
-
 ?>
 <link rel="stylesheet" href="<?php echo $module->getUrl('styles/settings.css');?>">
 
@@ -24,12 +26,14 @@ $json = json_decode(file_get_contents($file),TRUE);
 <div class="container">
     <h1><?php echo lang('SETTINGS_TITLE');?> </h1>
     <p><?php echo lang('SETTINGS_MAIN_TEXT');?> </p>
-    <table id="settings" class="display cell-border" cellspacing="0" WIDTH="90%" >
+    <table id="settings" class="display cell-border" cellspacing="0" cellpadding="0" style="width: 100%;" width="100%">
         <thead>
         <tr>
             <th> <?php echo lang('SETTINGS_RULE');?> </th>
 
             <th><?php echo lang('SETTINGS_ALERT_LEVEL');?></th>
+            <th></th>
+            <th></th>
             <th><?php echo lang('SETTINGS_ACTIVE');?></th>
         </tr>
         </thead>
@@ -37,7 +41,7 @@ $json = json_decode(file_get_contents($file),TRUE);
         <tr>
             <td class="dt-body-left"><?php echo lang('OTHER_OR_UNKNOWN_TITLE');?></td>
             <td class="dt-body-center">
-                <select size="1" id="other-unknown-alert-level" name="other-unknown-alert-level"  title="other-unknown-alert-level">
+                <select size="1" id="other-unknown-alert-level" name="other_or_unknown[type]"  title="other-unknown-alert-level">
                     <option value="<?php echo lang('INFO');?>" <?php  if (strtolower($json['other_or_unknown']['type'])== strtolower(lang('INFO'))) echo "selected=\"selected\""; ?> >
                         <?php echo lang('INFO');?>
                     </option>
@@ -49,6 +53,13 @@ $json = json_decode(file_get_contents($file),TRUE);
                     </option>
                 </select>
             </td>
+            <td><?php echo lang('RECOMMENDED_VALUES');?>
+                <textarea name="other_or_unknown[recommended_values]" style="min-width: 300px; min-height: 200px;"><?php echo $json['other_or_unknown']['recommended_values']; ?></textarea>
+            </td>
+            <td>
+                <?php echo lang('RECOMMENDED_KEYWORDS');?>
+                <textarea name="other_or_unknown[keywords]" style="min-width: 300px; min-height: 200px;"><?php echo $json['other_or_unknown']['keywords']; ?></textarea>
+            </td>
             <td class="dt-body-center">
                 <label class="switch">
                     <input type="checkbox" name="other-active-selected" value="" <?php  if ($json['other_or_unknown']['active']) echo "checked"; ?>>
@@ -56,7 +67,97 @@ $json = json_decode(file_get_contents($file),TRUE);
                 </label>
             </td>
         </tr>
+
         <tr>
+            <td class="dt-body-left"><?php echo lang('YES_NO_TITLE');?></td>
+            <td class="dt-body-center">
+                <select size="1" id="other-yes-no-alert-level" name="yes_no[type]"  title="other-yes-no-alert-level">
+                    <option value="<?php echo lang('INFO');?>" <?php  if (strtolower($json['yes_no']['type'])== strtolower(lang('INFO'))) echo "selected=\"selected\""; ?> >
+                        <?php echo lang('INFO');?>
+                    </option>
+                    <option value=" <?php echo lang('WARNING');?>" <?php  if (strtolower($json['yes_no']['type'])==strtolower(lang('WARNING'))) echo "selected=\"selected\""; ?>>
+                        <?php echo lang('WARNING');?>
+                    </option>
+                    <option value="<?php echo lang('DANGER');?>" <?php  if (strtolower($json['yes_no']['type'])==strtolower(lang('DANGER'))) echo "selected=\"selected\""; ?>>
+                        <?php echo lang('DANGER');?>
+                    </option>
+                </select>
+            </td>
+            <td>
+                <textarea name="yes_no[keywords_yes]" style="min-width: 300px; min-height: 200px;"><?php echo $json['yes_no']['keywords_yes']; ?></textarea>
+            </td>
+            <td>
+                <textarea name="yes_no[keywords_no]" style="min-width: 300px; min-height: 200px;"><?php echo $json['yes_no']['keywords_no']; ?></textarea>
+            </td>
+            <td class="dt-body-center">
+                <label class="switch">
+                    <input type="checkbox" name="yes-no-active-selected" value="" <?php  if ($json['yes_no']['active']) echo "checked"; ?>>
+                    <div class="slider round"></div>
+                </label>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="dt-body-left"><?php echo lang('TEST_RECORDS_TITLE');?></td>
+            <td class="dt-body-center">
+                <select size="1" id="test-records-alert-level" name="test_records[type]"  title="test-records-alert-level">
+                    <option value="<?php echo lang('INFO');?>" <?php  if (strtolower($json['test_records']['type'])== strtolower(lang('INFO'))) echo "selected=\"selected\""; ?> >
+                        <?php echo lang('INFO');?>
+                    </option>
+                    <option value=" <?php echo lang('WARNING');?>" <?php  if (strtolower($json['test_records']['type'])==strtolower(lang('WARNING'))) echo "selected=\"selected\""; ?>>
+                        <?php echo lang('WARNING');?>
+                    </option>
+                    <option value="<?php echo lang('DANGER');?>" <?php  if (strtolower($json['test_records']['type'])==strtolower(lang('DANGER'))) echo "selected=\"selected\""; ?>>
+                        <?php echo lang('DANGER');?>
+                    </option>
+                </select>
+            </td>
+            <td>
+                <textarea name="test_records[no_records]" style="min-width: 300px; min-height: 200px;"><?php echo $json['test_records']['no_records']; ?></textarea>
+            </td>
+            <td>
+                <textarea name="test_records[no_exports]" style="min-width: 300px; min-height: 200px;"><?php echo $json['test_records']['no_exports']; ?></textarea>
+            </td>
+            <td class="dt-body-center">
+                <label class="switch">
+                    <input type="checkbox" name="test-records-active-selected" value="" <?php  if ($json['test_records']['active']) echo "checked"; ?>>
+                    <div class="slider round"></div>
+                </label>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="dt-body-left"><?php echo lang('POSITIVE_NEGATIVE_TITLE');?></td>
+            <td class="dt-body-center">
+                <select size="1" id="positive-negative-alert-level" name="positive_negative[type]"  title="positive-negative-alert-level">
+                    <option value="<?php echo lang('INFO');?>" <?php  if (strtolower($json['positive_negative']['type'])== strtolower(lang('INFO'))) echo "selected=\"selected\""; ?> >
+                        <?php echo lang('INFO');?>
+                    </option>
+                    <option value=" <?php echo lang('WARNING');?>" <?php  if (strtolower($json['positive_negative']['type'])==strtolower(lang('WARNING'))) echo "selected=\"selected\""; ?>>
+                        <?php echo lang('WARNING');?>
+                    </option>
+                    <option value="<?php echo lang('DANGER');?>" <?php  if (strtolower($json['positive_negative']['type'])==strtolower(lang('DANGER'))) echo "selected=\"selected\""; ?>>
+                        <?php echo lang('DANGER');?>
+                    </option>
+                </select>
+            </td>
+            <td>
+                <textarea name="positive_negative[keywords_positive]" style="min-width: 300px; min-height: 200px;"><?php echo $json['positive_negative']['keywords_positive']; ?></textarea>
+            </td>
+            <td>
+                <textarea name="positive_negative[keywords_negative]" style="min-width: 300px; min-height: 200px;"><?php echo $json['positive_negative']['keywords_negative']; ?></textarea>
+            </td>
+            <td class="dt-body-center">
+                <label class="switch">
+                    <input type="checkbox" name="positive-negative-active-selected" value="" <?php  if ($json['positive_negative']['active']) echo "checked"; ?>>
+                    <div class="slider round"></div>
+                </label>
+            </td>
+        </tr>
+
+        <tr>
+            <td> </td>
+            <td> </td>
             <td> </td>
             <td> </td>
             <td> <div align="right"> <button type="button" class="btn btn-primary">Save</button></div></td>
@@ -99,17 +200,19 @@ $json = json_decode(file_get_contents($file),TRUE);
             var dataset = table.$('input, select, textarea ').serialize();//input, select, textarea, checkbox
             $.ajax({type: "POST",
                 data:dataset,
-                url:'save.php',
+                url: <?php echo APP_PATH_WEBROOT; ?> + "ExternalModules/?prefix=goprod&page=settings/save",
                 success: function (result){
-                    // $("#div1").html(result);
-                    // window.location.href = "save";
+                    alert("You have successfully saved this configuration.")
+
                     location.reload();
-                    alert(
-                        "The following data would have been submitted to the server: \n\n"
-                        //+ data.substr( 0, 120 )+'...'
-                    );
+
                 }, error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert("some error");
+
+                    alert('An error occurred when attempting to save your setup to the tsconfig.json file.');
+
+                    console.log(XMLHttpRequest);
+                    console.log(textStatus);
+                    console.log(errorThrown);
                 }
 
             });

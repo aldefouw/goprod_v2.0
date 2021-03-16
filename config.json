@@ -57,9 +57,25 @@
 				{ "value": "es", "name": "Español" }
 
 			]
+		},
+		{
+			"key": "other_or_unknown",
+			"name": "Other or Unknown Recommended Values",
+			"type": "text",
+			"default": "97,88,98,99,999,9999,888,8888,-1,777,7777"
+		},
+		{
+			"key": "other_or_unknown_keywords",
+			"name": "Other or Unknown Keywords",
+			"type": "text",
+			"default": "Other, Unknown, Don't know/Not sure ,Don't know,Not sure, Not Reported, NA, N/A, uninterpretable, otro, otra, no se, Other please specify, not obtained, missing data, do not know or not sure, refused, no response was entered on form despite affirming that the patient was untestable, no response was entered on form despite affirming that the patient was testable, did not provide answer / not answered, other type, unclear, not gradable, other frequency, sent or stored other, no data available, unable to examine"
+		},
+		{
+			"key": "email-repetitive",
+			"name": "Resend Emails on Form Re-save?",
+			"required": false,
+			"type":"checkbox"
 		}
 	],
-
-	
 	"project-settings": []
 }
