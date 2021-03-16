@@ -1,10 +1,7 @@
 <?php
 namespace Stanford\GoProd;
 
+require APP_PATH_DOCROOT . "ControlCenter/header.php";
 
-use ExternalModules\AbstractExternalModule;
-use ExternalModules\ExternalModules;
-$HtmlPage = new \HtmlPage();
-$HtmlPage->PrintHeaderExt();
 include 'settings/index.php';
 // $HtmlPage->PrintFooterExt();
