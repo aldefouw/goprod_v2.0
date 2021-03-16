@@ -1,4 +1,21 @@
-
 README.md
 
-README.md
+/settings/config.json
+
+/.idea/*
+*.jks
+*.jceks
+*.pkcs12
+*.pk12
+*.pem
+*.pfx
+
+# Operating system garbage
+.DS_Store
+[Tt]humbs.db
+
+# Emacs backup files
+*~
+
+vendor/*
+
