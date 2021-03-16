@@ -183,28 +183,30 @@ if($status == 0){
         <br>
         <h4 class="projhdr"><?php echo lang('NOTICE');?></h4>
     <hr>
-    <ul class="list-group col-md-6 col-sm-6 col-xs-12">
+
+    <ul class="list-group">
         <li class="list-group-item">
             <h4 class="list-group-item-heading"><?php echo lang('INFO_WHAT_NETX');?></h4>
-            <p class="list-group-item-text"> <?php echo lang('INFO_WHAT_NETX_BODY');?></p>
+            <p class="list-group-item-text"> <?php echo $module->getSystemSetting('next_text');?></p>
             <br>
         </li>
-        <br>
+
         <li class="list-group-item">
             <p class="list-group-item-text"><?php echo lang('INFO_WHAT_NETX_BODY_2');?></p>
         </li>
     </ul>
-    <ul class="list-group col-md-6 col-sm-6 col-xs-12">
+    <ul class="list-group">
         <li class="list-group-item">
-            <h4 class="list-group-item-heading"><?php echo lang('INFO_CITATION');?></h4>
-            <p class="list-group-item-text"><?php echo lang('INFO_CITATION_BODY');?>  </p>
+            <h5 class="list-group-item-heading"><?php echo lang('INFO_CITATION');?></h5>
+            <p class="list-group-item-text"><?php echo $module->getSystemSetting('citation_text');?>  </p>
         </li>
-        <br>
+
         <li class="list-group-item">
-            <h4 class="list-group-item-heading"><?php echo lang('INFO_STATISTICIAN_REVIEW');?>  </h4>
+            <h5 class="list-group-item-heading"><?php echo lang('INFO_STATISTICIAN_REVIEW');?>  </h5>
             <p class="list-group-item-text"> <?php echo lang('INFO_STATISTICIAN_REVIEW_BODY');?> </p>
         </li>
     </ul>
+
     <div class="col-md-12 col-sm-6 col-xs-12 col-lg-12 text-center well" >
         <h4>
             <?php echo lang('I_AGREE_BODY');?>

@@ -57,6 +57,16 @@
 				{ "value": "es", "name": "Español" }
 
 			]
+		},
+		{
+			"key": "next_text",
+			"name": "What happens next?",
+			"type": "rich-text"
+		},
+		{
+			"key": "citation_text",
+			"name": "Citation Information",
+			"type": "rich-text"
 		}
 	],
 	"project-settings": []
