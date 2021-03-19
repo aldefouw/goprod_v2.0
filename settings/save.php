@@ -19,7 +19,7 @@ if(file_exists($file)){
 
 
     if(isset($_POST['other_or_unknown']['type'])) {
-        $json['other_or_unknown']['type'] = $_POST['other_or_unknown']['type'];
+        $json['other_or_unknown']['type'] = trim($_POST['other_or_unknown']['type']);
     }
     if(isset($_POST['other_or_unknown']['recommended_values'])) {
         $json['other_or_unknown']['recommended_values'] = trim($_POST['other_or_unknown']['recommended_values']);
@@ -29,7 +29,7 @@ if(file_exists($file)){
     }
 
     if(isset($_POST['yes_no']['type'])) {
-        $json['yes_no']['type'] = $_POST['yes_no']['type'];
+        $json['yes_no']['type'] = trim($_POST['yes_no']['type']);
     }
     if(isset($_POST['yes_no']['keywords_yes'])) {
         $json['yes_no']['keywords_yes'] = trim($_POST['yes_no']['keywords_yes']);
@@ -39,7 +39,7 @@ if(file_exists($file)){
     }
 
     if(isset($_POST['test_records']['type'])) {
-        $json['test_records']['type'] = $_POST['test_records']['type'];
+        $json['test_records']['type'] = trim($_POST['test_records']['type']);
     }
     if(isset($_POST['test_records']['no_exports'])) {
         $json['test_records']['no_records'] = trim($_POST['test_records']['no_records']);
@@ -49,7 +49,7 @@ if(file_exists($file)){
     }
 
     if(isset($_POST['test_records']['type'])) {
-        $json['positive_negative']['type'] = $_POST['positive_negative']['type'];
+        $json['positive_negative']['type'] = trim($_POST['positive_negative']['type']);
     }
     if(isset($_POST['positive_negative']['keywords_positive'])) {
         $json['positive_negative']['keywords_positive'] = trim($_POST['positive_negative']['keywords_positive']);

@@ -22,7 +22,6 @@ $json = json_decode(file_get_contents($file),TRUE);
 ?>
 <link rel="stylesheet" href="<?php echo $module->getUrl('styles/settings.css');?>">
 
-
 <div class="container">
     <h1><?php echo lang('SETTINGS_TITLE');?> </h1>
     <p><?php echo lang('SETTINGS_MAIN_TEXT');?> </p>
@@ -42,13 +41,13 @@ $json = json_decode(file_get_contents($file),TRUE);
             <td class="dt-body-left"><?php echo lang('OTHER_OR_UNKNOWN_TITLE');?></td>
             <td class="dt-body-center">
                 <select size="1" id="other-unknown-alert-level" name="other_or_unknown[type]"  title="other-unknown-alert-level">
-                    <option value="<?php echo lang('INFO');?>" <?php  if (strtolower($json['other_or_unknown']['type'])== strtolower(lang('INFO'))) echo "selected=\"selected\""; ?> >
+                    <option value="<?php echo lang('INFO');?>" <?php  if (strtolower($json['other_or_unknown']['type']) == strtolower(lang('INFO'))) echo "selected=\"selected\""; ?> >
                         <?php echo lang('INFO');?>
                     </option>
-                    <option value=" <?php echo lang('WARNING');?>" <?php  if (strtolower($json['other_or_unknown']['type'])==strtolower(lang('WARNING'))) echo "selected=\"selected\""; ?>>
+                    <option value=" <?php echo lang('WARNING');?>" <?php  if (strtolower($json['other_or_unknown']['type']) == strtolower(lang('WARNING'))) echo "selected=\"selected\""; ?>>
                         <?php echo lang('WARNING');?>
                     </option>
-                    <option value="<?php echo lang('DANGER');?>" <?php  if (strtolower($json['other_or_unknown']['type'])==strtolower(lang('DANGER'))) echo "selected=\"selected\""; ?>>
+                    <option value="<?php echo lang('DANGER');?>" <?php  if (strtolower($json['other_or_unknown']['type']) == strtolower(lang('DANGER'))) echo "selected=\"selected\""; ?>>
                         <?php echo lang('DANGER');?>
                     </option>
                 </select>
