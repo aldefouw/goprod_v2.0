@@ -175,15 +175,11 @@ $goprod_workflow=$module->getProjectSetting("gopprod-workflow");
 if ($goprod_workflow==0){
 exit();
 }
-//em@partners removing echos for UserID and status
-//echo USERID;
-//echo $status;
-
 /*Remove the go to production button if the project is already in production mode*/
-if($status == 0 or USERID == 'alvaro'){ //USERID == 'alvaro1' and
-
+if($status == 0){
 ?>
-    <div id='final-info' style="display: none">
+
+    <div id='final-info'>
         <br>
         <h4 class="projhdr"><?php echo lang('NOTICE');?></h4>
     <hr>
@@ -215,8 +211,6 @@ if($status == 0 or USERID == 'alvaro'){ //USERID == 'alvaro1' and
         </h4> <br><button id="go_prod_accept_all" class=" btn btn-md btn-success text-center "> <?php echo lang('I_AGREE');?> </button>
     </div>
     </div>
-
-
 
     <script type="text/javascript">
         /*Auto Run the report if the  URL  variable is to_prod_plugin=2 */
