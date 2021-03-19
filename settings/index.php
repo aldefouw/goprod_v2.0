@@ -61,7 +61,7 @@ $json = json_decode(file_get_contents($file),TRUE);
             </td>
             <td class="dt-body-center">
                 <label class="switch">
-                    <input type="checkbox" name="other-active-selected" value="" <?php  if ($json['other_or_unknown']['active']) echo "checked"; ?>>
+                    <input type="checkbox" name="other_or_unknown[active]" value="" <?php  if ($json['other_or_unknown']['active']) echo "checked"; ?>>
                     <div class="slider round"></div>
                 </label>
             </td>
@@ -90,7 +90,7 @@ $json = json_decode(file_get_contents($file),TRUE);
             </td>
             <td class="dt-body-center">
                 <label class="switch">
-                    <input type="checkbox" name="yes-no-active-selected" value="" <?php  if ($json['yes_no']['active']) echo "checked"; ?>>
+                    <input type="checkbox" name="yes_no[active]"" value="" <?php  if ($json['yes_no']['active']) echo "checked"; ?>>
                     <div class="slider round"></div>
                 </label>
             </td>
@@ -119,7 +119,7 @@ $json = json_decode(file_get_contents($file),TRUE);
             </td>
             <td class="dt-body-center">
                 <label class="switch">
-                    <input type="checkbox" name="test-records-active-selected" value="" <?php  if ($json['test_records']['active']) echo "checked"; ?>>
+                    <input type="checkbox" name="test_records[active]" value="" <?php  if ($json['test_records']['active']) echo "checked"; ?>>
                     <div class="slider round"></div>
                 </label>
             </td>
@@ -148,7 +148,7 @@ $json = json_decode(file_get_contents($file),TRUE);
             </td>
             <td class="dt-body-center">
                 <label class="switch">
-                    <input type="checkbox" name="positive-negative-active-selected" value="" <?php  if ($json['positive_negative']['active']) echo "checked"; ?>>
+                    <input type="checkbox" name="positive_negative[active]" value="" <?php  if ($json['positive_negative']['active']) echo "checked"; ?>>
                     <div class="slider round"></div>
                 </label>
             </td>
@@ -203,7 +203,9 @@ $json = json_decode(file_get_contents($file),TRUE);
                 success: function (result){
                     alert("You have successfully saved this configuration.")
 
-                    location.reload();
+                    console.log(result)
+
+                    //location.reload();
 
                 }, error: function(XMLHttpRequest, textStatus, errorThrown) {
 
