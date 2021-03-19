@@ -10,8 +10,8 @@ namespace Stanford\GoProd;
 
 function  TestRule(){
 
-    $Rule['title']="this is the tile of the rule";
-    $Rule['body']="Here is the explanation  of why this is a problem.....";
+    $Rule['title']=lang('TEST_RECORDS_TITLE');
+    $Rule['body']=lang('TEST_RECORDS_BODY');
     $Rule['risk']="warning"; // level of risk: warning, danger or info.
 
     $phat_to_rule= dirname(dirname(__FILE__)) . '/classes/Check_other_or_unknown.php';

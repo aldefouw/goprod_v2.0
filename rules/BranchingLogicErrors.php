@@ -11,8 +11,8 @@ namespace Stanford\GoProd;
 
 function  BranchingLogicErrors(){
 
-    $Rule['title']="this is the tile of the rule";
-    $Rule['body']="Here is the explanation  of why this is a problem.....";
+    $Rule['title']=lang('BRANCHING_LOGIC_TITLE');
+    $Rule['body']=lang('BRANCHING_LOGIC_BODY');
     $Rule['risk']="warning"; // level of risk: warning, danger or info.
 
     $phat_to_rule= dirname(dirname(__FILE__)) . '/classes/Check_presence_of_branching_and_calculated_variables.php';

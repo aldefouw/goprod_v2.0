@@ -59,7 +59,7 @@ function TransformToThreeColumns($results){
 function OtherOrUnknown(){
     $Rule['title']=lang('OTHER_OR_UNKNOWN_TITLE');
     $Rule['body']=lang('OTHER_OR_UNKNOWN_BODY');
-    $Rule['risk']="warning"; // level of risk: warning, danger or info.
+    $Rule['risk']=$GLOBALS['config_json']['other_or_unknown']['type']; // level of risk: warning, danger or info.
 //    $Rule['status'] //actvie- inactive -skiped
     $phat_to_rule= dirname(dirname(__FILE__)) . '/classes/Check_other_or_unknown.php';
     if(!@include_once($phat_to_rule)){ error_log("Failed to include:: $phat_to_rule");}

@@ -3,6 +3,22 @@ namespace Stanford\GoProd;
  use ExternalModules\AbstractExternalModule;
 include_once "classes/messages.php";
 
+global $config_json;
+global $file;
+
+$file = $GLOBALS['modulePath'].'/settings/config.json';
+
+ if(file_exists($file)){
+     //Decode the file contents into JSON
+     $config_json = json_decode(file_get_contents($file),TRUE);
+
+ } else {
+
+     echo 'Error.  /config/config.json does not exist!';
+
+ }
+
+
 class GoProd extends AbstractExternalModule
 {
     const PATH_TO_RULES= 'rules/';
