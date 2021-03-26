@@ -13,6 +13,7 @@ namespace Stanford\GoProd;
 use \REDCap as REDCap;
 include_once 'utilities.php';
 
+
 // TODO: ADD veriffication Numbers without labels  0,__ 1,__
 class check_consistency_for_lists //check_consistency_for_lists
 {
@@ -21,32 +22,31 @@ class check_consistency_for_lists //check_consistency_for_lists
     /**
      * @return string --- with the list of possible values for Yes
      */
-public static  function getYesWords(){
-        $var= "Yes, Si, yes, si, Yes*, Si*, 否";
-        return $var;
-    }
-    /**
-     * @return string --- with the list of possible values for  No
-     */
-public static function getNoWords(){
-        $var= "No, no, No*, 是";
-        return $var;
+    public static function getYesWords(){
+        global $config_json;
+        return $config_json['yes_no']['keywords_yes'];
     }
 
-//Dictionary of  possible words for Positive Or Negative results
+    public static function getNoWords(){
+        global $config_json;
+        return $config_json['yes_no']['keywords_no'];
+    }
+
+    //Dictionary of  possible words for Positive Or Negative results
     /**
      * @return string --- with the list of possible values for Positive
      */
-public static function getPositiveWords(){
-        $var= "Positive, Positive*, + ";
-        return $var;
+    public static function getPositiveWords(){
+        global $config_json;
+        return $config_json['positive_negative']['keywords_positive'];
     }
+
     /**
      * @return string --- with the list of possible values for  Negative
      */
-public static function getNegativeWords(){
-        $var= "Negative, Negative*, -";
-        return $var;
+    public static function getNegativeWords(){
+        global $config_json;
+        return $config_json['positive_negative']['keywords_negative'];
     }
 
 
