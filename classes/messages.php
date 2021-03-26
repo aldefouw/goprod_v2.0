@@ -7,7 +7,7 @@
 //Validation Labels
 namespace Stanford\GoProd;
 
-
+global $config_json;
 
 /**
  * @param $phrase
@@ -60,7 +60,7 @@ function lang($phrase){
             'VAR_NAMES_EVENT_NAMES_BODY' => 'Some of your field names are the same as an event name, this can create confusion. if this is non intentional please change the name of the variables.',
 
             'TEST_RECORDS_TITLE' => 'This project has not been sufficiently tested.',
-            'TEST_RECORDS_BODY' => 'We recommend the creation of at least <strong>three</strong> test records and at least <strong>one</strong> export in development mode. This allows you to preview the type of results expected from your project. It is also highly recommended that you review your project\'s design with a statistician prior to entering production mode to ensure your data capture is configured properly.',
+            'TEST_RECORDS_BODY' => 'We recommend the creation of at least <strong>#NUMBER_RECORDS#</strong> test record(s) and at least <strong>#NUMBER_EXPORTS#</strong> export(s) in development mode. This allows you to preview the type of results expected from your project. It is also highly recommended that you review your project\'s design with a statistician prior to entering production mode to ensure your data capture is configured properly.',
 
             'READY_TO_GO_TITLE' => ' You are all set!. ',
             'READY_TO_GO_BODY' => 'Looks like you are ready to move this project to production mode!.',

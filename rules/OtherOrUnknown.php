@@ -57,9 +57,11 @@ function TransformToThreeColumns($results){
 
 //tiene que retornar en $Rule['results'] un array con datos o vacio si es positivo  o false si no se encotro el problema
 function OtherOrUnknown(){
+    global $config_json;
+
     $Rule['title']=lang('OTHER_OR_UNKNOWN_TITLE');
     $Rule['body']=lang('OTHER_OR_UNKNOWN_BODY');
-    $Rule['risk']=$GLOBALS['config_json']['other_or_unknown']['type']; // level of risk: warning, danger or info.
+    $Rule['risk']=$config_json['other_or_unknown']['type']; // level of risk: warning, danger or info.
 //    $Rule['status'] //actvie- inactive -skiped
     $phat_to_rule= dirname(dirname(__FILE__)) . '/classes/Check_other_or_unknown.php';
     if(!@include_once($phat_to_rule)){ error_log("Failed to include:: $phat_to_rule");}

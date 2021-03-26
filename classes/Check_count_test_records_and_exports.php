@@ -8,13 +8,12 @@
  */
 
 namespace Stanford\GoProd;
-use \REDCap as REDCap;
-// connect to the REDCap database
- //require_once '../../../redcap_connect.php';
+// Call the REDCap Connect file in the main "redcap" directory
+//require_once "../../../redcap_connect.php";
+require_once 'utilities.php';
 
 //NOTICE: when the project is moved to production made the Survey Responses and created records are deleted
 // If the project is a copy then the log is reset to 0. that is ok since you may need to test this new project.
-
 
 
 /*
@@ -30,9 +29,6 @@ use \REDCap as REDCap;
 
 class check_count_test_records_and_exports
 {
-
-
-
 
     /**
      * @param $string
@@ -57,7 +53,8 @@ class check_count_test_records_and_exports
     /**
      * @return array // Return  Array with number of exports an records created.
      */
-    public static function CheckTestRecordsAndExports( ){
+    public static function CheckTestRecordsAndExports(){
+        global $config_json;
 
         //project information
         $create_record_array=Array(self::CleanString('Create survey response (Auto calculation)'),self::CleanString('Create survey response'),self::CleanString('Created Response'),self::CleanString('Create record'),self::CleanString('Create record (API)'),self::CleanString( 'Create record (API) (Auto calculation)'),self::CleanString('Create record (Auto calculation)'),self::CleanString('Create record (import)'));
@@ -75,7 +72,7 @@ class check_count_test_records_and_exports
                 $count_exports++;
             }
         }
-          if($count_records < 3 or $count_exports < 1) { $total=  Array($count_exports,$count_records); }
+          if($count_records < $config_json['test_records']['no_records'] or $count_exports < $config_json['test_records']['no_exports']) { $total=  Array($count_exports,$count_records); }
             return $total;
 }
 
