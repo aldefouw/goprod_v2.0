@@ -30,6 +30,14 @@ require_once 'utilities.php';
 class check_count_test_records_and_exports
 {
 
+    public static function CreateResultArray($where, $issue, $link)
+    {
+        $tmp = array();
+        array_push($tmp, $where, $issue, $link);
+        $tmp1[0] = $tmp;
+        return $tmp1;
+    }
+
     /**
      * @param $string
      * @return mixed|string
@@ -72,9 +80,32 @@ class check_count_test_records_and_exports
                 $count_exports++;
             }
         }
-          if($count_records < $config_json['test_records']['no_records'] or $count_exports < $config_json['test_records']['no_exports']) { $total=  Array($count_exports,$count_records); }
-            return $total;
-}
 
+        if($count_records < $config_json['test_records']['no_records'] && $count_exports < $config_json['test_records']['no_exports']) {
+
+            $where = "Insufficient Records & Exports Testing";//TODO: create the lang file variable
+            $issue = "There has not been enough testing done in this project.  Please perform additional testing by creating records and exporting test data.";
+            $link = '<a target="_blank" class="btn  btn-default review_btn" href=" ' . APP_PATH_WEBROOT . 'DataEntry/record_status_dashboard.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
+            $array = self::CreateResultArray($where, $issue, $link);
+
+        } else if ($count_records < $config_json['test_records']['no_records']) {
+
+            $where = "Insufficient Records";//TODO: create the lang file variable
+            $issue = "There has not been enough testing done in this project.  Please perform additional testing by creating records.";
+            $link = '<a target="_blank" class="btn  btn-default review_btn" href=" ' . APP_PATH_WEBROOT . 'DataEntry/record_status_dashboard.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
+            $array = self::CreateResultArray($where, $issue, $link);
+
+        } else if ($count_exports < $config_json['test_records']['no_exports']) {
+
+            $where = "Insufficient Exports";//TODO: create the lang file variable
+            $issue = "There has not been enough testing done in this project.  Please perform additional testing by exporting test data.";
+            $link = '<a target="_blank" class="btn  btn-default review_btn" href=" ' . APP_PATH_WEBROOT . 'DataEntry/record_status_dashboard.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
+            $array = self::CreateResultArray($where, $issue, $link);
+        } else {
+            $array = array();
+        }
+
+        return $array;
+    }
 
 }
