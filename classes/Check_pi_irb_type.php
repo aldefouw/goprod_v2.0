@@ -87,7 +87,7 @@ class check_pi_irb_type
         global $Proj;
 
         $where = "Project Setup";//TODO: create the lang file variable
-        $issue = "Not for fun project can not be moved to production mode";
+        $issue = "Practice projects shouldn't be moved to production.";
         $link = '<a target="_blank" class="btn btn-link" href=" ' . APP_PATH_WEBROOT . 'ProjectSetup/index.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
         $array = self::CreateResultArray($where, $issue, $link);
         $purpose = $Proj->project['purpose'];
@@ -113,7 +113,7 @@ class check_pi_irb_type
         global $Proj;
 
         $where = "Project Setup";//TODO: create the lang file variable
-        $issue = "Not for fun project can not be moved to production mode";
+        $issue = "This project is not a Research or Quality Improvement project.  It doesn't have to be moved to production unless you choose to.";
         $link = '<a target="_blank" class="btn btn-link" href=" ' . APP_PATH_WEBROOT . 'ProjectSetup/index.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
         $array = self::CreateResultArray($where, $issue, $link);
         $purpose = $Proj->project['purpose'];
