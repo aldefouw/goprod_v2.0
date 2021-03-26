@@ -6,17 +6,15 @@ include_once "classes/messages.php";
 global $config_json;
 global $file;
 
-$file = $GLOBALS['modulePath'].'/settings/config.json';
+if(isset($GLOBALS['modulePath'])) {
+    $file = $GLOBALS['modulePath'] . '/settings/config.json';
 
- if(file_exists($file)){
-     //Decode the file contents into JSON
-     $config_json = json_decode(file_get_contents($file),TRUE);
-
- } else {
-
-     echo 'Error.  /config/config.json does not exist!';
-
- }
+     if(file_exists($file)){
+         $config_json = json_decode(file_get_contents($file),TRUE); //Decode the file contents into JSON
+     } else {
+         echo 'Error.  /config/config.json does not exist!';
+     }
+}
 
 
 class GoProd extends AbstractExternalModule
