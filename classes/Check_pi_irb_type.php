@@ -26,7 +26,7 @@ class check_pi_irb_type
         $purpose = trim($Proj->project['purpose']);
         $where = "Project Setup ";//TODO: create the lang file variable
         $issue = "PI is missing";
-        $link = '<a target="_blank" class="btn btn-link" href=" ' . APP_PATH_WEBROOT . 'ProjectSetup/index.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
+        $link = '<a target="_blank" class="btn  btn-default review_btn" href=" ' . APP_PATH_WEBROOT . 'ProjectSetup/index.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
         $array = self::CreateResultArray($where, $issue, $link);
         if ($purpose === "2" and strlen($first_name) == 0 and strlen($last_name) == 0) {
             return $array;// with results - this is a JustFor fun project.
@@ -47,7 +47,7 @@ class check_pi_irb_type
         $irb_number = $Proj->project['project_irb_number'];
         $where = "Project Setup $irb_number";//TODO: create the lang file variable
         $issue = "IRB is missing";
-        $link = '<a target="_blank" class="btn btn-link" href=" ' . APP_PATH_WEBROOT . 'ProjectSetup/index.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
+        $link = '<a target="_blank" class="btn  btn-default review_btn" href=" ' . APP_PATH_WEBROOT . 'ProjectSetup/index.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
         $array = self::CreateResultArray($where, $issue, $link);
         $purpose = $Proj->project['purpose'];
         if ($purpose === "2" and strlen(trim($irb_number)) == 0) {
@@ -67,7 +67,7 @@ class check_pi_irb_type
 
         $where = "Project Setup";//TODO: create the lang file variable
         $issue = "This project is not for research";
-        $link = '<a target="_blank" class="btn btn-link" href=" ' . APP_PATH_WEBROOT . 'ProjectSetup/index.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
+        $link = '<a target="_blank" class="btn  btn-default review_btn" href=" ' . APP_PATH_WEBROOT . 'ProjectSetup/index.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
         $array = self::CreateResultArray($where, $issue, $link);
         $purpose = $Proj->project['purpose'];
         if ($purpose !== "2" and $purpose !== "0") {
@@ -88,7 +88,7 @@ class check_pi_irb_type
 
         $where = "Project Setup";//TODO: create the lang file variable
         $issue = "Practice projects shouldn't be moved to production.";
-        $link = '<a target="_blank" class="btn btn-link" href=" ' . APP_PATH_WEBROOT . 'ProjectSetup/index.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
+        $link = '<a target="_blank" class="btn  btn-default review_btn" href=" ' . APP_PATH_WEBROOT . 'ProjectSetup/index.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
         $array = self::CreateResultArray($where, $issue, $link);
         $purpose = $Proj->project['purpose'];
         if ($purpose === "0") {
@@ -114,7 +114,7 @@ class check_pi_irb_type
 
         $where = "Project Setup";//TODO: create the lang file variable
         $issue = "This project is not a Research or Quality Improvement project.  It doesn't have to be moved to production unless you choose to.";
-        $link = '<a target="_blank" class="btn btn-link" href=" ' . APP_PATH_WEBROOT . 'ProjectSetup/index.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
+        $link = '<a target="_blank" class="btn  btn-default review_btn" href=" ' . APP_PATH_WEBROOT . 'ProjectSetup/index.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
         $array = self::CreateResultArray($where, $issue, $link);
         $purpose = $Proj->project['purpose'];
 
