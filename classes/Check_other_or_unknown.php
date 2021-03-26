@@ -10,11 +10,11 @@ use \REDCap as REDCap;
 // Call the REDCap Connect file in the main "redcap" directory
 //require_once "../../../redcap_connect.php";
 require_once 'utilities.php';
+
  class check_other_or_unknown {
 
 // Get the data dictionary for the current project in array format
 //$dd_array = REDCap::getDataDictionary('array');
-
 
 //Dictionary of warning words
 //public $Words = "Other, Unknown, Don't know/Not sure ,Don't know,Not sure, Not Reported, NA, N/A, uninterpretable, otro, otra, no se, Other please specify, not obtained, missing data, do not know or not sure, refused, no response was entered on form despite affirming that the patient was untestable, no response was entered on form despite affirming that the patient was testable, did not provide answer / not answered, other type, unclear, not gradable, other frequency, sent or stored other, none, no data available, unable to examine ";
@@ -28,16 +28,16 @@ require_once 'utilities.php';
      * @return string
      */
     public static function getKeyWords(){
-        $var= "Other, Unknown, Don't know/Not sure ,Don't know,Not sure, Not Reported, NA, N/A, uninterpretable, otro, otra, no se, Other please specify, not obtained, missing data, do not know or not sure, refused, no response was entered on form despite affirming that the patient was untestable, no response was entered on form despite affirming that the patient was testable, did not provide answer / not answered, other type, unclear, not gradable, other frequency, sent or stored other, no data available, unable to examine "; //none??
-        return $var;
+        global $config_json;
+        return $config_json['other_or_unknown']['keywords'];
     }
 
     /**
      * @return string
      */
     public static function getIDs(){
-        $var="97,88,98,99,999,9999,888,8888,-1,777,7777";
-        return $var;
+        global $config_json;
+        return $config_json['other_or_unknown']['recommended_values'];
     }
 
 
