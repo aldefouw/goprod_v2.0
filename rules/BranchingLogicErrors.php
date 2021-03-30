@@ -11,9 +11,12 @@ namespace Stanford\GoProd;
 
 function  BranchingLogicErrors(){
 
+    global $config_json;
+
+    $Rule['configured_name'] = 'branching_logic';
     $Rule['title']=lang('BRANCHING_LOGIC_TITLE');
     $Rule['body']=lang('BRANCHING_LOGIC_BODY');
-    $Rule['risk']="warning"; // level of risk: warning, danger or info.
+    $Rule['risk']=$config_json['branching_logic']['type']; // level of risk: warning, danger or info.
 
     $phat_to_rule= dirname(dirname(__FILE__)) . '/classes/Check_presence_of_branching_and_calculated_variables.php';
 
@@ -27,8 +30,5 @@ function  BranchingLogicErrors(){
 //    error_log( "finnnn;;;");
 
     return  $Rule;
-
-
-
 
 }

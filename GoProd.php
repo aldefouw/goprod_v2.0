@@ -100,7 +100,10 @@ class GoProd extends AbstractExternalModule
         {
             if(ctype_upper(substr($filename, 0, 1)) ){
                 $filename=preg_replace('/\.[^.]+$/','',$filename);
-                array_push($RuleNames, $filename);
+
+                if($this->ruleStatusActive($filename)) {
+                    array_push($RuleNames, $filename);
+                }
             }
         }
 
@@ -113,14 +116,15 @@ class GoProd extends AbstractExternalModule
         return $RuleNames;
     }
 
+
     /*********************************************************************************
-     * Call and execute a given rule --- returns (print) the json_encode  for the view
+     * See if the Rule is currently set to active
      ********************************************************************************* */
-    function CallRule($RuneName){
+    function ruleStatusActive($RuleName){
 
-        //path to the rule folder
+        global $config_json;
 
-        $phat_to_rule=$this::PATH_TO_RULES.$RuneName.'.php';
+        $phat_to_rule=$this::PATH_TO_RULES.$RuleName.'.php';
 
         //Dynamic include the path of the rule in order to be called -- exit if fails
         if(!@include_once($phat_to_rule)) {
@@ -129,27 +133,59 @@ class GoProd extends AbstractExternalModule
         }
 
         //Check if the path and function exist. if not then exit.
-        if (!(function_exists(__NAMESPACE__."\\".$RuneName))) {
-            error_log( "Problem loading  $RuneName does not exist");
+        if (!(function_exists(__NAMESPACE__."\\".$RuleName))) {
+            error_log( "Problem loading $RuleName does not exist");
+            exit();
+        }
+
+        //Call the function for the Rule
+        $rule = call_user_func(__NAMESPACE__."\\".$RuleName);
+
+        //Check to see if the Configured Rule is marked as ACTIVE in the JSON file
+        if(!empty($rule['configured_name']) && $config_json[$rule['configured_name']]['active']){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /*********************************************************************************
+     * Call and execute a given rule --- returns (print) the json_encode  for the view
+     ********************************************************************************* */
+    function CallRule($RuleName){
+
+        //path to the rule folder
+
+        $phat_to_rule=$this::PATH_TO_RULES.$RuleName.'.php';
+
+        //Dynamic include the path of the rule in order to be called -- exit if fails
+        if(!@include_once($phat_to_rule)) {
+            error_log("Failed to include:: $phat_to_rule");
+            exit();
+        }
+
+        //Check if the path and function exist. if not then exit.
+        if (!(function_exists(__NAMESPACE__."\\".$RuleName))) {
+            error_log( "Problem loading  $RuleName does not exist");
             exit();
         }
 
         //Call the Rule the function  call_user_func helps to call functions directly from a path  and save the result in $ResultRulesArray
-        $ResultRulesArray = call_user_func(__NAMESPACE__."\\".$RuneName);
+        $ResultRulesArray = call_user_func(__NAMESPACE__."\\".$RuleName);
         //read the results sof the function: if the rule returns true, then extract the Html to present on the views - if not return false
         if(!empty($ResultRulesArray['results'])){
             //if found problems
             $a=$this::PrintAHref("views/results.php");// results.php is the DATA TABLE that shows the list of issues
             $span=$this::PrintLevelOfRisk($ResultRulesArray['risk']);
-            $print=$this::PrintTr($ResultRulesArray['title'],$ResultRulesArray['body'],$span,$a,$RuneName);
+            $print=$this::PrintTr($ResultRulesArray['title'],$ResultRulesArray['body'],$span,$a,$RuleName);
             $ResultRulesArray=$ResultRulesArray['results'];
-            $result[$RuneName]= array("Results"=>$ResultRulesArray,"Html"=>$print);
+            $result[$RuleName]= array("Results"=>$ResultRulesArray,"Html"=>$print);
             $res = json_encode($result);
             echo $res;
         }
         else {
             //if no problem found
-            error_log(">>>>>Call Rule returns false with rule= $RuneName <<<<<");
+            error_log(">>>>>Call Rule returns false with rule= $RuleName <<<<<");
             $res=json_encode(false);
             echo $res;
         }

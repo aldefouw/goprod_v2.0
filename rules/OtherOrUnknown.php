@@ -59,6 +59,7 @@ function TransformToThreeColumns($results){
 function OtherOrUnknown(){
     global $config_json;
 
+    $Rule['configured_name'] = 'other_or_unknown';
     $Rule['title']=lang('OTHER_OR_UNKNOWN_TITLE');
     $Rule['body']=lang('OTHER_OR_UNKNOWN_BODY');
     $Rule['risk']=$config_json['other_or_unknown']['type']; // level of risk: warning, danger or info.

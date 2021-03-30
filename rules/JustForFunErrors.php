@@ -12,6 +12,7 @@ namespace Stanford\GoProd;
 
 function JustForFunErrors(){
 
+    $Rule['configured_name'] = 'just_for_fun';
     $Rule['title']=lang('JUST_FOR_FUN_PROJECT_TITLE');
     $Rule['body']=lang('JUST_FOR_FUN_PROJECT_BODY');
     $Rule['risk']="danger"; // level of risk: warning, danger or info.

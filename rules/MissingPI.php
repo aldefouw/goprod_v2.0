@@ -10,6 +10,7 @@ namespace Stanford\GoProd;
 
 function  MissingPI(){
 
+    $Rule['configured_name'] = 'missing_pi';
     $Rule['title']=lang('PI_TITLE');
     $Rule['body']=lang('PI_BODY');
     $Rule['risk']="danger"; // level of risk: warning, danger or info.

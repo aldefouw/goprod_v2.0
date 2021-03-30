@@ -11,6 +11,7 @@ function  TestRule(){
 
     global $config_json;
 
+    $Rule['configured_name'] = 'test_records';
     $Rule['title']=lang('TEST_RECORDS_TITLE');
 
     $body = str_replace('#NUMBER_RECORDS#', $config_json['test_records']['no_records'], lang('TEST_RECORDS_BODY'));

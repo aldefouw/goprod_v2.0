@@ -4,6 +4,7 @@ namespace Stanford\GoProd;
 
 function ResearchErrors(){
 
+    $Rule['configured_name'] = 'research_errors';
     $Rule['title']=lang('RESEARCH_PROJECT_TITLE');
     $Rule['body']=lang('RESEARCH_PROJECT_BODY');
     $Rule['risk']="info"; // level of risk: warning, danger or info.

@@ -14,6 +14,7 @@ namespace Stanford\GoProd;
 
 function RxOrQI(){
 
+    $Rule['configured_name'] = 'rx_or_qi';
     $Rule['title']=lang('NOT_RX_OR_QI_TITLE');
     $Rule['body']=lang('NOT_RX_OR_QI_BODY');
     $Rule['risk']="danger"; // level of risk: warning, danger or info.

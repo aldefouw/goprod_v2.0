@@ -10,6 +10,7 @@ namespace Stanford\GoProd;
 
 function  MissingIRB(){
 
+    $Rule['configured_name'] = 'missing_irb';
     $Rule['title']=lang('IRB_TITLE');
     $Rule['body']=lang('IRB_BODY');
     $Rule['risk']="danger"; // level of risk: warning, danger or info.
