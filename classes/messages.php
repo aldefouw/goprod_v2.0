@@ -112,7 +112,7 @@ function lang($phrase){
             'CLOSE' => 'Close',
             'NOTICE' => 'Notice',
             'INFO_WHAT_NETX' => 'What happens Next?',
-            'INFO_WHAT_NETX_BODY' => '  Your project will be reviewed by SCCI before being moved into Production. This process typically takes 1-2 business days.  Can\'t wait? Click <a href="https://medwiki.stanford.edu/x/SRMzAw"><u>HERE</u></a>.',
+            'INFO_WHAT_NETX_BODY' => '  Your project will be reviewed before being moved into Production.',
             'INFO_WHAT_NETX_BODY_2' => ' If, on the next page you check \'Delete ALL Data\', any data entered before being approved for Production will be deleted. Do not enter production data while a request is pending unless you uncheck this box and follow the instructions in the next item.',
             'INFO_CITATION' => 'Citation Information',
             'INFO_CITATION_BODY' => ' REDCap at Stanford is supported by Research IT. All research resulting from the use of REDCap must cite the grants that make this service available - details, including biolerplate language, are located
@@ -132,7 +132,7 @@ function lang($phrase){
             'TITLE' => 'Move to Production Check List',
             'GO_PROD' => 'Review and Move Project to production',
             'STARTING' => 'Collecting Meta Data',
-            'MAIN_TEXT' => 'If the thought of losing the data you have entered into your REDCap project sounds painful, you should be in production mode. Production mode helps protect your data from accidental mistakes. This plugin will allow you to verify if your project is ready to move to production mode or if you first need to fix something.  <a href="https://medwiki.stanford.edu/x/SRMzAw" > <u>When do I move to Production Mode?</u></a>',
+            'MAIN_TEXT' => 'If the thought of losing the data you have entered into your REDCap project sounds painful, you should be in production mode. Production mode helps protect your data from accidental mistakes. This plugin will allow you to verify if your project is ready to move to production mode or if you first need to fix something.',
 
               'SETTINGS_TITLE'=>'Go to Prod Setup',
               'SETTINGS_MAIN_TEXT'=>'Use this page activate/deactivate rules and change the default options for each rule.',
