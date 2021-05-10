@@ -144,31 +144,7 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
             </div>
         </div>
     </div>
-    <!-- em@partners.org: Adding Go to Production button-->
-    <div align="center">
-    <button id="go_prod_accept_all1" class=" btn btn-md btn-success text-center " style="display: none;"> <?php echo lang('I_AGREE');?> </button>
-    </div>
-    <!--Ajax calls -->
-    <script>
-      //psssing php variables
-        var project_id=<?php echo $_GET['pid']; ?>;
-        var geturl_ajax="<?php echo $module->getUrl('ajax_handler.php'); ?>";
-    </script>
-    <script type="text/javascript" src="<?php echo $module->getUrl("js/ajax_calls.js");?>"> </script>
 
-    <script type="text/javascript">
-
-        document.getElementById("go_prod_accept_all1").onclick = function(){
-            // em@partners.org: 1. There is a bug in the next line that doesn't grab the entire URL address.
-            //                     I had to add 'https://' by hand, and the server name by php.
-            //                  2. Intented GoProd usage is meant to link the end of GoProd to the Production workflow
-            //                     in which the user clicks the "Send request to move to production" button after
-            //                     the GoProd takes them to the "Move to Prod" window. That's why we're using the
-            //                     tag of to_prod_plugin=3.
-            production = <?php  echo json_encode('https://'.$_SERVER['SERVER_NAME'].APP_PATH_WEBROOT.'ProjectSetup/index.php?pid='.$_GET['pid'].'&to_prod_plugin=3')?>;
-            location.href = production;
-        };
-    </script>
 <?php
 
 $goprod_workflow=$module->getProjectSetting("gopprod-workflow");
@@ -207,12 +183,31 @@ if($status == 0){
         </li>
     </ul>
 
-    <div class="col-md-12 col-sm-6 col-xs-12 col-lg-12 text-center well" >
-        <h4>
-            <?php echo lang('I_AGREE_BODY');?>
-        </h4> <br><button id="go_prod_accept_all" class=" btn btn-md btn-success text-center "> <?php echo lang('I_AGREE');?> </button>
+    <!-- em@partners.org: Adding Go to Production button-->
+    <div align="center">
+        <button id="go_prod_accept_all1" class=" btn btn-md btn-success text-center "> <?php echo lang('I_AGREE');?> </button>
     </div>
-    </div>
+    <!--Ajax calls -->
+    <script>
+        //psssing php variables
+        var project_id=<?php echo $_GET['pid']; ?>;
+        var geturl_ajax="<?php echo $module->getUrl('ajax_handler.php'); ?>";
+    </script>
+    <script type="text/javascript" src="<?php echo $module->getUrl("js/ajax_calls.js");?>"> </script>
+
+    <script type="text/javascript">
+
+        document.getElementById("go_prod_accept_all1").onclick = function(){
+            // em@partners.org: 1. There is a bug in the next line that doesn't grab the entire URL address.
+            //                     I had to add 'https://' by hand, and the server name by php.
+            //                  2. Intented GoProd usage is meant to link the end of GoProd to the Production workflow
+            //                     in which the user clicks the "Send request to move to production" button after
+            //                     the GoProd takes them to the "Move to Prod" window. That's why we're using the
+            //                     tag of to_prod_plugin=3.
+            url = <?php  echo json_encode(APP_PATH_WEBROOT.'ExternalModules/?prefix=goprod&page=index&pid='.$_GET['pid'].'&to_prod_plugin=3')?>;
+            location.href = url;
+        };
+    </script>
 
     <script type="text/javascript">
         /*Auto Run the report if the  URL  variable is to_prod_plugin=2 */

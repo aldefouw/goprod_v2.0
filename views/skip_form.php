@@ -6,8 +6,6 @@
  * Time: 3:45 PM
  */
 
-//namespace Stanford\GoProd;
-//include_once "classes/ReadWriteLogging.php";
 ?>
 
 <form class="form-horizontal" onsubmit="return SkipSubmitFunction()">
@@ -24,7 +22,7 @@
                 </tr>
                 <tr>
                     <td>
-                            <textarea class="form-control" id="textarea" name="textarea">provide a reason..</textarea>
+                            <textarea class="form-control" id="textarea" name="textarea" placeholder="provide a reason.."></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -32,20 +30,20 @@
                         <p id="testp">
                             Please notice that future problems related with the omission of this recommendation may result in additional support costs for your project.
                             <?php echo $_GET['rule'].$_GET['pid'];
-//                            $res->UpdateConfig($_GET['rule'],"alvarologsss".rand(2,88));
-//                            $res->SetConfig($_GET['rule'],"valor");
-//                            $res->GetConfig($_GET['rule']);
-//                            echo $res->PrintConfig($_GET['rule']);
+                            $res->UpdateConfig($_GET['rule'],"alvarologsss".rand(2,88));
+                            $res->SetConfig($_GET['rule'],"valor");
+                            $res->GetConfig($_GET['rule']);
+                            echo $res->PrintConfig($_GET['rule']);
                             ?>
                         </p>
                     </td>
                 </tr>
                 <tr><td>
                         <div>
-<!--                            <label class="checkbox-inline" for="checkboxes-0">-->
-<!--                                <input type="checkbox" name="checkboxes" id="checkboxes-0" value="1">-->
-<!--                                I understand.-->
-<!--                            </label>-->
+                            <label class="checkbox-inline" for="checkboxes-0">
+                                <input type="checkbox" name="checkboxes" id="checkboxes-0" value="1">
+                                I understand.
+                            </label>
                             <button id="gp_skip_button" name="gp_skip_button" class="btn btn-warning   btn-md">Skip this recommendation</button>
                         </div>
                     </td>
