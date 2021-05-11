@@ -226,6 +226,10 @@ class GoProd extends AbstractExternalModule
     }
 //Print the level of risk or the rule
      function PrintLevelOfRisk($type){
+
+        #the risk level appears to come through as titlecase, let's fix that
+        $type = strtolower($type);
+
          $size='fa-2x';
          switch ($type) {
 
