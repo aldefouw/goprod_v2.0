@@ -7,21 +7,21 @@
  */
 namespace Stanford\GoProd;
 
-function YesNo(){
+function PositiveNegative(){
 
     global $config_json;
 
-    $Rule['configured_name'] = 'yes_no';
+    $Rule['configured_name'] = 'positive_negative';
     $Rule['title']=lang('YES_NO_TITLE');
     $Rule['body']=lang('YES_NO_BODY');
-    $Rule['risk']=$config_json['yes_no']['type']; // level of risk: warning, danger or info.
+    $Rule['risk']=$config_json['branching_logic']['type']; // level of risk: warning, danger or info.
 
     $phat_to_rule= dirname(dirname(__FILE__)) . '/classes/Check_consistency_for_lists.php';
 
     if(!@include_once($phat_to_rule)){ error_log("Failed to include:: $phat_to_rule");}
 
     $res= new check_consistency_for_lists();
-    $Rule['results']=$res::IsYesNoConsistent();
+    $Rule['results']=$res::IsPositiveNegativeConsistent();
 
     return  $Rule;
 
