@@ -55,7 +55,7 @@ class check_consistency_for_lists //check_consistency_for_lists
      * @return array
      * //Get dropdown, Checkbox  and Radio buttons from the REDCap Data Dictionary
      */
-public static function getLists($DataDictionary){
+    public static function getLists($DataDictionary){
         $var= array();
         // Loop through each field and do something with each
         foreach ($DataDictionary as $field_name=>$field_attributes){
@@ -80,7 +80,7 @@ public static function getLists($DataDictionary){
      * @return array
      * //In: Array $FormName,$FieldName,$Choices  --- Return: Array $Form,$Field, Id, Value
      */
-public static function Transform($array){
+    public static function Transform($array){
 
         $dd_array= array();
         foreach ($array as $item){
@@ -100,7 +100,7 @@ public static function Transform($array){
      * @param $string
      * @return mixed|string
      */
-public static function CleanString($string){
+    public static function CleanString($string){
 
     // first preparing the strings.
         //for $string1
@@ -119,7 +119,7 @@ public static function CleanString($string){
      * @param $array
      * @return array
      */
-public static function CleanArray($array){
+    public static function CleanArray($array){
     $CleanedArray= array();
     foreach ($array as $item){
         array_push($CleanedArray,self::CleanString($item));
@@ -128,13 +128,13 @@ public static function CleanArray($array){
     return $CleanedArray;
 }
 
-//Filter just  the yes no questions
+    //Filter just  the yes no questions
     /**
      * @param $array
      * @param $known_list
      * @return array
      */
-public static function Filter($array, $known_list){
+    public static function Filter($array, $known_list){
         $FilteredOut= array();
         $FilteredOutList = explode(",", $known_list);// string to array
         //print_r($FilteredOutList);
@@ -153,11 +153,11 @@ public static function Filter($array, $known_list){
         }
 
 
-return $FilteredOut;
+    return $FilteredOut;
 }
 
 
-// create the table with the choices and highlight the  inconsistent one
+    // create the table with the choices and highlight the  inconsistent one
     public static function getChoices($array,$variable_name,$to_highlight ){
         $table = '<table id="gp-results-table" class="table table-sm"  style="width:80%; border-color: inherit;" border="1">';
 
@@ -178,18 +178,17 @@ return $FilteredOut;
 
     }
 
-//check if any Id (Yes or No ot Positive/Negative) is different  tho the rest
+    //check if any Id (Yes or No ot Positive/Negative) is different  tho the rest
     /**
      * @param $array
      * @return array
      */
     public static function FindProblems($array){
-
         global $Proj;
+
         $FilteredOut= array();
         foreach ($array as $item1){
             foreach ( $array as $item2){
-
                 if ($item1[2]!=$item2[2] and !in_array($item1,$FilteredOut)){
                     $link_path1 = APP_PATH_WEBROOT . 'Design/online_designer.php?pid=' . $_GET['pid'] . '&page=' . $item1[0] . '&field=' . $item1[1];
                     $link_path2= APP_PATH_WEBROOT . 'Design/online_designer.php?pid=' . $_GET['pid'] . '&page=' . $item2[0] . '&field=' . $item2[1];
@@ -202,20 +201,14 @@ return $FilteredOut;
                     $label1=TextBreak($item1[1]);
                     $label2=TextBreak($item2[1]);
 
-
-
                     array_push($FilteredOut,Array($item1[0],$item1[1],$label1,$item1[3],$link_to_edit1),Array($item2[0],$item2[1],$label2 ,$item2[3],$link_to_edit2));
                     break;
                 }
 
             }
             if (!empty($FilteredOut)){
-
                 break;
             }
-
-
-
         }
 
         return  array_map("unserialize", array_unique(array_map("serialize", $FilteredOut))); //return just the unique values found
@@ -227,7 +220,7 @@ return $FilteredOut;
      * @param $DataDictionary
      * @return array
      */
-public static function IsYesNoConsistent( ) {
+    public static function IsYesNoConsistent() {
     $DataDictionary= \REDCap::getDataDictionary('array');
         $yes_no_array= self::getLists($DataDictionary);
         $all_list_questions=  self::Transform($yes_no_array);
@@ -249,7 +242,7 @@ public static function IsYesNoConsistent( ) {
      * @param $DataDictionary
      * @return array
      */
-public static function IsPositiveNegativeConsistent( ) {
+    public static function IsPositiveNegativeConsistent() {
         $DataDictionary= \REDCap::getDataDictionary('array');
         $positive_negative_array= self::getLists($DataDictionary);
         $all_list_questions=  self::Transform($positive_negative_array);
