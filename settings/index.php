@@ -170,8 +170,9 @@ $json = json_decode(file_get_contents($file),TRUE);
                 </select>
             </td>
             <td>
-
+                <?php echo lang('BRANCHING_LOGIC_BODY');?>
             </td>
+
             <td>
 
             </td>
@@ -182,6 +183,36 @@ $json = json_decode(file_get_contents($file),TRUE);
                 </label>
             </td>
         </tr>
+
+        <tr>
+            <td class="dt-body-left"><?php echo lang('PI_TITLE');?></td>
+            <td class="dt-body-center">
+                <select size="1" id="missing-pi-alert-level" name="missing_pi[type]"  title="missing-pi-alert-level">
+                    <option value="<?php echo lang('INFO');?>" <?php  if (strtolower($json['missing_pi']['type'])== strtolower(lang('INFO'))) echo "selected=\"selected\""; ?> >
+                        <?php echo lang('INFO');?>
+                    </option>
+                    <option value=" <?php echo lang('WARNING');?>" <?php  if (strtolower($json['missing_pi']['type'])==strtolower(lang('WARNING'))) echo "selected=\"selected\""; ?>>
+                        <?php echo lang('WARNING');?>
+                    </option>
+                    <option value="<?php echo lang('DANGER');?>" <?php  if (strtolower($json['missing_pi']['type'])==strtolower(lang('DANGER'))) echo "selected=\"selected\""; ?>>
+                        <?php echo lang('DANGER');?>
+                    </option>
+                </select>
+            </td>
+            <td>
+                <?php echo lang('PI_BODY');?>
+            </td>
+            <td>
+
+            </td>
+            <td class="dt-body-center">
+                <label class="switch">
+                    <input type="checkbox" name="missing_pi[active]" value="" <?php  if ($json['missing_pi']['active']) echo "checked"; ?>>
+                    <div class="slider round"></div>
+                </label>
+            </td>
+        </tr>
+
 
         <tr>
             <td> </td>
