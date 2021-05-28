@@ -128,33 +128,61 @@ class check_consistency_for_lists //check_consistency_for_lists
     return $CleanedArray;
 }
 
+    /**
+     * @param $string1
+     * @param $string2
+     * @param $percentage
+     * @return bool
+     * Compare two strings and return if they have a similarity bigger than $percentage
+     */
+    public static function EvaluateSimilarity($string1 , $string2, $percentage){
+
+        // first preparing the strings.
+        //for $string1
+        //remove spaces at the end and convert in lowercase
+        $word1=trim(strtolower($string1));
+        //remove spaces between words
+        $word1 = str_replace(' ', '_', $word1);
+        //remove tabs
+        $word1 = preg_replace('/\s+/','_',$word1);
+        $word1 = str_replace('__', '_', $word1);
+        // for $string2
+        //remove spaces at the end and convert in lowercase
+        $word2=trim(strtolower($string2));
+        //remove spaces between words
+        $word2 = str_replace(' ', '_', $word2);
+        //remove tabs
+        $word2 = preg_replace('/\s+/','_',$word2);
+        $word2 = str_replace('__', '_', $word2);
+        // obtain the % of similarity betwen words as a number and save the value on $similarity
+        similar_text($word1, $word2, $similarity);
+
+        return $similarity >= $percentage ? true : false;
+
+    }
+
+
     //Filter just  the yes no questions
     /**
      * @param $array
      * @param $known_list
      * @return array
      */
-    public static function Filter($array, $known_list){
-        $FilteredOut= array();
-        $FilteredOutList = explode(",", $known_list);// string to array
-        //print_r($FilteredOutList);
-        $FilteredOutList= self::CleanArray($FilteredOutList);
-        foreach ($array as $item){
-            if (in_array(self::CleanString($item[3]),$FilteredOutList)){
+    public static function Filter($array, $known_list,$percentage = 95){
+        $to_fix_array= array();
+        $OtherOrUnknownList = explode(",", $known_list);
+        foreach ($array as $list){
+            foreach ($OtherOrUnknownList as $Other){
+                if (self::EvaluateSimilarity($list[3],$Other,$percentage ) ){   //TODO: check if   substrings should be part of the query or not strpos($list[3],$Other)
 
-                $table= self::getChoices($array,$item[1], $item[3]);
+                    $table= self::getChoices($array,$list[1], $list[3]);
 
-
-
-                array_push($FilteredOut,Array($item[0],$item[1],$item[2],$table));
-
+                    array_push( $to_fix_array, Array($list[0],$list[1],$list[2],$table));
+                }
             }
-
         }
-
-
-    return $FilteredOut;
-}
+        return $to_fix_array;
+    }
 
 
     // create the table with the choices and highlight the  inconsistent one
@@ -189,19 +217,18 @@ class check_consistency_for_lists //check_consistency_for_lists
         $FilteredOut= array();
         foreach ($array as $item1){
             foreach ( $array as $item2){
-                if ($item1[2]!=$item2[2] and !in_array($item1,$FilteredOut)){
+                if ($item1[2]!=$item2[2] && !in_array($item1,$FilteredOut)){
                     $link_path1 = APP_PATH_WEBROOT . 'Design/online_designer.php?pid=' . $_GET['pid'] . '&page=' . $item1[0] . '&field=' . $item1[1];
                     $link_path2= APP_PATH_WEBROOT . 'Design/online_designer.php?pid=' . $_GET['pid'] . '&page=' . $item2[0] . '&field=' . $item2[1];
                     $link_to_edit1 = '<a href=' . $link_path1 . ' target="_blank" ><img src=' . APP_PATH_IMAGES . 'pencil.png></a>';
                     $link_to_edit2 = '<a href=' . $link_path2. ' target="_blank" ><img src=' . APP_PATH_IMAGES. 'pencil.png></a>';
-                    //array_push($FilteredOut,Array($item1[0],$item1[1],$item1[2],$item1[3]));
-
 
                     // Adding : Intrument Name, instrument
                     $label1=TextBreak($item1[1]);
                     $label2=TextBreak($item2[1]);
 
-                    array_push($FilteredOut,Array($item1[0],$item1[1],$label1,$item1[3],$link_to_edit1),Array($item2[0],$item2[1],$label2 ,$item2[3],$link_to_edit2));
+                    array_push( $FilteredOut, Array(REDCap::getInstrumentNames($item1[0]),$item1[1],$label1,$item1[3],$link_to_edit1));
+                    array_push( $FilteredOut, Array(REDCap::getInstrumentNames($item2[0]),$item2[1],$label2,$item2[3],$link_to_edit2));
                     break;
                 }
 
@@ -221,7 +248,7 @@ class check_consistency_for_lists //check_consistency_for_lists
      * @return array
      */
     public static function IsYesNoConsistent() {
-    $DataDictionary= \REDCap::getDataDictionary('array');
+        $DataDictionary= \REDCap::getDataDictionary('array');
         $yes_no_array= self::getLists($DataDictionary);
         $all_list_questions=  self::Transform($yes_no_array);
         $yes_words=self::getYesWords();
@@ -232,9 +259,8 @@ class check_consistency_for_lists //check_consistency_for_lists
 
         $yes=self::FindProblems($yes_list);
         $no=self::FindProblems($no_list);
-    return array_merge($yes,$no);
-
-}
+        return array_merge($yes,$no);
+    }
 
 
     /**
@@ -255,7 +281,6 @@ class check_consistency_for_lists //check_consistency_for_lists
         $positive=self::FindProblems($positive_list);
         $negative=self::FindProblems($negative_list);
         return array_merge($positive,$negative);
-
     }
 
 

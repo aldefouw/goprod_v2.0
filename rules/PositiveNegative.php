@@ -7,6 +7,8 @@
  */
 namespace Stanford\GoProd;
 
+require_once __DIR__."../../classes/table_formatting.php";
+
 function PositiveNegative(){
 
     global $config_json;
@@ -21,7 +23,7 @@ function PositiveNegative(){
     if(!@include_once($phat_to_rule)){ error_log("Failed to include:: $phat_to_rule");}
 
     $res= new check_consistency_for_lists();
-    $Rule['results']=$res::IsPositiveNegativeConsistent();
+    $Rule['results']=TransformToThreeColumns($res::IsPositiveNegativeConsistent());
 
     return  $Rule;
 
