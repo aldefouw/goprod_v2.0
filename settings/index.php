@@ -83,9 +83,11 @@ $json = json_decode(file_get_contents($file),TRUE);
                 </select>
             </td>
             <td>
+                <?php echo lang('KEYWORDS_YES');?>
                 <textarea name="yes_no[keywords_yes]" style="min-width: 300px; min-height: 200px;"><?php echo $json['yes_no']['keywords_yes']; ?></textarea>
             </td>
             <td>
+                <?php echo lang('KEYWORDS_NO');?>
                 <textarea name="yes_no[keywords_no]" style="min-width: 300px; min-height: 200px;"><?php echo $json['yes_no']['keywords_no']; ?></textarea>
             </td>
             <td class="dt-body-center">
@@ -112,9 +114,11 @@ $json = json_decode(file_get_contents($file),TRUE);
                 </select>
             </td>
             <td>
+                <?php echo lang('NUMBER_RECORDS');?>
                 <textarea name="test_records[no_records]" style="min-width: 300px; min-height: 200px;"><?php echo $json['test_records']['no_records']; ?></textarea>
             </td>
             <td>
+                <?php echo lang('NUMBER_EXPORTS');?>
                 <textarea name="test_records[no_exports]" style="min-width: 300px; min-height: 200px;"><?php echo $json['test_records']['no_exports']; ?></textarea>
             </td>
             <td class="dt-body-center">
@@ -141,9 +145,11 @@ $json = json_decode(file_get_contents($file),TRUE);
                 </select>
             </td>
             <td>
+                <?php echo lang('KEYWORDS_POSITIVE');?>
                 <textarea name="positive_negative[keywords_positive]" style="min-width: 300px; min-height: 200px;"><?php echo $json['positive_negative']['keywords_positive']; ?></textarea>
             </td>
             <td>
+                <?php echo lang('KEYWORDS_NEGATIVE');?>
                 <textarea name="positive_negative[keywords_negative]" style="min-width: 300px; min-height: 200px;"><?php echo $json['positive_negative']['keywords_negative']; ?></textarea>
             </td>
             <td class="dt-body-center">

@@ -134,14 +134,25 @@ function lang($phrase){
             'STARTING' => 'Collecting Meta Data',
             'MAIN_TEXT' => 'If the thought of losing the data you have entered into your REDCap project sounds painful, you should be in production mode. Production mode helps protect your data from accidental mistakes. This plugin will allow you to verify if your project is ready to move to production mode or if you first need to fix something.',
 
-              'SETTINGS_TITLE'=>'Go to Prod Setup',
-              'SETTINGS_MAIN_TEXT'=>'Use this page activate/deactivate rules and change the default options for each rule.',
-              'SETTINGS_RULE'=>' Rule/Checklist',
-              'SETTINGS_OPTIONS'=>'Options',
-              'SETTINGS_ALERT_LEVEL'=>'Alert Level',
-              'RECOMMENDED_VALUES'=>'Recommended Values',
-              'RECOMMENDED_KEYWORDS'=>'Recommended Keywords',
-              'SETTINGS_ACTIVE'=>'Active',
+            'SETTINGS_TITLE'=>'Go to Prod Setup',
+            'SETTINGS_MAIN_TEXT'=>'Use this page activate/deactivate rules and change the default options for each rule.',
+            'SETTINGS_RULE'=>' Rule/Checklist',
+            'SETTINGS_OPTIONS'=>'Options',
+            'SETTINGS_ALERT_LEVEL'=>'Alert Level',
+
+            'RECOMMENDED_VALUES'=>'Recommended Values',
+            'RECOMMENDED_KEYWORDS'=>'Recommended Keywords',
+
+            'KEYWORDS_YES' => 'Keywords to match Yes',
+            'KEYWORDS_NO'=> 'Keywords to match No',
+
+            'NUMBER_RECORDS'=> 'Minimum Number of Records',
+            'NUMBER_EXPORTS'=> 'Minimum Number of Exports',
+
+            'KEYWORDS_POSITIVE'=> 'Keywords to match Positive',
+            'KEYWORDS_NEGATIVE'=> 'Keywords to match Negative',
+
+            'SETTINGS_ACTIVE'=>'Active',
 
             'RESULTS_TABLE_HEADER1'=>'Where',
             'RESULTS_TABLE_HEADER2'=>'Possible issue',
