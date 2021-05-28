@@ -35,5 +35,9 @@
   "missing_irb" : {
     "active" : true,
     "type" : "danger"
+  },
+  "just_for_fun" : {
+    "active" : true,
+    "type" : "danger"
   }
 }
