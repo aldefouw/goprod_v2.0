@@ -27,5 +27,9 @@
   "branching_logic": {
     "active": true,
     "type": "danger"
+  },
+  "missing_pi" : {
+    "active" : true,
+    "type" : "danger"
   }
 }
