@@ -31,5 +31,9 @@
   "missing_pi" : {
     "active" : true,
     "type" : "danger"
+  },
+  "missing_irb" : {
+    "active" : true,
+    "type" : "danger"
   }
 }
