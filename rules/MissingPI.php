@@ -9,10 +9,13 @@ namespace Stanford\GoProd;
 
 
 function  MissingPI(){
+
+    global $config_json;
+
     $Rule['configured_name'] = 'missing_pi';
     $Rule['title']=lang('PI_TITLE');
     $Rule['body']=lang('PI_BODY');
-    $Rule['risk']="danger"; // level of risk: warning, danger or info.
+    $Rule['risk']=$config_json['missing_pi']['type']; // level of risk: warning, danger or info.
 
     $phat_to_rule= dirname(dirname(__FILE__)) . '/classes/Check_pi_irb_type.php';
 
