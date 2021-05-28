@@ -9,14 +9,10 @@ namespace Stanford\GoProd;
 
 
 function  MissingPI(){
-
     $Rule['configured_name'] = 'missing_pi';
     $Rule['title']=lang('PI_TITLE');
     $Rule['body']=lang('PI_BODY');
     $Rule['risk']="danger"; // level of risk: warning, danger or info.
-
-
-
 
     $phat_to_rule= dirname(dirname(__FILE__)) . '/classes/Check_pi_irb_type.php';
 
@@ -24,10 +20,6 @@ function  MissingPI(){
 
     $res= new check_pi_irb_type();
     $Rule['results']=$res::MissingPI();
-
-    //    error_log("*****MissingPI*************************************************");
-//    error_log(print_r($Rule, TRUE));
-//    error_log("******************************************************");
 
     return $Rule;
 }
