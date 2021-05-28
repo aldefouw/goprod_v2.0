@@ -8,6 +8,7 @@
 
 namespace Stanford\GoProd;
 
+require_once __DIR__."../../classes/table_formatting.php";
 
 function  BranchingLogicErrors(){
 
@@ -23,12 +24,8 @@ function  BranchingLogicErrors(){
     if(!@include_once($phat_to_rule)){ error_log("Failed to include:: $phat_to_rule");}
 
     $res= new check_presence_of_branching_and_calculated_variables();
-    $Rule['results']=$res::CheckIfBranchingLogicVariablesExist();
 
-//   error_log( "qqqqquiiiiiiiiiiiiiii;;;");
-//   error_log( print_r($Rule, TRUE));
-//    error_log( "finnnn;;;");
-
+    $Rule['results']=TransformToThreeColumns($res::CheckIfBranchingLogicVariablesExist());
+    
     return  $Rule;
-
 }
