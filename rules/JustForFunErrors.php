@@ -12,10 +12,12 @@ namespace Stanford\GoProd;
 
 function JustForFunErrors(){
 
+    global $config_json;
+
     $Rule['configured_name'] = 'just_for_fun';
     $Rule['title']=lang('JUST_FOR_FUN_PROJECT_TITLE');
     $Rule['body']=lang('JUST_FOR_FUN_PROJECT_BODY');
-    $Rule['risk']="danger"; // level of risk: warning, danger or info.
+    $Rule['risk']=$config_json['just_for_fun']['type']; // level of risk: warning, danger or info.
 
     $phat_to_rule= dirname(dirname(__FILE__)) . '/classes/Check_pi_irb_type.php';
 

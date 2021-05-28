@@ -248,6 +248,35 @@ $json = json_decode(file_get_contents($file),TRUE);
             </td>
         </tr>
 
+        <tr>
+            <td class="dt-body-left"><?php echo lang('JUST_FOR_FUN_TITLE');?></td>
+            <td class="dt-body-center">
+                <select size="1" id="just-for-fun-alert-level" name="just_for_fun[type]"  title="just-for-fun-alert-level">
+                    <option value="<?php echo lang('INFO');?>" <?php  if (strtolower($json['just_for_fun']['type'])== strtolower(lang('INFO'))) echo "selected=\"selected\""; ?> >
+                        <?php echo lang('INFO');?>
+                    </option>
+                    <option value=" <?php echo lang('WARNING');?>" <?php  if (strtolower($json['just_for_fun']['type'])==strtolower(lang('WARNING'))) echo "selected=\"selected\""; ?>>
+                        <?php echo lang('WARNING');?>
+                    </option>
+                    <option value="<?php echo lang('DANGER');?>" <?php  if (strtolower($json['just_for_fun']['type'])==strtolower(lang('DANGER'))) echo "selected=\"selected\""; ?>>
+                        <?php echo lang('DANGER');?>
+                    </option>
+                </select>
+            </td>
+            <td>
+                <?php echo lang('JUST_FOR_FUN_BODY');?>
+            </td>
+            <td>
+
+            </td>
+            <td class="dt-body-center">
+                <label class="switch">
+                    <input type="checkbox" name="just_for_fun[active]" value="" <?php  if ($json['just_for_fun']['active']) echo "checked"; ?>>
+                    <div class="slider round"></div>
+                </label>
+            </td>
+        </tr>
+
 
         <tr>
             <td> </td>

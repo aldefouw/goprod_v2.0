@@ -70,8 +70,9 @@ class check_pi_irb_type
         $link = '<a target="_blank" class="btn  btn-default review_btn" href=" ' . APP_PATH_WEBROOT . 'ProjectSetup/index.php?to_prod_plugin=3&pid=' . $_GET['pid'] . '"  >' . lang('VIEW') . '</a>';
         $array = self::CreateResultArray($where, $issue, $link);
         $purpose = $Proj->project['purpose'];
-        if ($purpose !== "2" and $purpose !== "0") {
-            return $array;// with results - this is a JustFor fun project.
+
+        if ($purpose !== "2") {
+            return $array;// with results
         } else {
             return array(); // no results. this is a real project
         }

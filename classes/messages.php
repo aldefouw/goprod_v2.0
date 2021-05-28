@@ -62,6 +62,9 @@ function lang($phrase){
             'TEST_RECORDS_TITLE' => 'This project has not been sufficiently tested.',
             'TEST_RECORDS_BODY' => 'We recommend the creation of at least <strong>#NUMBER_RECORDS#</strong> test record(s) and at least <strong>#NUMBER_EXPORTS#</strong> export(s) in development mode. This allows you to preview the type of results expected from your project. It is also highly recommended that you review your project\'s design with a statistician prior to entering production mode to ensure your data capture is configured properly.',
 
+            'JUST_FOR_FUN_TITLE' => 'Notify User of Practice Project',
+            'JUST_FOR_FUN_BODY' => 'Inform user that production checklist is optional for practice project.',
+
             'READY_TO_GO_TITLE' => ' You are all set!. ',
             'READY_TO_GO_BODY' => 'Looks like you are ready to move this project to production mode!.',
 
