@@ -29,53 +29,55 @@ class GoProd extends AbstractExternalModule
         if(PAGE == 'ProjectSetup/index.php' and isset($project_id) and $goprod_workflow==1){
             ?>
                 <script>
-/*                    function pop_up(url){
-                        window.open(url,'win2','status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=1076,height=768,directories=no,location=no')
-                    }*/
+                    // function pop_up(url){
+                    //     window.open(url,'win2','status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=1076,height=768,directories=no,location=no')
+                    // }
 
                     $(document).ready(function() {
                         //find and hide the current go to prod button
-                        var MoveProd=  $( "button[onclick='btnMoveToProd()']" );
+                        var MoveProd=  $( "div.chklisttext button:contains(production)" );
                         MoveProd.hide();
+
                         //add the new go to pro button
                         gopro_button= '<button id="go_prod_plugin" class="btn btn-defaultrc btn-xs fs13">'+ '<?php echo lang('GO_PROD');?>' +'</button>';
                         MoveProd.after(gopro_button);
+
+                        //Take the user to the proper location for the Production Checklist
                         document.getElementById("go_prod_plugin").onclick = function () {
                             production =  <?php  echo json_encode($this->getUrl("index.php"))?>;
                             location.href = production;
-                           // pop_up(production);
+                            //pop_up(production);
                         };
 
                         ready_to_prod = <?php echo json_encode($_GET["to_prod_plugin"])?>;
                         //ready_to_prod = '3';
-                        if (ready_to_prod === '1'){
-                            //MoveProd.click();
-                            //$( 'div[aria-describedby="certify_prod"]' ).hide();
-                            // setTimeout(function(){
-                            // $('.ui-dialog-buttonpane button').click();
-                            // },500);
 
-                            // em@partners.org: adding new Move to Production button - 12/10/2018: Does work - I get an Ajax-Error
-//                            gopro_button= '<button id="go_prod_plugin" class="btn btn-defaultrc btn-xs fs13"> Move to Production </button> or ';
-//                            MoveProd.after(gopro_button);
-//                            document.getElementById("go_prod_plugin").onclick = function (){
-//                               btnMoveToProd();
-//                            };
-//                            gopro_button= '<button id="go_prod_pluginBP" class="btn btn-defaultrc btn-xs fs13"> Move to Production BP</button> or ';
-//                            MoveProd.after(gopro_button);
-//                            document.getElementById("go_prod_pluginBP").onclick = function (){
-//                                $('#certify_prod').dialog({ bgiframe: true, modal: true, width: 500, buttons: {
-//                                        'I Agree': function() {
-//                                            $(this).dialog('close');
-//                                            $('#status_dialog').dialog({ bgiframe: true, modal: true, width: 650, buttons: {
-//                                                    'Cancel': function() { $(this).dialog('close'); },
-//                                                    //'YES, Move to Production Status': function() { doChangeStatus(0,'move_to_prod','EMORALES7@PARTNERS.ORG',0,0); }
-//                                                    'YES, Move to Production Status': function() { doChangeStatus(0,'','EMORALES7@PARTNERS.ORG',0,0); }
-//                                                } });
-//                                       },
-//                                        'Cancel': function() { $(this).dialog('close'); }
-//                                    } });
-//                            };
+                        if (ready_to_prod === '1'){
+                            MoveProd.click();
+                            $( 'div[aria-describedby="certify_prod"]' ).hide();
+                            setTimeout(function(){
+                            $('.ui-dialog-buttonpane button').click();
+                            },500);
+
+                           gopro_button= '<button id="go_prod_plugin" class="btn btn-defaultrc btn-xs fs13"> Move to Production </button> or ';
+                           MoveProd.after(gopro_button);
+                           document.getElementById("go_prod_plugin").onclick = function (){
+                              btnMoveToProd();
+                           };
+                           gopro_button= '<button id="go_prod_pluginBP" class="btn btn-defaultrc btn-xs fs13"> Move to Production BP</button> or ';
+                           MoveProd.after(gopro_button);
+                           document.getElementById("go_prod_pluginBP").onclick = function (){
+                               $('#certify_prod').dialog({ bgiframe: true, modal: true, width: 500, buttons: {
+                                       'I Agree': function() {
+                                           $(this).dialog('close');
+                                           $('#status_dialog').dialog({ bgiframe: true, modal: true, width: 650, buttons: {
+                                                   'Cancel': function() { $(this).dialog('close'); },
+                                                   'YES, Move to Production Status': function() { doChangeStatus(0,'','EMORALES7@PARTNERS.ORG',0,0); }
+                                               } });
+                                      },
+                                       'Cancel': function() { $(this).dialog('close'); }
+                                   } });
+                           };
                         }
                         if (ready_to_prod === '3'){
                             //in case of IRB ,  PI  or purpose errors found
