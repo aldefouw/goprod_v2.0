@@ -210,13 +210,18 @@ if($status == 0){
     </script>
 
     <script type="text/javascript">
-        /*Auto Run the report if the  URL  variable is to_prod_plugin=2 */
+        /*Auto Run the report if the URL variable is to_prod_plugin=2 */
         $( document ).ready(function() {
 
             ready_to_prod = <?php echo json_encode($_GET["to_prod_plugin"])?>;
-          //  window.alert(ready_to_prod);
+
             if (ready_to_prod === '2'){
                 $('button[id="go_prod_go_btn"]').click();
+            }
+
+            if (ready_to_prod === '3'){
+                production = <?php echo json_encode(APP_PATH_WEBROOT.'ProjectSetup/index.php?pid='.$_GET['pid'].'&to_prod_plugin=1')?>;
+                location.href = production;
             }
 
         });
