@@ -1,14 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: alvaro1
- * Date: 5/3/18
- * Time: 3:45 PM
- */
-
-?>
-
-<form class="form-horizontal" onsubmit="return SkipSubmitFunction()">
+<form id="<?php echo $_GET['rule']; ?>" class="form-horizontal" onsubmit="return SkipSubmitFunction(this)">
     <fieldset>
         <!-- Textarea -->
         <div class="form-group" style="padding: 5%">
@@ -54,23 +44,22 @@
     </fieldset>
 </form>
 <script type="text/javascript">
-    function SkipSubmitFunction()
+    function SkipSubmitFunction(form)
     {
-        var getrulename="<?php echo '#'.$_GET['rule']; ?>";
-        var geturl_ajax="<?php echo $module->getUrl('update_rule_options.php').'&rule='.$_GET['rule']; ?>";
-        //console.log(geturl_ajax);
+        let geturl_ajax="<?php echo $module->getUrl('update_rule_options.php'); ?>";
 
-        $.get( geturl_ajax, function() {
-            alert('This rule will now be skipped for this project moving forward.')
-
-            //location.reload();
-
-            //$("#close_modal").click();
-            //$(getrulename).hide();
-
-            // $("#go_prod_go_btn").click();
+        $.ajax({
+            type: 'get',
+            url: geturl_ajax,
+            data: {
+                rule:  '<?php echo $_GET['rule']; ?>',
+                text: $(form).find('textarea').val()
+            },
+           success: function(data) {
+               console.log(data)
+           }
         });
 
-         return false;
+        return false;
     }
 </script>

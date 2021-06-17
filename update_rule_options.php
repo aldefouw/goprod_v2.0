@@ -16,5 +16,12 @@ $module->setProjectSetting($_GET['rule'], 'disabled', $_GET['pid']);
 ////This is the new setting for this rule within the project
 $new_setting = $module->getProjectSetting($_GET['rule'], $_GET['pid']);
 
+//This is where the justification is set
+$module->setProjectSetting($_GET['rule'].'Justification', $_GET['justification'], $_GET['pid']);
+
+var_dump($_GET);
+
+//Log all of this to project-specific log
 $res= new ReadWriteLogging($_GET['pid']);
-$res->logEvent($_GET['rule'],$new_setting);
+$res->logEvent($_GET['rule'], $new_setting);
+$res->standardLog("Justification: ".$_GET['justification']);
