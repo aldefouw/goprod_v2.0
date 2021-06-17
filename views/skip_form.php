@@ -76,12 +76,18 @@
                 text: $(form).find('textarea').val()
             },
            success: function(data) {
+
+               $("#close_modal").trigger('click');
+               $('#'+getrulename).fadeOut();
+
+               //This is passing the number of active results that are not yet disabled
                console.log(data)
+
+                // if(data == "true") {
+                //     $('#go_prod_accept_all1').prop('hidden', '')
+                // }
            }
         });
-
-        $("#close_modal").trigger('click');
-        $('#'+getrulename).fadeOut();
 
         return false;
     }
