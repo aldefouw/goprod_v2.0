@@ -215,7 +215,7 @@ if($status == 0){
             ready_to_prod = <?php echo json_encode($_GET["to_prod_plugin"])?>;
 
             if (ready_to_prod === '2'){
-                $('button[id="go_prod_go_btn"]').click();
+                $('button[id="go_prod_go_btn"]').trigger('click');
             }
 
             if (ready_to_prod === '3'){
