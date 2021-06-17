@@ -164,7 +164,6 @@ if($status == 0){
         <li class="list-group-item">
             <h4 class="list-group-item-heading"><?php echo lang('INFO_WHAT_NETX');?></h4>
             <p class="list-group-item-text"> <?php echo $module->getSystemSetting('next_text');?></p>
-            <br>
         </li>
 
         <li class="list-group-item">
