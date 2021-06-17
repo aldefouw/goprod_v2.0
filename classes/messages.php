@@ -66,7 +66,7 @@ function lang($phrase){
             'JUST_FOR_FUN_BODY' => 'Inform user that production checklist is optional for practice project.',
 
             'READY_TO_GO_TITLE' => ' You are all set!. ',
-            'READY_TO_GO_BODY' => 'Looks like you are ready to move this project to production mode!.',
+            'READY_TO_GO_BODY' => 'Looks like you are ready to move this project to production mode!',
 
             'MY_FIRST_INSTRUMENT_TITLE' => '"My First Instrument" form name found. ',
             'MY_FIRST_INSTRUMENT_BODY' => 'You will see one default form already present in your "Online Designer," entitled “My First Instrument.” You may rename this form by clicking the “Rename” button to the right of the form name.',
