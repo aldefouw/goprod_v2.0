@@ -22,20 +22,17 @@
                             if(strlen($module->getSystemSetting('not_a_problem_text'))){
                                 echo $module->getSystemSetting('not_a_problem_text');
                             } else { ?>
-                                Please note that future problems related to with the omission of this recommendation may result in additional support costs for your project.
+                                Please note that future problems related to the omission of this recommendation may result in additional support costs for your project.
                             <?php } ?>
                         </p>
                     </td>
                 </tr>
                 <tr><td>
                         <div>
-                            <label class="checkbox-inline" for="checkboxes-0">
-                                <input type="checkbox" name="checkboxes" id="checkboxes-0" value="1">
-                                I understand.
-                            </label>
-
+                            <label class="checkbox-inline" for="checkboxes-0">I understand.</label>
+                            <input type="checkbox" name="checkboxes" id="checkboxes-0" value="1">
                             <br />
-                            <button id="gp_skip_button" name="gp_skip_button" class="btn btn-warning   btn-md">Skip this recommendation</button>
+                            <button id="gp_skip_button" name="gp_skip_button" class="btn btn-warning btn-md" disabled="disabled">Skip this recommendation</button>
                         </div>
                     </td>
                 </tr>
@@ -44,6 +41,27 @@
     </fieldset>
 </form>
 <script type="text/javascript">
+    
+    //When the textbox changes, check that a justification and "I understand" has been checked
+    $("textarea#textarea").on("change paste keyup", function() {
+        //Enable the button for submission if this stuff is checked
+        if($('#checkboxes-0').is(':checked') && $(this).val().length) {
+            $('button#gp_skip_button').prop('disabled', false)
+        } else {
+            $('button#gp_skip_button').prop('disabled', true)
+        }
+    })
+
+    //When the checkbox status changes, check that a justification and "I understand" has been checked
+    $('#checkboxes-0').on("change", function() {
+        if($("textarea#textarea").val().length > 0 && $(this).is(':checked')){
+            $('button#gp_skip_button').prop('disabled', false)
+        } else {
+            $('button#gp_skip_button').prop('disabled', true)
+        }
+    })
+
+    //Submit the justification to prevent the rule from showing up in the future
     function SkipSubmitFunction(form)
     {
         let geturl_ajax="<?php echo $module->getUrl('update_rule_options.php'); ?>";
@@ -52,7 +70,7 @@
             type: 'get',
             url: geturl_ajax,
             data: {
-                rule:  '<?php echo $_GET['rule']; ?>',
+                rule: '<?php echo $_GET['rule']; ?>',
                 text: $(form).find('textarea').val()
             },
            success: function(data) {
