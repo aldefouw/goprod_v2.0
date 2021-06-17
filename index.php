@@ -160,16 +160,7 @@ if($status == 0){
         <h4 class="projhdr"><?php echo lang('NOTICE');?></h4>
     <hr>
 
-    <ul class="list-group">
-        <li class="list-group-item">
-            <h4 class="list-group-item-heading"><?php echo lang('INFO_WHAT_NETX');?></h4>
-            <p class="list-group-item-text"> <?php echo $module->getSystemSetting('next_text');?></p>
-        </li>
 
-        <li class="list-group-item">
-            <p class="list-group-item-text"><?php echo lang('INFO_WHAT_NETX_BODY_2');?></p>
-        </li>
-    </ul>
     <ul class="list-group">
         <li class="list-group-item">
             <h5 class="list-group-item-heading"><?php echo lang('INFO_CITATION');?></h5>
@@ -182,8 +173,22 @@ if($status == 0){
         </li>
     </ul>
 
+    <br />&nbsp;<br />
+
+    <ul class="list-group">
+        <li class="list-group-item">
+            <h4 class="list-group-item-heading"><?php echo lang('INFO_WHAT_NETX');?></h4>
+            <p class="list-group-item-text"> <?php echo $module->getSystemSetting('next_text');?></p>
+        </li>
+        <li class="list-group-item">
+            <p class="list-group-item-text"><?php echo lang('INFO_WHAT_NETX_BODY_2');?></p>
+
+        </li>
+    </ul>
+
     <!-- em@partners.org: Adding Go to Production button-->
     <div align="center">
+        <p class="list-group-item-text"><?php echo lang('I_AGREE_BODY');?></p>
         <button id="go_prod_accept_all1" class=" btn btn-md btn-success text-center "> <?php echo lang('I_AGREE');?> </button>
     </div>
     <!--Ajax calls -->
