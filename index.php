@@ -112,9 +112,7 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
    <tr>
        <td style="border: none">
             <strong>
-
                     <?php echo lang('READY_TO_GO_TITLE'); ?>
-
             </strong>
        </td>
    </tr>
@@ -155,6 +153,24 @@ exit();
 if($status == 0){
 ?>
 
+    <ul class="list-group">
+        <li class="list-group-item">
+            <h4 class="list-group-item-heading"><?php echo lang('INFO_WHAT_NETX');?></h4>
+            <p class="list-group-item-text"> <?php echo $module->getSystemSetting('next_text');?></p>
+        </li>
+        <li class="list-group-item">
+            <p class="list-group-item-text"><?php echo lang('INFO_WHAT_NETX_BODY_2');?></p>
+
+        </li>
+    </ul>
+
+    <br />&nbsp;<br />
+
+    <!-- em@partners.org: Adding Go to Production button-->
+    <div align="center">
+        <button id="go_prod_accept_all1" class=" btn btn-md btn-success text-center" hidden="hidden"> <?php echo lang('I_AGREE');?> </button>
+    </div>
+
     <div id='final-info'>
         <br>
         <h4 class="projhdr"><?php echo lang('NOTICE');?></h4>
@@ -173,24 +189,8 @@ if($status == 0){
         </li>
     </ul>
 
-    <br />&nbsp;<br />
 
-    <ul class="list-group">
-        <li class="list-group-item">
-            <h4 class="list-group-item-heading"><?php echo lang('INFO_WHAT_NETX');?></h4>
-            <p class="list-group-item-text"> <?php echo $module->getSystemSetting('next_text');?></p>
-        </li>
-        <li class="list-group-item">
-            <p class="list-group-item-text"><?php echo lang('INFO_WHAT_NETX_BODY_2');?></p>
 
-        </li>
-    </ul>
-
-    <!-- em@partners.org: Adding Go to Production button-->
-    <div align="center">
-        <p class="list-group-item-text"><?php echo lang('I_AGREE_BODY');?></p>
-        <button id="go_prod_accept_all1" class=" btn btn-md btn-success text-center "> <?php echo lang('I_AGREE');?> </button>
-    </div>
     <!--Ajax calls -->
     <script>
         //psssing php variables

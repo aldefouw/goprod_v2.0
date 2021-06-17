@@ -20,8 +20,6 @@ function loadResults(rules,project_id){
 
     //for each rule
     $.each( rules, function( i, val ) {
-
-
         var urlcall=GetPath(val,project_id);
 
         $.get( urlcall, function(data) {
@@ -85,9 +83,19 @@ function loadResults(rules,project_id){
 
                     }
 
+                    // em@partners.org: Showing Move to Prod button when there are no errors found
+                    if (count_problems_found===0 & newprogress===100){
+                        $('#go_prod_accept_all1').prop('hidden', '')
+                    }
+
                     return $(this).attr('aria-valuenow', newprogress+"%").css('width',newprogress+"%");
+
+
+
+
                 }
             ); //progress bar end
+
 
 
 

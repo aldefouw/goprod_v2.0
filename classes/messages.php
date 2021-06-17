@@ -116,7 +116,7 @@ function lang($phrase){
             'NOTICE' => 'Notice',
             'INFO_WHAT_NETX' => 'What happens Next?',
             'INFO_WHAT_NETX_BODY' => '  Your project will be reviewed before being moved into Production.',
-            'INFO_WHAT_NETX_BODY_2' => ' If, on the next page you check \'Delete ALL Data\', any data entered before being approved for Production will be deleted. Do not enter production data while a request is pending unless you uncheck this box and follow the instructions in the next item.',
+            'INFO_WHAT_NETX_BODY_2' => 'After all clicking "<strong>Run Check List</strong>", and <strong>all of the checklist items have passed or skipped</strong>, the "<strong>Move to Production</strong>" button will appear below. <br /><br />  When you click it, you\'ll be presented with a choice about what to do with your data. <br /><br /> If, on the next page you select \'Delete ALL Data\', any data entered before being approved for Production will be deleted. <br /><br /> If you want to carry across data to production, please choose the \'Keep ALL data saved so far\' option.',
             'INFO_CITATION' => 'Citation Information',
             'INFO_CITATION_BODY' => ' REDCap at Stanford is supported by Research IT. All research resulting from the use of REDCap must cite the grants that make this service available - details, including biolerplate language, are located
                 <a href="https://medwiki.stanford.edu/x/AAJPB"><u>HERE</u></a>.',
@@ -124,7 +124,7 @@ function lang($phrase){
             'INFO_STATISTICIAN_REVIEW_BODY' => 'It is also highly recommended that you review your project\'s design with a statistician prior to entering production mode to ensure your data capture is configured properly.',
 
             'I_AGREE_BODY' => 'Click \'I Agree\' to signify all the pertinent issues above  were solved and the project is ready to go to production mode:',
-            'I_AGREE' => 'I Agree',
+            'I_AGREE' => 'Move to Production',
 
             'VALIDATED_FIELDS' => 'Validated Fields:',
             'TEXT_BOX_FIELDS' => 'Text Box Fields:',
