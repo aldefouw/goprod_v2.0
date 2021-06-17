@@ -65,7 +65,7 @@ function lang($phrase){
             'JUST_FOR_FUN_TITLE' => 'Notify User of Practice Project',
             'JUST_FOR_FUN_BODY' => 'Inform user that production checklist is optional for practice project.',
 
-            'READY_TO_GO_TITLE' => ' You are all set!. ',
+            'READY_TO_GO_TITLE' => ' You are all set!',
             'READY_TO_GO_BODY' => 'Looks like you are ready to move this project to production mode!',
 
             'MY_FIRST_INSTRUMENT_TITLE' => '"My First Instrument" form name found. ',
