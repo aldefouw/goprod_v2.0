@@ -81,7 +81,7 @@
         });
 
         $("#close_modal").trigger('click');
-        $('#'+getrulename).hide();
+        $('#'+getrulename).fadeOut();
 
         return false;
     }

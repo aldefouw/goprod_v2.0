@@ -65,6 +65,57 @@ class GoProd extends AbstractExternalModule
         }
 	}
 
+    function GetListOfAllRules(){
+        $RuleNames = array();
+        $url= __DIR__.'/'.$this::PATH_TO_RULES;
+        foreach (scandir($url) as $filename)
+        {
+            if(ctype_upper(substr($filename, 0, 1)) ){
+                $filename=preg_replace('/\.[^.]+$/','',$filename);
+
+                if($this->ruleStatus($filename)) {
+                    array_push($RuleNames, $filename);
+                }
+            }
+        }
+
+        return $RuleNames;
+    }
+
+    function ruleStatus($RuleName){
+
+        global $config_json;
+
+        $phat_to_rule=$this::PATH_TO_RULES.$RuleName.'.php';
+
+        //Dynamic include the path of the rule in order to be called -- exit if fails
+        if(!@include_once($phat_to_rule)) {
+            error_log("Failed to include:: $phat_to_rule");
+            exit();
+        }
+
+        //Check if the path and function exist. if not then exit.
+        if (!(function_exists(__NAMESPACE__."\\".$RuleName))) {
+            error_log( "Problem loading $RuleName does not exist");
+            exit();
+        }
+
+        //Call the function for the Rule
+        $rule = call_user_func(__NAMESPACE__."\\".$RuleName);
+
+        //echo $RuleName.'- ' .$this->getProjectSetting($RuleName, $this->getProjectId()) . '<br />';
+
+        //Check to see if the Configured Rule is marked as ACTIVE in the JSON file
+        //Also must not have been disabled by the user by clicking "Not a Problem" (which sets it to disabled)
+        if(!empty($rule['configured_name'])
+            && $config_json[$rule['configured_name']]['active']
+        ){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     /**********************************************************************************************************
     Read all file names on the /rules folder and creates an array with all the names removing the .php part

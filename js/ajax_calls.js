@@ -135,27 +135,32 @@ function Addstyles(){
     $('#gp-loader').hide();
 }
 
+function loadRules(){
+    var call=GetPath("GetListOfActiveRules",project_id);
 
-$( document ).ready(function() {
+    $.ajax({url: call, success: function(result){
+            // console.log(result);
+            $("#go_prod_tbody").empty();
+            result = $.parseJSON(result);
 
-    $("#go_prod_go_btn").click(function(){
+        loadResults(result,project_id);
+    }});//cierra ajax call
+
+}
+
+
+$(document).ready(function() {
+
+    $("#go_prod_go_btn").click(function() {
         $('#allset1').hide();
         $('#loader-count').text("");
         $('#gp-loader').show();
         $('#gp-starting').show();
         $('#gp-run').hide();
-        $(this).prop("disabled",true);//disable run button while run
-        var call=GetPath("GetListOfActiveRules",project_id);
+        $(this).prop("disabled", true);//disable run button while run
 
-        $.ajax({url: call, success: function(result){
-                // console.log(result);
-                $("#go_prod_tbody").empty();
-                result = $.parseJSON(result);
-
-                loadResults(result,project_id);
-            }});//cierra ajax call
-    });//cierra on click
-
+        loadRules()
+    })
 
     var ResultsModal =$("#ResultsModal");
         ResultsModal.on('show.bs.modal', function (event) {
@@ -163,13 +168,7 @@ $( document ).ready(function() {
             var url = button.data('link'); // Extract info from data-* attributes
             $("#remote-html").load(url);
             //$('.lds-ripple').hide();
-
-
-
         });
-
-
-
 
     console.log( "ready COL!" );
 });

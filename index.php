@@ -65,6 +65,8 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
     echo lang('VERSION_INFO');
 }
 
+
+
 ?>
 
 
@@ -145,12 +147,19 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
 
 <?php
 
+
+
 $goprod_workflow=$module->getProjectSetting("gopprod-workflow");
 if ($goprod_workflow==0){
 exit();
 }
 /*Remove the go to production button if the project is already in production mode*/
 if($status == 0){
+
+    foreach($module->GetListOfAllRules() as $rule){
+        $module->setProjectSetting($rule, '', $module->getProjectId());
+    }
+
 ?>
 
     <ul class="list-group">
