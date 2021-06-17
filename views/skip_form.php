@@ -41,7 +41,7 @@
     </fieldset>
 </form>
 <script type="text/javascript">
-    
+
     //When the textbox changes, check that a justification and "I understand" has been checked
     $("textarea#textarea").on("change paste keyup", function() {
         //Enable the button for submission if this stuff is checked
@@ -64,7 +64,9 @@
     //Submit the justification to prevent the rule from showing up in the future
     function SkipSubmitFunction(form)
     {
-        let geturl_ajax="<?php echo $module->getUrl('update_rule_options.php'); ?>";
+
+        let getrulename = "<?php echo $_GET['rule']; ?>";
+        let geturl_ajax = "<?php echo $module->getUrl('update_rule_options.php'); ?>";
 
         $.ajax({
             type: 'get',
@@ -77,6 +79,9 @@
                console.log(data)
            }
         });
+
+        $("#close_modal").trigger('click');
+        $('#'+getrulename).hide();
 
         return false;
     }

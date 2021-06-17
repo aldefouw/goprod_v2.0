@@ -31,8 +31,8 @@ class ReadWriteLogging
     }
 
     //Write anything to the log
-    public function standardLog($value){
+    public function standardLog($value, $rulename = "Rule"){
         $sql_log = json_encode($this->config);
-        REDCap::logEvent("GoProd:Rule", $value, $sql_log, null, null, $this->project_id);
+        REDCap::logEvent("GoProd:".$rulename, $value, $sql_log, null, null, $this->project_id);
     }
 }
