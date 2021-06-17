@@ -67,6 +67,12 @@
 			"key": "citation_text",
 			"name": "Citation Information",
 			"type": "rich-text"
+		},
+		{
+			"key": "not_a_problem_text",
+			"name": "Text to appear when skipping issues found",
+			"type": "rich-text",
+			"default": "Please note that future problems related to with the omission of this recommendation may result in additional support costs for your project."
 		}
 	],
 	"project-settings": []

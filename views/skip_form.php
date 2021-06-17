@@ -16,25 +16,24 @@
                 <tr>
                     <td>
                         <label for="textarea">
-                            Use this option if you consider this is not an issue or if the remain issues are not a problem for your REDCap Database.
+                            If the issues found are not a problem for your project, please explain why in the text box below.
                         </label>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                            <textarea class="form-control" id="textarea" name="textarea" placeholder="provide a reason.."></textarea>
+                        <textarea class="form-control" id="textarea" name="textarea" placeholder="provide a reason.."></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <p id="testp">
-                            Please notice that future problems related with the omission of this recommendation may result in additional support costs for your project.
-                            <?php echo $_GET['rule'].$_GET['pid'];
-                            $res->UpdateConfig($_GET['rule'],"alvarologsss".rand(2,88));
-                            $res->SetConfig($_GET['rule'],"valor");
-                            $res->GetConfig($_GET['rule']);
-                            echo $res->PrintConfig($_GET['rule']);
-                            ?>
+                            <?php
+                            if(strlen($module->getSystemSetting('not_a_problem_text'))){
+                                echo $module->getSystemSetting('not_a_problem_text');
+                            } else { ?>
+                                Please note that future problems related to with the omission of this recommendation may result in additional support costs for your project.
+                            <?php } ?>
                         </p>
                     </td>
                 </tr>
@@ -44,6 +43,8 @@
                                 <input type="checkbox" name="checkboxes" id="checkboxes-0" value="1">
                                 I understand.
                             </label>
+
+                            <br />
                             <button id="gp_skip_button" name="gp_skip_button" class="btn btn-warning   btn-md">Skip this recommendation</button>
                         </div>
                     </td>
@@ -58,10 +59,15 @@
         var getrulename="<?php echo '#'.$_GET['rule']; ?>";
         var geturl_ajax="<?php echo $module->getUrl('update_rule_options.php').'&rule='.$_GET['rule']; ?>";
         //console.log(geturl_ajax);
+
         $.get( geturl_ajax, function() {
-            location.reload();
-            // $("#close_modal").click();
-            // $(getrulename).hide();
+            alert('This rule will now be skipped for this project moving forward.')
+
+            //location.reload();
+
+            //$("#close_modal").click();
+            //$(getrulename).hide();
+
             // $("#go_prod_go_btn").click();
         });
 

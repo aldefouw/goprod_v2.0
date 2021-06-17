@@ -5,30 +5,16 @@
  * Date: 6/19/18
  * Time: 3:33 PM
  */
-
-
 namespace Stanford\GoProd;
 /** @var \Stanford\GoProd\GoProd $module */
 
+require_once  'classes/ReadWriteLogging.php';
 
-//echo "entro en ajax";
-//exit;
+////Set the rule to false in the project settings
+$module->setProjectSetting($_GET['rule'], 'disabled', $_GET['pid']);
 
-//include_once  $module->getModulePath().'classes/ReadWriteLogging.php';
-//include_once  $module->getUrl('/classes/ReadWriteLogging.php');
-include_once  'classes/ReadWriteLogging.php';
+////This is the new setting for this rule within the project
+$new_setting = $module->getProjectSetting($_GET['rule'], $_GET['pid']);
 
-// error_log("URLSSSSS" );
-// error_log($module->getUrl('/classes/ReadWriteLogging.php'));
-                            //$res= new namespace\ReadWriteLogging(15);
-                            $res= new ReadWriteLogging($_GET['pid']);
-                            //echo $_GET['rule'].$_GET['pid'];
-                            //include_once 'classes/ReadWriteLogging.php';
-                            $res->UpdateConfig($_GET['rule'],"0");
-                            $res->SetConfig($_GET['rule'],"0");
-                            $res->GetConfig($_GET['rule']);
-                            error_log($res->PrintConfig($_GET['rule']) );
-                           // echo $res->PrintConfig($_GET['rule']);
-/// update the Rule list
-///
-///
+$res= new ReadWriteLogging($_GET['pid']);
+$res->logEvent($_GET['rule'],$new_setting);
