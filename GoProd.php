@@ -84,12 +84,6 @@ class GoProd extends AbstractExternalModule
             }
         }
 
-        //TODO: filter skipped rules::
-        //load skipped rules from logg
-        // $res= new ReadWriteLogging($_GET['pid']);
-        //  $RuleNames=$res->GetActiveRules($RuleNames);
-
-
         return $RuleNames;
     }
 
@@ -119,7 +113,11 @@ class GoProd extends AbstractExternalModule
         $rule = call_user_func(__NAMESPACE__."\\".$RuleName);
 
         //Check to see if the Configured Rule is marked as ACTIVE in the JSON file
-        if(!empty($rule['configured_name']) && $config_json[$rule['configured_name']]['active']){
+        //Also must not have been disabled by the user by clicking "Not a Problem" (which sets it to disabled)
+        if(!empty($rule['configured_name'])
+            && $config_json[$rule['configured_name']]['active']
+            && $this->getProjectSetting($RuleName, $this->getProjectId()) !== "disabled"
+        ){
             return true;
         } else {
             return false;
