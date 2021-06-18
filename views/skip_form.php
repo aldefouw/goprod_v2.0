@@ -77,15 +77,34 @@
             },
            success: function(data) {
 
-               $("#close_modal").trigger('click');
-               $('#'+getrulename).fadeOut();
+                //Let's close the modal
+                $("#close_modal").trigger('click');
 
-               //This is passing the number of active results that are not yet disabled
-               console.log(data)
+                //We're going to fade out the rule from view
+                $('#'+getrulename).fadeOut();
 
-                // if(data == "true") {
-                //     $('#go_prod_accept_all1').prop('hidden', '')
-                // }
+                //If we can see the number of problems in session storage
+                if(sessionStorage.getItem("number_of_problems")){
+                    //We just removed one of the "problems" by liccking "Not a Problem"
+                    let num_probs = sessionStorage.getItem("number_of_problems") - 1
+
+                    //We need to set the new number of problems on the session level
+                    sessionStorage.setItem('number_of_problems', num_probs)
+
+                    //If the number of problems is equal to 0, then let's make the "Go to Production" button appear
+                    if(num_probs === 0){
+
+                        //Let's make the "Go to Production" button appear
+                        $('#go_prod_accept_all1').fadeIn().prop('hidden', '')
+
+                        //Make the table disappear
+                        $('#go_prod_table').hide();
+
+                        //Let's make the "All Set" area appear
+                        $('#allset1').fadeIn();
+                    }
+                }
+
            }
         });
 
