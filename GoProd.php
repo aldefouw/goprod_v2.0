@@ -5,6 +5,7 @@ include_once "classes/messages.php";
 
 global $config_json;
 global $file;
+global $Proj;
 
 if(isset($GLOBALS['modulePath'])) {
     $file = $GLOBALS['modulePath'] . '/settings/config.json';
@@ -20,13 +21,19 @@ if(isset($GLOBALS['modulePath'])) {
 class GoProd extends AbstractExternalModule
 {
     const PATH_TO_RULES= 'rules/';
+
     function hook_every_page_top($project_id)
 	{
+
+
        // $this->log("Here", func_get_args());
 	    $goprod_workflow=$this->getProjectSetting("gopprod-workflow");
 
 	    //Move from Development to Production mode
         if(PAGE == 'ProjectSetup/index.php' and isset($project_id) and $goprod_workflow==1){
+
+            //Because we're moving from development to production, next go around, let's check all of the stuff again
+            $this->resetIgnoredRules();
             ?>
                 <script>
 
@@ -67,10 +74,9 @@ class GoProd extends AbstractExternalModule
         //Move drafted changes to Production mode
         if(PAGE == 'Design/online_designer.php' and isset($project_id) and $goprod_workflow==1){
 
-            //This will reset the Production Checklist items that have been ignored when new drafted changes are submitted
-            foreach($this->GetListOfAllRules() as $rule){
-                $this->setProjectSetting($rule, '', $this->getProjectId());
-            }
+            //Because we're moving from draft to production, next go around, let's check all of the stuff again
+            //The thought behind this approach is that we can't guarantee that data instruments haven't changed
+            $this->resetIgnoredRules();
 
             ?>
             <script>
@@ -91,6 +97,13 @@ class GoProd extends AbstractExternalModule
             <?php
         }
 	}
+
+    //This will reset the Production Checklist items that have been ignored
+	function resetIgnoredRules(){
+        foreach($this->GetListOfAllRules() as $rule){
+            $this->setProjectSetting($rule, '', $this->getProjectId());
+        }
+    }
 
 	function GetListOfAllRules(){
         $RuleNames = array();
@@ -149,14 +162,19 @@ class GoProd extends AbstractExternalModule
     ..... -maybe PrintRulesNames is not the best name-
      **********************************************************************************************************/
     function GetListOfActiveRules(){
+        global $Proj;
         $RuleNames = array();
         $url= __DIR__.'/'.$this::PATH_TO_RULES;
         foreach (scandir($url) as $filename)
         {
+            $status = $Proj->project['status'];
+            $excluded_rules = ['MissingIRB', 'MissingPI', 'TestRule', 'JustForFunErrors'];
+
             if(ctype_upper(substr($filename, 0, 1)) ){
                 $filename=preg_replace('/\.[^.]+$/','',$filename);
 
-                if($this->ruleStatusActive($filename)) {
+                //We exclude certain rules if we're already in production because they don't apply
+                if(($status != "0" && !in_array($filename, $excluded_rules) || $status == "0") && $this->ruleStatusActive($filename)) {
                     array_push($RuleNames, $filename);
                 }
             }
