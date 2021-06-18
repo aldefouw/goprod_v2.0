@@ -22,10 +22,10 @@ class GoProd extends AbstractExternalModule
     const PATH_TO_RULES= 'rules/';
     function hook_every_page_top($project_id)
 	{
-
        // $this->log("Here", func_get_args());
 	    $goprod_workflow=$this->getProjectSetting("gopprod-workflow");
 
+	    //Move from Development to Production mode
         if(PAGE == 'ProjectSetup/index.php' and isset($project_id) and $goprod_workflow==1){
             ?>
                 <script>
@@ -63,9 +63,36 @@ class GoProd extends AbstractExternalModule
                 </script>
             <?php
         }
+
+        //Move drafted changes to Production mode
+        if(PAGE == 'Design/online_designer.php' and isset($project_id) and $goprod_workflow==1){
+
+            //This will reset the Production Checklist items that have been ignored when new drafted changes are submitted
+            foreach($this->GetListOfAllRules() as $rule){
+                $this->setProjectSetting($rule, '', $this->getProjectId());
+            }
+
+            ?>
+            <script>
+
+                $(function() {
+                    //find and hide the current go to prod button
+                    var MoveProd=  $('input[value="Submit Changes for Review"]');
+
+                    //We use this specifically to know if the user has Agreed to the terms set
+                    ready_to_prod = <?php echo json_encode($_GET["to_prod_plugin"])?>;
+
+                    //If the user has confirmed that they "Move to Production" on the Production Checklist page
+                    if (ready_to_prod === '2'){
+                        MoveProd.trigger('click');
+                    }
+                });
+            </script>
+            <?php
+        }
 	}
 
-    function GetListOfAllRules(){
+	function GetListOfAllRules(){
         $RuleNames = array();
         $url= __DIR__.'/'.$this::PATH_TO_RULES;
         foreach (scandir($url) as $filename)

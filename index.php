@@ -151,14 +151,8 @@ if (\REDCap::versionCompare(REDCAP_VERSION, '8.1.0') < 0) {
 
 $goprod_workflow=$module->getProjectSetting("gopprod-workflow");
 if ($goprod_workflow==0){
-exit();
+    exit();
 }
-/*Remove the go to production button if the project is already in production mode*/
-if($status == 0){
-
-    foreach($module->GetListOfAllRules() as $rule){
-        $module->setProjectSetting($rule, '', $module->getProjectId());
-    }
 
 ?>
 
@@ -233,12 +227,14 @@ if($status == 0){
             }
 
             if (ready_to_prod === '3'){
-                production = <?php echo json_encode(APP_PATH_WEBROOT.'ProjectSetup/index.php?pid='.$_GET['pid'].'&to_prod_plugin=1')?>;
-                location.href = production;
+                <?php if ($status == 0){ ?>
+                    production = <?php echo json_encode(APP_PATH_WEBROOT.'ProjectSetup/index.php?pid='.$_GET['pid'].'&to_prod_plugin=1')?>;
+                    location.href = production;
+                <?php } else if ($status == 1) { ?>
+                    production = <?php echo json_encode(APP_PATH_WEBROOT.'Design/online_designer.php?pid='.$_GET['pid'].'&to_prod_plugin=2')?>;
+                    location.href = production;
+                <?php } ?>
             }
 
         });
     </script>
-
-    <?php
-}
