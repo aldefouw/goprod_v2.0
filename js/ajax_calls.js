@@ -2,7 +2,6 @@
  * Created by alvaro1 on 4/12/17.
  */
 
-
 function GetPath(rulename,project_id){
     url= geturl_ajax+"&rule="+rulename;
     return url;
@@ -99,7 +98,7 @@ function loadResults(rules,project_id){
 
 
 
-
+            sessionStorage.setItem('number_of_problems', count_problems_found);
         });
     });
 
