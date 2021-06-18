@@ -110,3 +110,24 @@ function CheckIfRuleIsActive($Rule,$pid_stats){
 
 
 }
+
+function projectMode(){
+    global $Proj;
+    return $Proj->project['status'];
+}
+
+
+//This is used to limit what checklist items are return to an end user
+function draftedFields(){
+    global $Proj;
+
+    $status = projectMode();
+    if($status == "1") {
+        $return = array();
+        $new_fields = array_diff(array_keys($Proj->metadata_temp), array_keys($Proj->metadata));
+        array_walk_recursive($new_fields, function($a) use (&$return) { $return[] = $a; });
+        return $return;
+    } else {
+        return [];
+    }
+}

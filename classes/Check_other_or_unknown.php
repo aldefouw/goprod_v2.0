@@ -228,6 +228,22 @@ require_once 'utilities.php';
 
             }
         }
+
+        //If we're in production, only looked at drafted changes
+        if(projectMode() == "1"){
+            $drafted_fields = draftedFields();
+
+            $final_array = array();
+
+            foreach($to_fix_array as $item){
+                if(in_array($drafted_fields, $item)){
+                    $final_array = $item;
+                }
+            }
+
+            $to_fix_array = $final_array;
+        }
+
         return array_map("unserialize", array_unique(array_map("serialize", $to_fix_array)));
 
     }
@@ -241,11 +257,7 @@ require_once 'utilities.php';
         $REDCapList= self::Transform($List);
         $AllOther =self::FindOtherOrUnknown($REDCapList,$Words,$similarity);
 
-
-
         return self::ListOfOtherOrUnknownWithProblems($AllOther,$Ids);
-
-
     }
 
 
